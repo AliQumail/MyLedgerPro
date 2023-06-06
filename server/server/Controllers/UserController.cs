@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using server.Models;
 using server.Models.DTOs;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace server.Controllers
@@ -55,7 +52,7 @@ namespace server.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<string> Login(LoginUserDTO _user) {
+        public async Task<LoginResponse> Login(LoginUserDTO _user) {
 
             var user = await dbContext.User.SingleOrDefaultAsync(u => u.Email == _user.Email);
 
@@ -69,7 +66,16 @@ namespace server.Controllers
             }
 
             string token = CreateToken(user);
-            return token; 
+
+            var loginResponse = new LoginResponse()
+            {
+                Name = user.Name,
+                PhoneNo = user.PhoneNo,
+                Email = user.Email,
+                Token = token,
+            };
+
+            return loginResponse;
         }
 
         private string CreateToken(User user)

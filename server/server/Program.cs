@@ -47,6 +47,14 @@ builder.Services.AddDbContext<CashBookDbContext>(options =>
         builder.Configuration.GetConnectionString("ConnectionString"),
         sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()));
 
+
+
+builder.Services.AddCors(options => options.AddPolicy(name: "NgOrigins", policy =>
+{
+    policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+}));
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -55,7 +63,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("NgOrigins");
 
+app.UseAuthentication();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
