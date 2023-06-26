@@ -1,0 +1,120 @@
+<button class="btn btn-primary btn-lg" (click)="open(mymodal)">Add Student</button>
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Customer</h4>
+      <button type="button" class="close  bg-dark text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="addCustomerForm">
+           
+            <!-- Email input -->
+  
+            <div class="form-outline mb-3">
+              <!-- <label class="form-label" for="form3Example4">Password</label> -->
+              <input
+                type="text"
+                id="form3Example4"
+                formControlName="name"
+                class="form-control form-control-lg"
+                placeholder="Name"
+              />
+              <div
+                *ngIf="
+                  addCustomerForm.controls['name'].invalid &&
+                  (addCustomerForm.controls['name'].dirty ||
+                    addCustomerForm.controls['name'].touched)
+                "
+                class="text-danger"
+              >
+                Name is required
+              </div>
+            </div>
+  
+            <div class="form-outline mb-3">
+              <!-- <label class="form-label" for="form3Example4">Password</label> -->
+              <input
+                type="text"
+                id="form3Example4"
+                formControlName="phoneno"
+                class="form-control form-control-lg"
+                placeholder="Phone No"
+              />
+              <div
+                *ngIf="
+                  addCustomerForm.controls['phoneno'].invalid &&
+                  (addCustomerForm.controls['phoneno'].dirty ||
+                    addCustomerForm.controls['phoneno'].touched)
+                "
+                class="text-danger"
+              >
+                Phone no is required
+              </div>
+            </div>
+  
+            <div class="form-outline mb-4">
+              <!-- <label class="form-label" for="form3Example3">Username</label> -->
+              <input
+                type="email"
+                id="form3Example3"
+                class="form-control form-control-lg"
+                formControlName="email"
+                placeholder="Email"
+              />
+              <div
+                *ngIf="
+                  addCustomerForm.controls['email'].invalid &&
+                  (addCustomerForm.controls['email'].dirty ||
+                    addCustomerForm.controls['email'].touched)
+                "
+                class="text-danger"
+              >
+                Email is required
+              </div>
+            </div>
+  
+            <!-- Password input -->
+            <div class="form-outline mb-3">
+              <!-- <label class="form-label" for="form3Example4">Password</label> -->
+              <input
+                type="password"
+                id="form3Example4"
+                formControlName="password"
+                class="form-control form-control-lg"
+                placeholder="Password"
+              />
+              <div
+                *ngIf="
+                  addCustomerForm.controls['password'].invalid &&
+                  (addCustomerForm.controls['password'].dirty ||
+                    addCustomerForm.controls['password'].touched)
+                "
+                class="text-danger"
+              >
+                Password is required
+              </div>
+            </div>
+  
+            <div class="text-center text-lg-start mt-4 pt-2">
+              <button
+                type="submit"
+                class="btn btn-success btn-lg"
+                style="padding-left: 2.5rem; padding-right: 2.5rem"
+                (click)="register(addCustomerForm.value)"
+                [disabled]="addCustomerForm.invalid"
+              >
+                Register
+              </button>
+              <p class="mt-4 pt-1 mb-0">
+                Already have an account?
+                <a href="#!" routerLink="/" class="text-danger">Login</a>
+              </p>
+            </div>
+          </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+    </div>
+  </ng-template>

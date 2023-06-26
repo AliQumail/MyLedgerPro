@@ -12,8 +12,8 @@ using server.Models;
 namespace server.Migrations
 {
     [DbContext(typeof(CashBookDbContext))]
-    [Migration("20230601070304_added")]
-    partial class added
+    [Migration("20230614172516_initials")]
+    partial class initials
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

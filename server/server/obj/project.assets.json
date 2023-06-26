@@ -2428,19 +2428,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\aqumail\\.nuget\\packages\\": {}
+    "C:\\Users\\aqasy\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Cashtrack\\server\\server\\server.csproj",
+      "projectUniqueName": "C:\\Users\\aqasy\\Desktop\\Cashtrack\\server\\server\\server.csproj",
       "projectName": "server",
-      "projectPath": "D:\\Cashtrack\\server\\server\\server.csproj",
-      "packagesPath": "C:\\Users\\aqumail\\.nuget\\packages\\",
-      "outputPath": "D:\\Cashtrack\\server\\server\\obj\\",
+      "projectPath": "C:\\Users\\aqasy\\Desktop\\Cashtrack\\server\\server\\server.csproj",
+      "packagesPath": "C:\\Users\\aqasy\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\aqasy\\Desktop\\Cashtrack\\server\\server\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\aqumail\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\aqasy\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2508,7 +2508,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

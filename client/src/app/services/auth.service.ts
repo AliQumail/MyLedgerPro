@@ -21,7 +21,6 @@ export class AuthService {
   }
 
  
-
   public addCustomer(customer: any): Observable<string> {
     return this.http.post(
       'https://localhost:7277/api/Customer/addcustomer',
