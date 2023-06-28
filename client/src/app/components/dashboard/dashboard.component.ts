@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { CustomerService } from 'src/app/services/customer/customer.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private customerService: CustomerService) {}
 
   name: string | null = '';
   email: any = '';
@@ -45,7 +46,7 @@ export class DashboardComponent {
   }
 
   getCustomers(email: any) {
-    this.authService.getCustomers({ email }).subscribe(
+    this.customerService.getCustomers({ email }).subscribe(
       (res: any) => {
         console.log('CUSTOMERS: ', res);
         const response = JSON.parse(res);

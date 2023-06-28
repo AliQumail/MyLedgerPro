@@ -21,15 +21,15 @@ export class AuthService {
   }
 
  
-  public addCustomer(customer: any): Observable<string> {
-    return this.http.post(
-      'https://localhost:7277/api/Customer/addcustomer',
-      customer,
-      {
-        responseType: 'text',
-      }
-    );
-  }
+  // public addCustomer(customer: any): Observable<string> {
+  //   return this.http.post(
+  //     'https://localhost:7277/api/Customer/addcustomer',
+  //     customer,
+  //     {
+  //       responseType: 'text',
+  //     }
+  //   );
+  // }
 
   public getTransactions(email: any): Observable<string> {
     return this.http.post(
@@ -41,13 +41,13 @@ export class AuthService {
     );
   }
 
-  public getCustomers(email: any): Observable<string> {
-    return this.http.post(
-      'https://localhost:7277/api/Customer/getcustomersbyuser',
-      email,
-      {
-        responseType: 'text',
-      }
-    );
-  }
+  // public getCustomers(email: any): Observable<string> {
+  //   return this.http.post(
+  //     'https://localhost:7277/api/Customer/getcustomersbyuser',
+  //     email,
+  //     {
+  //       responseType: 'text',
+  //     }
+  //   );
+  // }
 }

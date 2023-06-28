@@ -1,42 +1,36 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
-  NgbModal,
   ModalDismissReasons,
+  NgbModal,
   NgbModalOptions,
 } from '@ng-bootstrap/ng-bootstrap';
-import { CustomerService } from 'src/app/services/customer/customer.service';
+import { TransactionService } from 'src/app/services/transaction/transaction.service';
 
 @Component({
-  selector: 'app-add-customer',
-  templateUrl: './add-customer.component.html',
-  styleUrls: ['./add-customer.component.css'],
+  selector: 'app-add-transaction',
+  templateUrl: './add-transaction.component.html',
+  styleUrls: ['./add-transaction.component.css'],
 })
-export class AddCustomerComponent {
-  title = 'ng-bootstrap-modal-demo';
+export class AddTransactionComponent {
   closeResult: string = '';
   modalOptions: NgbModalOptions;
-
-  constructor(
-    private modalService: NgbModal,
-    private customerService: CustomerService
-  ) {
+  constructor(private modalService: NgbModal, private transactionService: TransactionService) {
     this.modalOptions = {
       backdrop: 'static',
       backdropClass: 'customBackdrop',
     };
   }
 
-  addCustomerForm: FormGroup = new FormGroup({
-    name: new FormControl('', Validators.required),
-    phoneno: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.required),
-    
+  addTransactionForm: FormGroup = new FormGroup({
+    customerEmail: new FormControl('', Validators.required),
+    status: new FormControl('', Validators.required),
+    amount: new FormControl('', Validators.required),
   });
 
-  addCustomer(customerDetails: any) {
-    customerDetails.userEmail = "string";
-    this.customerService.addCustomer(customerDetails).subscribe(
+  addTransaction(transaction: any){
+    transaction.userEmail = "string";
+    this.transactionService.addTransaction(transaction).subscribe(
       (res: any) => {
         console.log(res);
       },
@@ -45,6 +39,7 @@ export class AddCustomerComponent {
         alert(error.headers);
       }
     );
+      
   }
 
   open(content: any) {

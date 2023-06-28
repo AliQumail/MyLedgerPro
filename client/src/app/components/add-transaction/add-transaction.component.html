@@ -1,14 +1,14 @@
-<button class="btn btn-primary btn-lg" (click)="open(mymodal)">Add Customer</button>
+<button class="btn btn-success btn-lg m-1" (click)="open(mymodal)">Add Transaction</button>
 
 <ng-template #mymodal let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Add Customer</h4>
+      <h4 class="modal-title" id="modal-basic-title">Add Transaction</h4>
       <button type="button" class="close  bg-dark text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-        <form [formGroup]="addCustomerForm">
+        <form [formGroup]="addTransactionForm">
            
             <!-- Email input -->
   
@@ -17,19 +17,19 @@
               <input
                 type="text"
                 id="form3Example4"
-                formControlName="name"
+                formControlName="customerEmail"
                 class="form-control form-control-lg"
-                placeholder="Name"
+                placeholder="Customer Email"
               />
               <div
                 *ngIf="
-                  addCustomerForm.controls['name'].invalid &&
-                  (addCustomerForm.controls['name'].dirty ||
-                    addCustomerForm.controls['name'].touched)
+                  addTransactionForm.controls['customerEmail'].invalid &&
+                  (addTransactionForm.controls['customerEmail'].dirty ||
+                    addTransactionForm.controls['customername'].touched)
                 "
                 class="text-danger"
               >
-                Name is required
+                Customer email is required
               </div>
             </div>
   
@@ -38,40 +38,40 @@
               <input
                 type="text"
                 id="form3Example4"
-                formControlName="phoneno"
+                formControlName="status"
                 class="form-control form-control-lg"
-                placeholder="Phone No"
+                placeholder="Status"
               />
               <div
                 *ngIf="
-                  addCustomerForm.controls['phoneno'].invalid &&
-                  (addCustomerForm.controls['phoneno'].dirty ||
-                    addCustomerForm.controls['phoneno'].touched)
+                  addTransactionForm.controls['status'].invalid &&
+                  (addTransactionForm.controls['status'].dirty ||
+                    addTransactionForm.controls['status'].touched)
                 "
                 class="text-danger"
               >
-                Phone no is required
+                Status is required
               </div>
             </div>
   
             <div class="form-outline mb-4">
               <!-- <label class="form-label" for="form3Example3">Username</label> -->
               <input
-                type="email"
+                type="number"
                 id="form3Example3"
                 class="form-control form-control-lg"
-                formControlName="email"
-                placeholder="Email"
+                formControlName="amount"
+                placeholder="Amount"
               />
               <div
                 *ngIf="
-                  addCustomerForm.controls['email'].invalid &&
-                  (addCustomerForm.controls['email'].dirty ||
-                    addCustomerForm.controls['email'].touched)
+                  addTransactionForm.controls['amount'].invalid &&
+                  (addTransactionForm.controls['amount'].dirty ||
+                    addTransactionForm.controls['amount'].touched)
                 "
                 class="text-danger"
               >
-                Email is required
+                Amount is required
               </div>
             </div>
   
@@ -83,8 +83,8 @@
                 type="submit"
                 class="btn btn-success btn-lg"
                 style="padding-left: 2.5rem; padding-right: 2.5rem"
-                (click)="addCustomer(addCustomerForm.value)"
-                [disabled]="addCustomerForm.invalid"
+                (click)="addTransaction(addTransactionForm.value)"
+                [disabled]="addTransactionForm.invalid"
               >
                 Add
               </button>

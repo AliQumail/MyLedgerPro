@@ -12,6 +12,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { AddCustomerComponent } from './components/add-customer/add-customer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AddTransactionComponent } from './components/add-transaction/add-transaction.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
-    AddCustomerComponent
+    AddCustomerComponent,
+    AddTransactionComponent
   ],
   imports: [
     BrowserModule,
