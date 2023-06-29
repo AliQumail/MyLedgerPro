@@ -1,6 +1,6 @@
 ﻿namespace server.Models.DTOs
 {
-    public class TransactionSummaryResponse
+    public class CustomersSummaryResponse
     {
         public string CustomerName { set; get; } = string.Empty;
         public string CustomerEmail { set; get; } = string.Empty;

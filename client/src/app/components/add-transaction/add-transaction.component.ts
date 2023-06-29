@@ -29,6 +29,7 @@ export class AddTransactionComponent {
   });
 
   addTransaction(transaction: any){
+    
     transaction.userEmail = "string";
     this.transactionService.addTransaction(transaction).subscribe(
       (res: any) => {

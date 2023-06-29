@@ -99,19 +99,20 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  
+                  <tr *ngFor="let item of summary">
                     <td>
                       <div class="d-flex align-items-center">
                         <div class="">
-                          <p class="fw-bold mb-1">John Doe</p>
-                          <p class="text-muted mb-0">john.doe@gmail.com</p>
+                          <p class="fw-bold mb-1">{{item.customerName}}</p>
+                          <p class="text-muted mb-0">{{item.customerEmail}}</p>
                         </div>
                       </div>
                     </td>
                     <td>
-                      <p class="fw-normal mb-1">Software engineer</p>
+                      <p class="fw-normal mb-1">{{item.toTake}}</p>
                     </td>
-                    <td>Senior</td>
+                    <td>{{item.toGive}}</td>
                     <td>
                       <button
                         type="button"

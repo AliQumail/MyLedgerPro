@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
+import { CustomerSummary } from 'src/app/Models/customersummary';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,16 @@ export class CustomerService {
       email,
       {
         responseType: 'text',
+      }
+    );
+  }
+
+  public getCustomerSummary( email: any ): Observable<CustomerSummary[]> {
+    return this.http.post<CustomerSummary[]>(
+      'https://localhost:7277/api/Customer/getcustomersummary',
+      email,
+      {
+        responseType: 'json',
       }
     );
   }

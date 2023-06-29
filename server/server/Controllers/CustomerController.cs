@@ -47,15 +47,15 @@ namespace server.Controllers
 
 
         [HttpPost]
-        [Route("gettransactionsummary")]
-        public async Task<List<TransactionSummaryResponse>> GetTransactionSummary(string _userEmail)
+        [Route("getcustomersummary")]
+        public async Task<List<CustomersSummaryResponse>> GetCustomersSummary(UserEmailRequest request)
         {
 
-            List<TransactionSummaryResponse> transactionSummaryList = new List<TransactionSummaryResponse>();
+            List<CustomersSummaryResponse> CustomersSummaryList = new List<CustomersSummaryResponse>();
 
             // Finding all the customers of the given user by email 
             var customers = await DbContext.Customer.Where(u => u.UserEmail
-            == _userEmail ).ToListAsync();
+            == request.Email ).ToListAsync();
 
 
             // Looping through customers 
@@ -63,13 +63,13 @@ namespace server.Controllers
             {
                 // Finding the total amount given to some customer 
                 var totalGive = await DbContext.Transaction
-                    .Where(u => u.CustomerEmail == customer.Email && u.UserEmail == _userEmail && u.Status == "Give")
+                    .Where(u => u.CustomerEmail == customer.Email && u.UserEmail == request.Email && u.Status == "Give")
                     .SumAsync(u => u.Amount);
 
 
                 // Finding the total amount taken from some customer
                 var totalTake = await DbContext.Transaction
-                    .Where(u => u.CustomerEmail == customer.Email  && u.UserEmail == _userEmail && u.Status == "Take")
+                    .Where(u => u.CustomerEmail == customer.Email  && u.UserEmail == request.Email && u.Status == "Take")
                     .SumAsync(u => u.Amount);
 
                 var toTake = 0;
@@ -86,18 +86,18 @@ namespace server.Controllers
 
                 }
                 // Create a new object for returning some values 
-                var transactionSummaryResponse = new TransactionSummaryResponse() {
+                var CustomersSummaryResponse = new CustomersSummaryResponse() {
                     CustomerName = customer.Name,
                     CustomerEmail = customer.Email,
                     ToTake = toTake,
                     ToGive = toGive
                 };
 
-                transactionSummaryList.Add(transactionSummaryResponse);
+                CustomersSummaryList.Add(CustomersSummaryResponse);
 
             }
 
-            return transactionSummaryList;
+            return CustomersSummaryList;
         }
 
     }

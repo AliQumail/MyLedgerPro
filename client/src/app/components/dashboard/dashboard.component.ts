@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Subject } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomerService } from 'src/app/services/customer/customer.service';
 
@@ -8,7 +9,10 @@ import { CustomerService } from 'src/app/services/customer/customer.service';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent {
-  constructor(private authService: AuthService, private customerService: CustomerService) {}
+  constructor(
+    private authService: AuthService,
+    private customerService: CustomerService
+  ) {}
 
   name: string | null = '';
   email: any = '';
@@ -18,6 +22,7 @@ export class DashboardComponent {
   toGive: any;
   summary: any = [];
 
+
   ngOnInit() {
     if (
       localStorage.getItem('name') != null &&
@@ -25,14 +30,14 @@ export class DashboardComponent {
     ) {
       this.name = localStorage.getItem('name');
       this.email = localStorage.getItem('email');
-      this.getTransactions(this.email);
-      this.getCustomers(this.email);
-      this.generateSummary();
+      // this.getTransactions(this.email);
+      // this.getCustomers(this.email);
+      this.generateSummary('string');
     }
   }
 
-  getTransactions(email: any) {
-    this.authService.getTransactions({ email }).subscribe(
+  getTransactions(_userEmail: any) {
+    this.authService.getTransactions({ _userEmail }).subscribe(
       (res: any) => {
         console.log('TRANSACTIONS: ', res);
         const response = JSON.parse(res);
@@ -54,50 +59,20 @@ export class DashboardComponent {
       },
       (error) => {
         console.log(JSON.stringify(error));
-        alert(error.headers);
       }
     );
   }
 
-  generateSummary() {
-    console.log("CALLED GENERATESUMMARY")
-    let custName,
-      custEmail,
-      totalGiven = 0,
-      totalTaken = 0,
-      given,
-      taken;
-    for (let i = 0; i < this.customers.length; i++) {
-      custName = this.customers[i].name;
-      custEmail = this.customers[i].email;
-      for (let j = 0; j < this.transactions.length; j++) {
-        if (custEmail == this.transactions[j].email) {
-          if (this.transactions[j].status == 'Given') {
-            totalGiven += this.transactions[j].amount;
-          } else {
-            totalTaken += this.transactions[j].amount;
-          }
-        }
+  generateSummary(email: any) {
+    this.customerService.getCustomerSummary({ email }).subscribe(
+      (res: any) => {
+        const JsonString = JSON.stringify(res);
+        this.summary = JSON.parse(JsonString)      
+        
+      },
+      (error) => {
+        console.log(JSON.stringify(error));
       }
-      if (totalGiven > totalTaken) {
-        given = totalGiven - totalTaken;
-        taken = 0;
-      } else {
-        taken = totalTaken - totalGiven;
-        given = 0;
-      }
-
-      this.summary.push({
-        name: custName,
-        email: custEmail,
-        given: given,
-        taken: taken,
-      });
-      given = 0;
-      taken = 0;
-      totalGiven = 0;
-      totalTaken = 0;
-    }
-    console.log("TOTAL SUMMARY: " + JSON.stringify(this.summary));
+    );
   }
 }
