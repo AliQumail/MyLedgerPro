@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AddCustomerComponent } from './components/add-customer/add-customer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddTransactionComponent } from './components/add-transaction/add-transaction.component';
+import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { AddTransactionComponent } from './components/add-transaction/add-transa
     RegisterComponent,
     DashboardComponent,
     AddCustomerComponent,
-    AddTransactionComponent
+    AddTransactionComponent,
+    CustomerDetailsComponent
   ],
   imports: [
     BrowserModule,

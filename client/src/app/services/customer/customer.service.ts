@@ -29,6 +29,16 @@ export class CustomerService {
     );
   }
 
+  public getCustomer(email: any): Observable<string> {
+    return this.http.post(
+      'https://localhost:7277/api/Customer/getcustomer',
+      email,
+      {
+        responseType: 'text',
+      }
+    );
+  }
+
   public getCustomerSummary( email: any ): Observable<CustomerSummary[]> {
     return this.http.post<CustomerSummary[]>(
       'https://localhost:7277/api/Customer/getcustomersummary',

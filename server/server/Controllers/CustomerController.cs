@@ -47,6 +47,13 @@ namespace server.Controllers
 
 
         [HttpPost]
+        [Route("getcustomer")]
+        public async Task<Customer> GetCustomer(UserEmailRequest request) {
+            var customer = await DbContext.Customer.SingleOrDefaultAsync(u => u.Email == request.Email);
+            return customer; 
+        }
+
+        [HttpPost]
         [Route("getcustomersummary")]
         public async Task<List<CustomersSummaryResponse>> GetCustomersSummary(UserEmailRequest request)
         {

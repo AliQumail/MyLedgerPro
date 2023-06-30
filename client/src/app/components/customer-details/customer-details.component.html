@@ -1,0 +1,135 @@
+<div *ngIf="customer.name != null">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand p-4" href="#">Navbar</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Pricing</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  
+    <div class="container">
+      <div class="row mt-5" *ngIf="customer.name != null">
+        <h5>Hi {{ customer.name }}!</h5>
+  
+        <hr />
+        <div>
+          <div class="row">
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div
+                        class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                      >
+                        To Give (RS)
+                      </div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">
+                        5,000,000
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div
+                        class="text-xs font-weight-bold text-success text-uppercase mb-1"
+                      >
+                        To Take (RS)
+                      </div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">
+                        5,000,000
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="row">
+            <div>
+              <app-add-customer></app-add-customer>
+              <app-add-transaction></app-add-transaction>
+            </div>
+  
+            <div>
+              <div class="row mt-5">
+                <table class="table align-middle mb-0 bg-white">
+                  <thead class="bg-light">
+                    <tr>
+                      <th>Tran Id</th>
+                      <th>Status</th>
+                      <th>Amount</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                    <tr *ngFor="let tran of transactions">
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div class="">
+                            <p class="fw-bold mb-1">{{tran.id}}</p>
+                            <!-- <p class="text-muted mb-0">{{item.customerEmail}}</p> -->
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="fw-normal mb-1">{{tran.status}}</p>
+                      </td>
+                      <td>{{tran.amount}}</td>
+                      <td>
+                        <button
+                          type="button"
+                          class="btn btn-link btn-sm btn-rounded"
+                    
+                        >
+                          {{tran.date}}
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -25,10 +25,21 @@ namespace server.Controllers
                 UserEmail = _transaction.UserEmail,
                 Status = _transaction.Status,
                 Amount = _transaction.Amount,
+                Date = DateTime.Now,
             };
             await DbContext.Transaction.AddAsync(transaction);
             DbContext.SaveChanges();
             return "Transaction added successfully";
+        }
+
+
+
+        [HttpPost]
+        [Route("gettransaction")]
+        public async Task<List<Transaction>> GetTransaction(GetTransactionRequest request)
+        {
+            var transactions = await DbContext.Transaction.Where(u => u.UserEmail == request.UserEmail && u.CustomerEmail == request.CustomerEmail).ToListAsync();            
+            return transactions;
         }
 
         [HttpPost]

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Subject } from 'rxjs';
+
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomerService } from 'src/app/services/customer/customer.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -11,7 +11,8 @@ import { CustomerService } from 'src/app/services/customer/customer.service';
 export class DashboardComponent {
   constructor(
     private authService: AuthService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private router: Router
   ) {}
 
   name: string | null = '';
@@ -21,7 +22,6 @@ export class DashboardComponent {
   toTake: any;
   toGive: any;
   summary: any = [];
-
 
   ngOnInit() {
     if (
@@ -36,15 +36,24 @@ export class DashboardComponent {
     }
   }
 
+  view(customerEmail: any) {
+
+    console.log(customerEmail);
+    this.router.navigate([
+      'details/user/:useremail/customer/:customeremail',
+      { useremail: 'string', customeremail: customerEmail },
+    ]);
+  }
+
   getTransactions(_userEmail: any) {
     this.authService.getTransactions({ _userEmail }).subscribe(
       (res: any) => {
-        console.log('TRANSACTIONS: ', res);
+        // console.log('TRANSACTIONS: ', res);
         const response = JSON.parse(res);
         this.transactions = response;
       },
       (error) => {
-        console.log(JSON.stringify(error));
+        // console.log(JSON.stringify(error));
         alert(error.headers);
       }
     );
@@ -67,8 +76,7 @@ export class DashboardComponent {
     this.customerService.getCustomerSummary({ email }).subscribe(
       (res: any) => {
         const JsonString = JSON.stringify(res);
-        this.summary = JSON.parse(JsonString)      
-        
+        this.summary = JSON.parse(JsonString);
       },
       (error) => {
         console.log(JSON.stringify(error));

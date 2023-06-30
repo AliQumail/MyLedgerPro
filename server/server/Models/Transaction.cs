@@ -8,5 +8,7 @@
         public string Status { get; set; } = string.Empty;
         public int Amount { get; set; }
 
+        public DateTime Date { get; set; }
+
     }
 }

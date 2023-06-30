@@ -93,8 +93,8 @@
                 <thead class="bg-light">
                   <tr>
                     <th>Name</th>
-                    <th>Given</th>
-                    <th>Taken</th>
+                    <th>To Take</th>
+                    <th>To Give</th>
                     <th>Details</th>
                   </tr>
                 </thead>
@@ -117,6 +117,7 @@
                       <button
                         type="button"
                         class="btn btn-link btn-sm btn-rounded"
+                        (click)="view(item.customerEmail)"
                       >
                         View
                       </button>

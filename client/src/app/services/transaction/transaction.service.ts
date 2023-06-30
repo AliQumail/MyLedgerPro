@@ -20,7 +20,7 @@ export class TransactionService {
 
   public getTransaction(email: any): Observable<string> {
     return this.http.post(
-      'https://localhost:7277/api/Customer/getcustomersbyuser',
+      'https://localhost:7277/api/Transaction/gettransaction',
       email,
       {
         responseType: 'text',
