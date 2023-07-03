@@ -15,8 +15,10 @@ export class CustomerDetailsComponent {
     private transactionService: TransactionService
   ) {}
 
-  customer: any; 
-  transactions: any = []; 
+  customer: any;
+  transactions: any = [];
+  totalToGive: number = 0;
+  totalToTake: number = 0;
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -25,7 +27,7 @@ export class CustomerDetailsComponent {
 
       this.customerService.getCustomer({ email: customeremail }).subscribe(
         (res: any) => {
-          this.customer = JSON.parse(res); 
+          this.customer = JSON.parse(res);
           console.log(this.customer);
         },
         (error) => {
@@ -37,8 +39,24 @@ export class CustomerDetailsComponent {
         .getTransaction({ userEmail: useremail, customerEmail: customeremail })
         .subscribe(
           (res: any) => {
-            this.transactions =JSON.parse(res);
+            this.transactions = JSON.parse(res);
             console.log('TRANSACTION:  ' + this.transactions);
+
+            this.transactions.forEach((transaction: any) => {
+              if (transaction.status == 'Give') {
+                this.totalToTake += transaction.amount;
+              } else {
+                this.totalToGive += transaction.amount;
+              }
+            });
+
+            if (this.totalToTake > this.totalToGive) {
+              this.totalToTake -= this.totalToGive;
+              this.totalToGive = 0;
+            } else {
+              this.totalToGive -= this.totalToTake;
+              this.totalToTake = 0;
+            }
           },
           (error) => {
             console.log(error);

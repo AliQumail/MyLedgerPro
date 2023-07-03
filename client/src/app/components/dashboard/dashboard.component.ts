@@ -22,6 +22,8 @@ export class DashboardComponent {
   toTake: any;
   toGive: any;
   summary: any = [];
+  totalToTake: number = 0;
+  totalToGive: number = 0;
 
   ngOnInit() {
     if (
@@ -37,7 +39,6 @@ export class DashboardComponent {
   }
 
   view(customerEmail: any) {
-
     console.log(customerEmail);
     this.router.navigate([
       'details/user/:useremail/customer/:customeremail',
@@ -77,6 +78,11 @@ export class DashboardComponent {
       (res: any) => {
         const JsonString = JSON.stringify(res);
         this.summary = JSON.parse(JsonString);
+
+        this.summary.forEach((item: any) => {
+          this.totalToTake += item.toTake;
+          this.totalToGive += item.toGive;
+        });
       },
       (error) => {
         console.log(JSON.stringify(error));
