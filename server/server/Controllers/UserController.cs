@@ -69,6 +69,7 @@ namespace server.Controllers
 
             var loginResponse = new LoginResponse()
             {
+                Id = user.Id,    
                 Name = user.Name,
                 PhoneNo = user.PhoneNo,
                 Email = user.Email,

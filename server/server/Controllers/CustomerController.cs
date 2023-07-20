@@ -25,7 +25,7 @@ namespace server.Controllers
 
             var customer = new Customer() {
                 Id = Guid.NewGuid(),
-                UserEmail = _customer.UserEmail,
+                UserId = _customer.UserId,
                 Email = _customer.Email,
                 PhoneNo = _customer.PhoneNo,
                 Name = _customer.Name,
@@ -36,7 +36,7 @@ namespace server.Controllers
             return "Customer added successfully";
         }
 
-
+        /*
         [HttpPost]
         [Route("getcustomersbyuser")]
         public async Task<List<Customer>> GetCustomersByUser(GetCustomersByUserDTO _user)
@@ -44,25 +44,34 @@ namespace server.Controllers
             var customers = await DbContext.Customer.Where(u => u.UserEmail == _user.Email).ToListAsync();
             return customers;
         }
+        */
 
-
+        /*
         [HttpPost]
         [Route("getcustomer")]
         public async Task<Customer> GetCustomer(UserEmailRequest request) {
             var customer = await DbContext.Customer.SingleOrDefaultAsync(u => u.Email == request.Email);
             return customer; 
         }
+        */
+
+        /*
+        [HttpPut]
+        [Route("update/customer")]
+        public async Task<bool> UpdateCustomer(Guid id, UpdateCustomerDTO request) { 
+        }
+        */ 
 
         [HttpPost]
-        [Route("getcustomersummary")]
-        public async Task<List<CustomersSummaryResponse>> GetCustomersSummary(UserEmailRequest request)
+        [Route("customers/summary")]
+        public async Task<List<CustomersSummaryResponse>> GetCustomersSummary(UserIdRequest request )
         {
 
             List<CustomersSummaryResponse> CustomersSummaryList = new List<CustomersSummaryResponse>();
 
             // Finding all the customers of the given user by email 
-            var customers = await DbContext.Customer.Where(u => u.UserEmail
-            == request.Email ).ToListAsync();
+            var customers = await DbContext.Customer.Where(u => u.UserId
+            == request.Id ).ToListAsync();
 
 
             // Looping through customers 
@@ -70,13 +79,13 @@ namespace server.Controllers
             {
                 // Finding the total amount given to some customer 
                 var totalGive = await DbContext.Transaction
-                    .Where(u => u.CustomerEmail == customer.Email && u.UserEmail == request.Email && u.Status == "Give")
+                    .Where(u => u.CustomerId == customer.Id && u.UserId == request.Id && u.Status == "Give")
                     .SumAsync(u => u.Amount);
 
 
                 // Finding the total amount taken from some customer
                 var totalTake = await DbContext.Transaction
-                    .Where(u => u.CustomerEmail == customer.Email  && u.UserEmail == request.Email && u.Status == "Take")
+                    .Where(u => u.CustomerId == customer.Id  && u.UserId == request.Id && u.Status == "Take")
                     .SumAsync(u => u.Amount);
 
                 var toTake = 0;

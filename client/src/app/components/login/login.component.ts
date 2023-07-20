@@ -33,9 +33,9 @@ export class LoginComponent {
         if (res == "User doesn't exist" || res == "Password doesn't match") {
           alert(res);
         } else {
+        
           const response = JSON.parse(res);
-          console.log(response.token);
-          console.log(response.name);
+          localStorage.setItem('userid', response.id);
           localStorage.setItem('token', response.token);
           localStorage.setItem('name', response.name);
           localStorage.setItem('email', response.email);

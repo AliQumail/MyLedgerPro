@@ -3,8 +3,8 @@
     public class GetTransactionRequest
     {
 
-        public string UserEmail { get; set; } = string.Empty;
-        public string CustomerEmail { get; set; } = string.Empty;
+        public Guid UserId { get; set; } 
+        public Guid CustomerId { get; set; } 
      
     }
 }

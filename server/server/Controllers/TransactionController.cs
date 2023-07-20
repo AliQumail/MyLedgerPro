@@ -21,8 +21,8 @@ namespace server.Controllers
         {
             var transaction = new Transaction()
             {
-                CustomerEmail = _transaction.CustomerEmail,
-                UserEmail = _transaction.UserEmail,
+                CustomerId = _transaction.CustomerId,
+                UserId = _transaction.UserId,
                 Status = _transaction.Status,
                 Amount = _transaction.Amount,
                 Date = DateTime.Now,
@@ -38,15 +38,50 @@ namespace server.Controllers
         [Route("gettransaction")]
         public async Task<List<Transaction>> GetTransaction(GetTransactionRequest request)
         {
-            var transactions = await DbContext.Transaction.Where(u => u.UserEmail == request.UserEmail && u.CustomerEmail == request.CustomerEmail).ToListAsync();            
+            var transactions = await DbContext.Transaction.Where(u => u.UserId == request.UserId && u.CustomerId == request.CustomerId).ToListAsync();            
             return transactions;
         }
 
         [HttpPost]
         [Route("gettransactionsbyuser")]
         public async Task<List<Transaction>> GetTransactionsByUser(GetTransactionsDTO _user){
-            var transactions = await DbContext.Transaction.Where(u => u.UserEmail == _user.Email).ToListAsync();
+            var transactions = await DbContext.Transaction.Where(u => u.UserId == _user.Id).ToListAsync();
             return transactions; 
         }
+
+        
+        [HttpDelete]
+        [Route("deletetransaction")]
+        public async Task<bool> DeleteTransaction(Guid id) {
+            var transaction = await DbContext.Transaction.FindAsync(id);
+            if (transaction != null)
+            {
+                DbContext.Transaction.Remove(transaction);
+                await DbContext.SaveChangesAsync();
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        [HttpPut]
+        [Route("updatetransaction")]
+        public async Task<bool> UpdateTransaction(Guid id, UpdateTransactionDTO request) {
+
+            var transaction = await DbContext.Transaction.FindAsync(id);
+            if (transaction != null)
+            {
+                transaction.Status = request.Status;
+                transaction.Amount = request.Amount;
+
+                await DbContext.SaveChangesAsync();
+
+                return true;
+            }
+
+            return false; 
+        }
+        
     }
 }

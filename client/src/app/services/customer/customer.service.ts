@@ -39,10 +39,10 @@ export class CustomerService {
     );
   }
 
-  public getCustomerSummary( email: any ): Observable<CustomerSummary[]> {
+  public getCustomerSummary( id : any ): Observable<CustomerSummary[]> {
     return this.http.post<CustomerSummary[]>(
-      'https://localhost:7277/api/Customer/getcustomersummary',
-      email,
+      'https://localhost:7277/api/Customer/customers/summary',
+      id, 
       {
         responseType: 'json',
       }

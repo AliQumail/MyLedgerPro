@@ -34,7 +34,7 @@ export class DashboardComponent {
       this.email = localStorage.getItem('email');
       // this.getTransactions(this.email);
       // this.getCustomers(this.email);
-      this.generateSummary('string');
+      this.generateSummary("0FE07491-31AD-403D-A314-E3A459C63298");
     }
   }
 
@@ -73,8 +73,8 @@ export class DashboardComponent {
     );
   }
 
-  generateSummary(email: any) {
-    this.customerService.getCustomerSummary({ email }).subscribe(
+  generateSummary( id : any) {
+    this.customerService.getCustomerSummary({ id }).subscribe(
       (res: any) => {
         const JsonString = JSON.stringify(res);
         this.summary = JSON.parse(JsonString);

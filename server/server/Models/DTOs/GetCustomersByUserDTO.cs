@@ -2,7 +2,7 @@
 {
     public class GetCustomersByUserDTO
     {
-        public string Email { set; get; } = string.Empty;
+        public Guid Id { set; get; }
 
     }
 }
