@@ -35,7 +35,7 @@ export class AddCustomerComponent {
   });
 
   addCustomer(customerDetails: any) {
-    customerDetails.userEmail = "string";
+    customerDetails.userId = localStorage.getItem("userid"); 
     this.customerService.addCustomer(customerDetails).subscribe(
       (res: any) => {
         console.log(res);

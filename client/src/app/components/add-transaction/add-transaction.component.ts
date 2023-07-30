@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   ModalDismissReasons,
@@ -15,7 +15,22 @@ import { TransactionService } from 'src/app/services/transaction/transaction.ser
 export class AddTransactionComponent {
   closeResult: string = '';
   modalOptions: NgbModalOptions;
-  constructor(private modalService: NgbModal, private transactionService: TransactionService) {
+  @Input() customers: any; 
+  // customers: any = [
+  //   {
+  //     name: 'cust 1',
+  //     id: 0,
+  //   },
+  //   {
+  //     name: 'cust 2',
+  //     id: 2
+  //   },
+  // ];
+
+  constructor(
+    private modalService: NgbModal,
+    private transactionService: TransactionService
+  ) {
     this.modalOptions = {
       backdrop: 'static',
       backdropClass: 'customBackdrop',
@@ -23,24 +38,24 @@ export class AddTransactionComponent {
   }
 
   addTransactionForm: FormGroup = new FormGroup({
-    customerEmail: new FormControl('', Validators.required),
+    customerId: new FormControl('', Validators.required),
     status: new FormControl('', Validators.required),
-    amount: new FormControl('', Validators.required),
+    amount: new FormControl('', Validators.required),    
   });
 
-  addTransaction(transaction: any){
-    
-    transaction.userEmail = "string";
-    this.transactionService.addTransaction(transaction).subscribe(
-      (res: any) => {
-        console.log(res);
-      },
-      (error) => {
-        console.log(JSON.stringify(error));
-        alert(error.headers);
-      }
-    );
-      
+  addTransaction(transaction: any) {
+    transaction.userId = localStorage.getItem('userid');
+    this.transactionService
+      .addTransaction(transaction)
+      .subscribe(
+        (res: any) => {
+          console.log(res);
+        },
+        (error) => {
+          console.log(JSON.stringify(error));
+          alert(error.headers);
+        }
+      );
   }
 
   open(content: any) {

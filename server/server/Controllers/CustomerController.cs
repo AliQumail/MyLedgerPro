@@ -103,6 +103,7 @@ namespace server.Controllers
                 }
                 // Create a new object for returning some values 
                 var CustomersSummaryResponse = new CustomersSummaryResponse() {
+                    CustomerId = customer.Id.ToString(),
                     CustomerName = customer.Name,
                     CustomerEmail = customer.Email,
                     ToTake = toTake,

@@ -1,98 +1,119 @@
-<button class="add-transactions-btn m-1" (click)="open(mymodal)">Add Transaction</button>
+<button class="add-transactions-btn m-1" (click)="open(mymodal)">
+  Add Transaction
+</button>
 
 <ng-template #mymodal let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Add Transaction</h4>
-      <button type="button" class="close  bg-dark text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-        <form [formGroup]="addTransactionForm">
-           
-            <!-- Email input -->
-  
-            <div class="form-outline mb-3">
-              <!-- <label class="form-label" for="form3Example4">Password</label> -->
-              <input
-                type="text"
-                id="form3Example4"
-                formControlName="customerEmail"
-                class="form-control form-control-lg"
-                placeholder="Customer Email"
-              />
-              <div
-                *ngIf="
-                  addTransactionForm.controls['customerEmail'].invalid &&
-                  (addTransactionForm.controls['customerEmail'].dirty ||
-                    addTransactionForm.controls['customername'].touched)
-                "
-                class="text-danger"
-              >
-                Customer email is required
-              </div>
-            </div>
-  
-            <div class="form-outline mb-3">
-              <!-- <label class="form-label" for="form3Example4">Password</label> -->
-              <input
-                type="text"
-                id="form3Example4"
-                formControlName="status"
-                class="form-control form-control-lg"
-                placeholder="Status"
-              />
-              <div
-                *ngIf="
-                  addTransactionForm.controls['status'].invalid &&
-                  (addTransactionForm.controls['status'].dirty ||
-                    addTransactionForm.controls['status'].touched)
-                "
-                class="text-danger"
-              >
-                Status is required
-              </div>
-            </div>
-  
-            <div class="form-outline mb-4">
-              <!-- <label class="form-label" for="form3Example3">Username</label> -->
-              <input
-                type="number"
-                id="form3Example3"
-                class="form-control form-control-lg"
-                formControlName="amount"
-                placeholder="Amount"
-              />
-              <div
-                *ngIf="
-                  addTransactionForm.controls['amount'].invalid &&
-                  (addTransactionForm.controls['amount'].dirty ||
-                    addTransactionForm.controls['amount'].touched)
-                "
-                class="text-danger"
-              >
-                Amount is required
-              </div>
-            </div>
-  
-            <!-- Password input -->
-           
-  
-            <div class="text-center text-lg-start mt-4 pt-2">
-              <button
-                type="submit"
-                class="btn btn-success btn-lg"
-                style="padding-left: 2.5rem; padding-right: 2.5rem"
-                (click)="addTransaction(addTransactionForm.value)"
-                [disabled]="addTransactionForm.invalid"
-              >
-                Add
-              </button>
-              
-            </div>
-          </form>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
-    </div>
-  </ng-template>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add Transaction</h4>
+    <button
+      type="button"
+      class="close bg-dark text-white"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addTransactionForm">
+      <!-- Email input -->
+
+      <div class="form-outline mb-3">
+        <!-- <label class="form-label" for="form3Example4">Password</label> -->
+
+        <select
+          formControlName="customerId"
+          class="form-select form-select-sm"
+          aria-label=".form-select-sm example"
+        >
+          <option value="">Choose customer</option>
+          <option
+            *ngFor="let customerName of customers"
+            [ngValue]="customerName.id"
+          >
+            {{ customerName.name }}
+          </option>
+        </select>
+
+        <div
+          *ngIf="
+            addTransactionForm.controls['customerId'].invalid &&
+            (addTransactionForm.controls['customerId'].dirty ||
+              addTransactionForm.controls['customerId'].touched)
+          "
+          class="text-danger"
+        >
+          Customer email is required
+        </div>
+      </div>
+
+      <div class="form-outline mb-3">
+        <!-- <label class="form-label" for="form3Example4">Password</label> -->
+        <select
+        formControlName="status"
+        class="form-select form-select-sm"
+        aria-label=".form-select-sm example"
+      >
+        <option value="" disabled>Choose status</option>
+        <option [ngValue]="'Give'">Give</option>
+        <option [ngValue]="'Take'">Take</option>
+        
+      </select>
+        <div
+          *ngIf="
+            addTransactionForm.controls['status'].invalid &&
+            (addTransactionForm.controls['status'].dirty ||
+              addTransactionForm.controls['status'].touched)
+          "
+          class="text-danger"
+        >
+          Status is required
+        </div>
+      </div>
+
+      <div class="form-outline mb-4">
+        <!-- <label class="form-label" for="form3Example3">Username</label> -->
+        <input
+          type="number"
+          id="form3Example3"
+          class="form-control form-control-lg"
+          formControlName="amount"
+          placeholder="Amount"
+        />
+        <div
+          *ngIf="
+            addTransactionForm.controls['amount'].invalid &&
+            (addTransactionForm.controls['amount'].dirty ||
+              addTransactionForm.controls['amount'].touched)
+          "
+          class="text-danger"
+        >
+          Amount is required
+        </div>
+      </div>
+
+      <!-- Password input -->
+
+      <div class="text-center text-lg-start mt-4 pt-2">
+        <button
+          type="submit"
+          class="btn btn-success btn-lg"
+          style="padding-left: 2.5rem; padding-right: 2.5rem"
+          (click)="addTransaction(addTransactionForm.value)"
+          [disabled]="addTransactionForm.invalid"
+        >
+          Add
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.close('Save click')"
+    >
+      Ok
+    </button>
+  </div>
+</ng-template>

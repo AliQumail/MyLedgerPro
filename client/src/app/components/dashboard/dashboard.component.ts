@@ -22,6 +22,7 @@ export class DashboardComponent {
   toTake: any;
   toGive: any;
   summary: any = [];
+ 
   totalToTake: number = 0;
   totalToGive: number = 0;
 
@@ -32,9 +33,7 @@ export class DashboardComponent {
     ) {
       this.name = localStorage.getItem('name');
       this.email = localStorage.getItem('email');
-      // this.getTransactions(this.email);
-      // this.getCustomers(this.email);
-      this.generateSummary("0FE07491-31AD-403D-A314-E3A459C63298");
+      this.generateSummary(localStorage.getItem('userid'));
     }
   }
 
@@ -60,22 +59,23 @@ export class DashboardComponent {
     );
   }
 
-  getCustomers(email: any) {
-    this.customerService.getCustomers({ email }).subscribe(
-      (res: any) => {
-        console.log('CUSTOMERS: ', res);
-        const response = JSON.parse(res);
-        this.transactions = response;
-      },
-      (error) => {
-        console.log(JSON.stringify(error));
-      }
-    );
-  }
+  // getCustomers(email: any) {
+  //   this.customerService.getCustomers({ email }).subscribe(
+  //     (res: any) => {
+  //       console.log('CUSTOMERS: ', res);
+  //       const response = JSON.parse(res);
+  //       this.transactions = response;
+  //     },
+  //     (error) => {
+  //       console.log(JSON.stringify(error));
+  //     }
+  //   );
+  // }
 
   generateSummary( id : any) {
     this.customerService.getCustomerSummary({ id }).subscribe(
       (res: any) => {
+        console.log(res); 
         const JsonString = JSON.stringify(res);
         this.summary = JSON.parse(JsonString);
 
@@ -83,6 +83,9 @@ export class DashboardComponent {
           this.totalToTake += item.toTake;
           this.totalToGive += item.toGive;
         });
+
+        this.customers = this.summary.map((customer: any) => ({ id: customer.customerId, name: customer.customerName }));
+
       },
       (error) => {
         console.log(JSON.stringify(error));
