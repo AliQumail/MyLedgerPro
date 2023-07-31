@@ -18,10 +18,10 @@ export class TransactionService {
     );
   }
 
-  public getTransaction(email: any): Observable<string> {
+  public getTransaction(userId: any, customerId: any): Observable<string> {
     return this.http.post(
       'https://localhost:7277/api/Transaction/gettransaction',
-      email,
+      { userId: userId, customerId: customerId },
       {
         responseType: 'text',
       }

@@ -22,10 +22,10 @@ export class CustomerDetailsComponent {
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
-      const useremail = params['useremail'];
-      const customeremail = params['customeremail'];
+      const userId = params['userId'];
+      const customerId = params['customerId'];
 
-      this.customerService.getCustomer({ email: customeremail }).subscribe(
+      this.customerService.getCustomer({ id: customerId }).subscribe(
         (res: any) => {
           this.customer = JSON.parse(res);
           console.log(this.customer);
@@ -35,37 +35,31 @@ export class CustomerDetailsComponent {
         }
       );
 
-      this.transactionService
-        .getTransaction({ userEmail: useremail, customerEmail: customeremail })
-        .subscribe(
-          (res: any) => {
-            this.transactions = JSON.parse(res);
-            console.log('TRANSACTION:  ' + this.transactions);
+      this.transactionService.getTransaction(userId, customerId).subscribe(
+        (res: any) => {
+          this.transactions = JSON.parse(res);
+          console.log('TRANSACTION:  ' + this.transactions);
 
-            this.transactions.forEach((transaction: any) => {
-              if (transaction.status == 'Give') {
-                this.totalToTake += transaction.amount;
-              } else {
-                this.totalToGive += transaction.amount;
-              }
-            });
-
-            if (this.totalToTake > this.totalToGive) {
-              this.totalToTake -= this.totalToGive;
-              this.totalToGive = 0;
+          this.transactions.forEach((transaction: any) => {
+            if (transaction.status == 'Give') {
+              this.totalToTake += transaction.amount;
             } else {
-              this.totalToGive -= this.totalToTake;
-              this.totalToTake = 0;
+              this.totalToGive += transaction.amount;
             }
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+          });
 
-      // You can now use the extracted emails as needed
-      console.log('User Email:', useremail);
-      console.log('Customer Email:', customeremail);
+          if (this.totalToTake > this.totalToGive) {
+            this.totalToTake -= this.totalToGive;
+            this.totalToGive = 0;
+          } else {
+            this.totalToGive -= this.totalToTake;
+            this.totalToTake = 0;
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     });
   }
 }

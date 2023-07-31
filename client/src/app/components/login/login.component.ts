@@ -35,7 +35,7 @@ export class LoginComponent {
         } else {
         
           const response = JSON.parse(res);
-          localStorage.setItem('userid', response.id);
+          localStorage.setItem('userId', response.id);
           localStorage.setItem('token', response.token);
           localStorage.setItem('name', response.name);
           localStorage.setItem('email', response.email);

@@ -33,15 +33,16 @@ export class DashboardComponent {
     ) {
       this.name = localStorage.getItem('name');
       this.email = localStorage.getItem('email');
-      this.generateSummary(localStorage.getItem('userid'));
+      this.generateSummary(localStorage.getItem('userId'));
     }
   }
 
-  view(customerEmail: any) {
-    console.log(customerEmail);
+  view(customerId: any) {
+    console.log("customer id : " + customerId);
+    console.log("user id: " + localStorage.getItem('userId'))
     this.router.navigate([
-      'details/user/:useremail/customer/:customeremail',
-      { useremail: 'string', customeremail: customerEmail },
+      'details/user/:userId/customer/:customerId',
+      { userId: localStorage.getItem('userId'), customerId: customerId },
     ]);
   }
 
