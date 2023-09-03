@@ -27,4 +27,12 @@ export class TransactionService {
       }
     );
   }
+
+  public deleteTransaction(id: any): Observable<boolean> {
+    return this.http.delete<boolean>(
+      `https://localhost:7277/api/Transaction/deletetransaction/${id}`,
+    );
+  }
+
+  
 }

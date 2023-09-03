@@ -29,20 +29,17 @@ export class CustomerService {
     );
   }
 
-  public getCustomer(email: any): Observable<string> {
-    return this.http.post(
-      'https://localhost:7277/api/Customer/getcustomer',
-      email,
-      {
-        responseType: 'text',
-      }
-    );
+  getCustomer(id: string): Observable<string> {
+    const url = `https://localhost:7277/api/Customer/getcustomer?id=${id}`;
+    return this.http.get<string>(url, {
+      responseType: 'text' as 'json', // Set the responseType to 'json' if the API returns JSON data
+    });
   }
 
-  public getCustomerSummary( id : any ): Observable<CustomerSummary[]> {
+  public getCustomerSummary(id: any): Observable<CustomerSummary[]> {
     return this.http.post<CustomerSummary[]>(
       'https://localhost:7277/api/Customer/customers/summary',
-      id, 
+      id,
       {
         responseType: 'json',
       }

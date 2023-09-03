@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Any;
+using server.Migrations;
 using server.Models;
 using server.Models.DTOs;
 
@@ -46,14 +47,18 @@ namespace server.Controllers
         }
         */
 
-        /*
-        [HttpPost]
+        
+        [HttpGet]
         [Route("getcustomer")]
-        public async Task<Customer> GetCustomer(UserEmailRequest request) {
-            var customer = await DbContext.Customer.SingleOrDefaultAsync(u => u.Email == request.Email);
-            return customer; 
+        public async Task<Customer?> GetCustomer(Guid id) {
+            var customer = await DbContext.Customer.SingleOrDefaultAsync(u => u.Id == id);
+            if (customer != null )
+            {
+                return customer;
+            } 
+            return null; 
         }
-        */
+        
 
         /*
         [HttpPut]

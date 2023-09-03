@@ -25,7 +25,7 @@ export class CustomerDetailsComponent {
       const userId = params['userId'];
       const customerId = params['customerId'];
 
-      this.customerService.getCustomer({ id: customerId }).subscribe(
+      this.customerService.getCustomer(customerId).subscribe(
         (res: any) => {
           this.customer = JSON.parse(res);
           console.log(this.customer);
@@ -62,4 +62,16 @@ export class CustomerDetailsComponent {
       );
     });
   }
+
+  deleteTransaction(id: any) {
+    this.transactionService.deleteTransaction(id).subscribe((res: any) => {
+      if (res) {
+        console.log("Delete successful");
+      } else {
+        console.log("Delete unsuccessful");
+      }
+    });
+  }
+
+
 }

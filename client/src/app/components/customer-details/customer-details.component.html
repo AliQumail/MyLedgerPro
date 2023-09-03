@@ -96,6 +96,7 @@
                       <th>Status</th>
                       <th>Amount</th>
                       <th>Date</th>
+                      <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -121,6 +122,9 @@
                         >
                           {{tran.date}}
                         </button>
+                      </td>
+                      <td>
+                        <button class="btn btn-danger" (click)='deleteTransaction(tran.id)'>Delete</button>
                       </td>
                     </tr>
                   </tbody>

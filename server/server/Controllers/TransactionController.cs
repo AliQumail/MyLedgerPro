@@ -51,7 +51,7 @@ namespace server.Controllers
 
         
         [HttpDelete]
-        [Route("deletetransaction")]
+        [Route("deletetransaction/{id}")]
         public async Task<bool> DeleteTransaction(Guid id) {
             var transaction = await DbContext.Transaction.FindAsync(id);
             if (transaction != null)
