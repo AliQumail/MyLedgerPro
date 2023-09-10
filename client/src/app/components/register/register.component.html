@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
   <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
@@ -44,31 +44,10 @@
       </div>
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
         <form [formGroup]="registerForm">
-          <!-- <div
-            class="d-flex m-auto flex-row align-items-center justify-content-center justify-content-lg-start"
-          >
-            <p class="lead fw-normal mb-0 me-3">Sign up with</p>
-            <button type="button" class="btn btn-primary btn-floating mx-1">
-              <fa-icon [icon]="facebookIcon"></fa-icon>
-            </button>
-
-            <button type="button" class="btn btn-primary btn-floating mx-1">
-              <fa-icon [icon]="twitterIcon"></fa-icon>
-            </button>
-
-            <button type="button" class="btn btn-primary btn-floating mx-1">
-              <fa-icon [icon]="linkedinIcon"></fa-icon>
-            </button>
-          </div> -->
-
-          <!-- <div class="divider d-flex align-items-center my-4">
-            <h4 class="text-center fw-bold mx-3 mb-0">Or</h4>
-          </div> -->
-
-          <!-- Email input -->
+       
 
           <div class="form-outline mb-3">
-            <!-- <label class="form-label" for="form3Example4">Password</label> -->
+            
             <input
               type="text"
               id="form3Example4"
@@ -89,7 +68,7 @@
           </div>
 
           <div class="form-outline mb-3">
-            <!-- <label class="form-label" for="form3Example4">Password</label> -->
+            
             <input
               type="text"
               id="form3Example4"
@@ -110,7 +89,7 @@
           </div>
 
           <div class="form-outline mb-4">
-            <!-- <label class="form-label" for="form3Example3">Username</label> -->
+           
             <input
               type="email"
               id="form3Example3"
@@ -130,9 +109,9 @@
             </div>
           </div>
 
-          <!-- Password input -->
+        
           <div class="form-outline mb-3">
-            <!-- <label class="form-label" for="form3Example4">Password</label> -->
+        
             <input
               type="password"
               id="form3Example4"
@@ -171,4 +150,97 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
+
+
+<div class="login-outer-most-div">
+  <app-navbar></app-navbar>
+  <section class="">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card login-card" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+  
+              <form class="mb-md-1 mt-md-4 pb-4" >
+  
+                <h2 class="fw-bold mb-2 text-uppercase">Register</h2>
+                <p class="text-white-50 mb-5">Please enter your login and password!</p>
+  
+                <div class="form-outline form-white mb-4">
+                  <label class="form-label" for="typeEmailX">Name</label>
+                  <input type="email" id="typeEmailX" class="form-control form-control-lg" />
+                  <div
+                  *ngIf="
+                    registerForm.controls['name'].invalid &&
+                    (registerForm.controls['name'].dirty ||
+                      registerForm.controls['name'].touched)
+                  "
+                  class="text-danger"
+                >
+                  Name is required
+                </div>
+                  
+                </div>
+  
+                <div class="form-outline form-white mb-4">
+                  <label class="form-label" for="typePasswordX">Phone number</label>
+                  <input type="password" id="typePasswordX" class="form-control form-control-lg" />
+                  <div
+                  *ngIf="
+                    registerForm.controls['phoneno'].invalid &&
+                    (registerForm.controls['phoneno'].dirty ||
+                      registerForm.controls['phoneno'].touched)
+                  "
+                  class="text-danger"
+                >
+                  Phone no is required
+                </div>
+                  
+                     
+                </div>
+                <div class="form-outline form-white mb-4">
+                  <label class="form-label" for="typeEmailX">Password</label>
+                  <input type="email" id="typeEmailX" class="form-control form-control-lg" />
+                  <div
+                  *ngIf="
+                    registerForm.controls['password'].invalid &&
+                    (registerForm.controls['password'].dirty ||
+                      registerForm.controls['password'].touched)
+                  "
+                  class="text-danger"
+                >
+                  Password is required
+                </div>
+                  
+                </div>
+  
+               
+                <!-- <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p> -->
+  
+                <button class="btn login-btn" type="submit" >
+                  Login</button>
+  
+                <!-- <div class="d-flex justify-content-center text-center mt-4 pt-1">
+                  <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
+                  <a href="#!" class="text-white"><i class="fab fa-twitter fa-lg mx-4 px-2"></i></a>
+                  <a href="#!" class="text-white"><i class="fab fa-google fa-lg"></i></a>
+                </div> -->
+  
+              </form>
+  
+              <div>
+                <p class="mb-0">Don't have an account? <a href="/register" class="text-primary"  routerLink="/register" >Register</a>
+                </p>
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  </div>
+
+
