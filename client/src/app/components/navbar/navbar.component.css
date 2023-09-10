@@ -1,0 +1,17 @@
+.navbar-brand {
+   padding: 0.7rem 0rem 0.7rem;
+   font-weight: 700;
+   font-size: 1.7rem;
+   color: black
+   
+}
+
+nav{
+   
+}
+
+.full-height-hero {
+   height: 100vh; /* Set the height to 100% of the viewport height */
+   display: flex; /* Use flexbox for vertical centering */
+   align-items: center; /* Vertically center the content */
+ }

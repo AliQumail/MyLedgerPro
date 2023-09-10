@@ -1,0 +1,17 @@
+
+.full-height-hero {
+    height: 100%;
+    width: 100%; /* Set the height to 100% of the viewport height */
+
+  }
+
+
+.login-outer-most-div{
+    height: 100vh;
+    /* background-color: hsl(0, 0%, 96%); */
+}
+
+.hero-image {
+    width: 75%;
+    border-radius: 50%;
+}

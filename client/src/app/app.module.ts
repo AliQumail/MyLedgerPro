@@ -14,6 +14,8 @@ import { AddCustomerComponent } from './components/add-customer/add-customer.com
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddTransactionComponent } from './components/add-transaction/add-transaction.component';
 import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { CustomerDetailsComponent } from './components/customer-details/customer
     DashboardComponent,
     AddCustomerComponent,
     AddTransactionComponent,
-    CustomerDetailsComponent
+    CustomerDetailsComponent,
+    NavbarComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
