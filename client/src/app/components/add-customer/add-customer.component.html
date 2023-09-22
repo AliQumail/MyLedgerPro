@@ -1,6 +1,7 @@
 <button class="add-transaction-btn" (click)="open(mymodal)">Add Customer</button>
 
 <ng-template #mymodal let-modal>
+  <form [formGroup]="addCustomerForm">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Add Customer</h4>
       <button type="button" class="close  bg-dark text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -8,7 +9,7 @@
       </button>
     </div>
     <div class="modal-body">
-        <form [formGroup]="addCustomerForm">
+        
            
             <!-- Email input -->
   
@@ -18,7 +19,7 @@
                 type="text"
                 id="form3Example4"
                 formControlName="name"
-                class="form-control form-control-lg"
+                class="form-control form-control-lg input-field"
                 placeholder="Name"
               />
               <div
@@ -39,7 +40,7 @@
                 type="text"
                 id="form3Example4"
                 formControlName="phoneno"
-                class="form-control form-control-lg"
+                class="form-control form-control-lg input-field"
                 placeholder="Phone No"
               />
               <div
@@ -59,7 +60,8 @@
               <input
                 type="email"
                 id="form3Example3"
-                class="form-control form-control-lg"
+                class="form-control form-control-lg input-field"
+               
                 formControlName="email"
                 placeholder="Email"
               />
@@ -75,24 +77,20 @@
               </div>
             </div>
   
-            <!-- Password input -->
-           
-  
-            <div class="text-center text-lg-start mt-4 pt-2">
-              <button
-                type="submit"
-                class="btn btn-success btn-lg"
-                style="padding-left: 2.5rem; padding-right: 2.5rem"
-                (click)="addCustomer(addCustomerForm.value)"
-                [disabled]="addCustomerForm.invalid"
-              >
-                Add
-              </button>
-              
-            </div>
-          </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+      <!-- <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button> -->
+      <div class="text-center text-lg-start mt-4 pt-2">
+        <button
+          type="submit"
+          class="btn btn-success btn-lg"
+          style="padding-left: 2.5rem; padding-right: 2.5rem"
+          (click)="addCustomer(addCustomerForm.value)"
+          [disabled]="addCustomerForm.invalid"
+        >
+          Add
+        </button>
+      </div>
     </div>
+  </form>
   </ng-template>

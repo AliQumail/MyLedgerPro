@@ -27,3 +27,7 @@
     -webkit-user-select: none;
     touch-action: manipulation;
 }
+
+.input-field {
+    background-color: rgb(246, 247, 248) !important; border-radius: 0 !important;
+}
