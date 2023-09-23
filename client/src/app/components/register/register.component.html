@@ -1,158 +1,3 @@
-<!-- <div>
-  <div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <a class="navbar-brand p-4" href="#">Navbar</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNavDropdown"
-          aria-controls="navbarNavDropdown"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </div>
-</div>
-
-<section class="vh-100">
-  <div class="container-fluid h-custom mt-5">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-md-9 col-lg-5 col-xl-5">
-        <img
-          src="https://cdn.dribbble.com/users/2520294/screenshots/7269423/media/8db02365a1363822ae9f0554cf3d4469.gif"
-          class="img-fluid"
-          alt="Sample image"
-        />
-      </div>
-      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-        <form [formGroup]="registerForm">
-       
-
-          <div class="form-outline mb-3">
-            
-            <input
-              type="text"
-              id="form3Example4"
-              formControlName="name"
-              class="form-control form-control-lg"
-              placeholder="Name"
-            />
-            <div
-              *ngIf="
-                registerForm.controls['name'].invalid &&
-                (registerForm.controls['name'].dirty ||
-                  registerForm.controls['name'].touched)
-              "
-              class="text-danger"
-            >
-              Name is required
-            </div>
-          </div>
-
-          <div class="form-outline mb-3">
-            
-            <input
-              type="text"
-              id="form3Example4"
-              formControlName="phoneno"
-              class="form-control form-control-lg"
-              placeholder="Phone No"
-            />
-            <div
-              *ngIf="
-                registerForm.controls['phoneno'].invalid &&
-                (registerForm.controls['phoneno'].dirty ||
-                  registerForm.controls['phoneno'].touched)
-              "
-              class="text-danger"
-            >
-              Phone no is required
-            </div>
-          </div>
-
-          <div class="form-outline mb-4">
-           
-            <input
-              type="email"
-              id="form3Example3"
-              class="form-control form-control-lg"
-              formControlName="email"
-              placeholder="Email"
-            />
-            <div
-              *ngIf="
-                registerForm.controls['email'].invalid &&
-                (registerForm.controls['email'].dirty ||
-                  registerForm.controls['email'].touched)
-              "
-              class="text-danger"
-            >
-              Email is required
-            </div>
-          </div>
-
-        
-          <div class="form-outline mb-3">
-        
-            <input
-              type="password"
-              id="form3Example4"
-              formControlName="password"
-              class="form-control form-control-lg"
-              placeholder="Password"
-            />
-            <div
-              *ngIf="
-                registerForm.controls['password'].invalid &&
-                (registerForm.controls['password'].dirty ||
-                  registerForm.controls['password'].touched)
-              "
-              class="text-danger"
-            >
-              Password is required
-            </div>
-          </div>
-
-          <div class="text-center text-lg-start mt-4 pt-2">
-            <button
-              type="submit"
-              class="btn btn-success btn-lg"
-              style="padding-left: 2.5rem; padding-right: 2.5rem"
-              (click)="register(registerForm.value)"
-              [disabled]="registerForm.invalid"
-            >
-              Register
-            </button>
-            <p class="mt-4 pt-1 mb-0">
-              Already have an account?
-              <a href="#!" routerLink="/" class="text-danger">Login</a>
-            </p>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</section> -->
-
-
 <div class="login-outer-most-div">
   <app-navbar></app-navbar>
   <section class="">
@@ -169,7 +14,7 @@
    -->
                 <div class="form-outline form-white mb-4">
                   <!-- <label class="form-label" for="typeEmailX">Name</label> -->
-                  <input type="text" formControlName="name" placeholder="Name" class="form-control form-control-lg" />
+                  <input type="text" formControlName="name" placeholder="Name" class="form-control form-control-lg input-field" />
                   <div
                   *ngIf="
                     registerForm.controls['name'].invalid &&
@@ -184,7 +29,7 @@
                 </div>
   
                 <div class="form-outline form-white mb-4">          
-                  <input type="text" id="typePasswordX"  formControlName="phoneno" placeholder="Phone number" class="form-control form-control-lg" />
+                  <input type="text" id="typePasswordX"  formControlName="phoneno" placeholder="Phone number" class="form-control form-control-lg input-field"/>
                   <div
                   *ngIf="
                     registerForm.controls['phoneno'].invalid &&
@@ -200,7 +45,7 @@
                 </div>
                 <div class="form-outline form-white mb-4">
                   <!-- <label class="form-label" for="typeEmailX">Password</label> -->
-                  <input type="email" id="typeEmailX" formControlName="email" placeholder="Email" class="form-control form-control-lg" />
+                  <input type="email" id="typeEmailX" formControlName="email" placeholder="Email" class="form-control form-control-lg input-field" />
                   <div
                   *ngIf="
                     registerForm.controls['email'].invalid &&
@@ -215,7 +60,7 @@
                 </div>
                 <div class="form-outline form-white mb-4">
                   <!-- <label class="form-label" for="typeEmailX">Password</label> -->
-                  <input type="password" id="typeEmailX" formControlName="password" placeholder="Password" class="form-control form-control-lg" />
+                  <input type="password" id="typeEmailX" formControlName="password" placeholder="Password" class="form-control form-control-lg input-field" />
                   <div
                   *ngIf="
                     registerForm.controls['password'].invalid &&

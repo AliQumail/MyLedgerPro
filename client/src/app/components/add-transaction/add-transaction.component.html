@@ -3,11 +3,12 @@
 </button>
 
 <ng-template #mymodal let-modal>
+  <form [formGroup]="addTransactionForm">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Add Transaction</h4>
     <button
       type="button"
-      class="close bg-dark text-white"
+      class="modal-cross-btn"
       aria-label="Close"
       (click)="modal.dismiss('Cross click')"
     >
@@ -15,16 +16,11 @@
     </button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="addTransactionForm">
-      <!-- Email input -->
-
       <div class="form-outline mb-3">
-        <!-- <label class="form-label" for="form3Example4">Password</label> -->
-
         <select
           formControlName="customerId"
-          class="form-select form-select-sm"
-          aria-label=".form-select-sm example"
+          class="form-select form-select-lg input-field"
+          aria-label=".form-select example"
         >
           <option value="">Choose customer</option>
           <option
@@ -51,8 +47,8 @@
         <!-- <label class="form-label" for="form3Example4">Password</label> -->
         <select
         formControlName="status"
-        class="form-select form-select-sm"
-        aria-label=".form-select-sm example"
+        class="form-select form-select-lg input-field"
+        aria-label=".form-select example"
       >
         <option value="" disabled>Choose status</option>
         <option [ngValue]="'Give'">Give</option>
@@ -72,11 +68,10 @@
       </div>
 
       <div class="form-outline mb-4">
-        <!-- <label class="form-label" for="form3Example3">Username</label> -->
         <input
           type="number"
           id="form3Example3"
-          class="form-control form-control-lg"
+          class="form-control form-control-lg input-field"
           formControlName="amount"
           placeholder="Amount"
         />
@@ -91,29 +86,20 @@
           Amount is required
         </div>
       </div>
-
-      <!-- Password input -->
-
-      <div class="text-center text-lg-start mt-4 pt-2">
-        <button
-          type="submit"
-          class="btn btn-success btn-lg"
-          style="padding-left: 2.5rem; padding-right: 2.5rem"
-          (click)="addTransaction(addTransactionForm.value)"
-          [disabled]="addTransactionForm.invalid"
-        >
-          Add
-        </button>
-      </div>
-    </form>
+ 
   </div>
   <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-outline-dark"
-      (click)="modal.close('Save click')"
-    >
-      Ok
-    </button>
+    <div class="text-center text-lg-start mt-4 pt-2">
+      <button
+        type="submit"
+        class="green-button"
+        style="padding-left: 2.5rem; padding-right: 2.5rem"
+        (click)="addTransaction(addTransactionForm.value)"
+        [disabled]="addTransactionForm.invalid"
+      >
+        Add
+      </button>
+    </div>
   </div>
+</form>
 </ng-template>
