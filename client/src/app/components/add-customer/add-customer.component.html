@@ -4,7 +4,7 @@
   <form [formGroup]="addCustomerForm">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Add Customer</h4>
-      <button type="button" class="close  bg-dark text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <button type="button" class="modal-cross-btn" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -83,7 +83,7 @@
       <div class="text-center text-lg-start mt-4 pt-2">
         <button
           type="submit"
-          class="btn btn-success btn-lg"
+          class="green-button"
           style="padding-left: 2.5rem; padding-right: 2.5rem"
           (click)="addCustomer(addCustomerForm.value)"
           [disabled]="addCustomerForm.invalid"
