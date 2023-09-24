@@ -16,7 +16,8 @@ import { AddTransactionComponent } from './components/add-transaction/add-transa
 import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,9 @@ import { HomeComponent } from './components/home/home.component';
     HttpClientModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    NgbModule
+    NgbModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

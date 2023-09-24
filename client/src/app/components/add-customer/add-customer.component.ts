@@ -5,6 +5,7 @@ import {
   ModalDismissReasons,
   NgbModalOptions,
 } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { CustomerService } from 'src/app/services/customer/customer.service';
 
 @Component({
@@ -19,7 +20,8 @@ export class AddCustomerComponent {
 
   constructor(
     private modalService: NgbModal,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private toastr: ToastrService
   ) {
     this.modalOptions = {
       backdrop: 'static',
@@ -33,6 +35,7 @@ export class AddCustomerComponent {
     email: new FormControl('', Validators.required),
     
   });
+ 
 
   addCustomer(customerDetails: any) {
     customerDetails.userId = localStorage.getItem("userid"); 

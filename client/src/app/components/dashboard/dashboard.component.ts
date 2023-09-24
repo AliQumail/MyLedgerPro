@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomerService } from 'src/app/services/customer/customer.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -12,7 +13,8 @@ export class DashboardComponent {
   constructor(
     private authService: AuthService,
     private customerService: CustomerService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   name: string | null = '';
@@ -36,6 +38,12 @@ export class DashboardComponent {
       this.generateSummary(localStorage.getItem('userId'));
     }
   }
+  
+    testToast(){
+      console.log("on click toast");
+      this.toastr.success('Hello world!', 'Toastr fun!');
+    }
+  
 
   view(customerId: any) {
     console.log("customer id : " + customerId);
