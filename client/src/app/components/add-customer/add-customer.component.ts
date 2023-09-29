@@ -38,14 +38,19 @@ export class AddCustomerComponent {
  
 
   addCustomer(customerDetails: any) {
-    customerDetails.userId = localStorage.getItem("userid"); 
+    customerDetails.userId = localStorage.getItem("userId"); 
+    console.log("before add customer api ")
+    console.log(customerDetails);
     this.customerService.addCustomer(customerDetails).subscribe(
       (res: any) => {
         console.log(res);
+        this.toastr.success("Customer added successfully");
+        this.modalService.dismissAll(); 
       },
       (error) => {
         console.log(JSON.stringify(error));
-        alert(error.headers);
+        this.toastr.error("Failed to add customer");
+        //alert(error.headers);
       }
     );
   }

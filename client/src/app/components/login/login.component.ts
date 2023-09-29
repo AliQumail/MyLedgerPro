@@ -7,6 +7,7 @@ import {
   faTwitter,
   faLinkedin,
 } from '@fortawesome/free-brands-svg-icons';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ import {
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService,
+    private toastr: ToastrService) {}
 
   facebookIcon = faFacebook;
   linkedinIcon = faLinkedin;
@@ -39,13 +41,15 @@ export class LoginComponent {
           localStorage.setItem('token', response.token);
           localStorage.setItem('name', response.name);
           localStorage.setItem('email', response.email);
-          this.router.navigate(['/dashboard']);
+          this.toastr.success("Login successful");
+          setTimeout(()=>{
+            this.router.navigate(['/dashboard']);
+          }, 1500)
         }
       },
       (error) => {
         console.log(JSON.stringify(error));
-        alert(error.headers);
-      }
+        this.toastr.error("Invalid credentials");      }
     );
   }
 }

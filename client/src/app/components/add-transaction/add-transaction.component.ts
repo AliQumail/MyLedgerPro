@@ -5,6 +5,7 @@ import {
   NgbModal,
   NgbModalOptions,
 } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { TransactionService } from 'src/app/services/transaction/transaction.service';
 
 @Component({
@@ -29,7 +30,8 @@ export class AddTransactionComponent {
 
   constructor(
     private modalService: NgbModal,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private toastr: ToastrService
   ) {
     this.modalOptions = {
       backdrop: 'static',
@@ -44,16 +46,19 @@ export class AddTransactionComponent {
   });
 
   addTransaction(transaction: any) {
-    transaction.userId = localStorage.getItem('userid');
+    transaction.userId = localStorage.getItem('userId');
     this.transactionService
       .addTransaction(transaction)
       .subscribe(
         (res: any) => {
           console.log(res);
+          this.toastr.success("Transaction successful")
+          this.modalService.dismissAll(); 
         },
         (error) => {
           console.log(JSON.stringify(error));
-          alert(error.headers);
+          this.toastr.error("Transaction failed");
+          // alert(error.headers);
         }
       );
   }

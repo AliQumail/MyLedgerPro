@@ -35,6 +35,8 @@ export class DashboardComponent {
     ) {
       this.name = localStorage.getItem('name');
       this.email = localStorage.getItem('email');
+      console.log("userId")
+      console.log(localStorage.getItem('userId'));
       this.generateSummary(localStorage.getItem('userId'));
     }
   }
@@ -82,6 +84,8 @@ export class DashboardComponent {
   // }
 
   generateSummary( id : any) {
+    console.log("user id")
+    console.log(id);
     this.customerService.getCustomerSummary({ id }).subscribe(
       (res: any) => {
         console.log(res); 
