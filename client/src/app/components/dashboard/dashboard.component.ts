@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { Location } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomerService } from 'src/app/services/customer/customer.service';
 import { Router } from '@angular/router';
@@ -14,7 +14,8 @@ export class DashboardComponent {
     private authService: AuthService,
     private customerService: CustomerService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private location: Location
   ) {}
 
   name: string | null = '';
@@ -46,6 +47,9 @@ export class DashboardComponent {
       this.toastr.success('Hello world!', 'Toastr fun!');
     }
   
+  handleRefreshList(){
+    this.generateSummary(localStorage.getItem("userId"));
+  }
 
   view(customerId: any) {
     console.log("customer id : " + customerId);

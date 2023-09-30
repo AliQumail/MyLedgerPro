@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   NgbModal,
@@ -17,6 +17,7 @@ export class AddCustomerComponent {
   title = 'ng-bootstrap-modal-demo';
   closeResult: string = '';
   modalOptions: NgbModalOptions;
+  @Output() refreshList: EventEmitter<string> = new EventEmitter();
 
   constructor(
     private modalService: NgbModal,
@@ -45,6 +46,7 @@ export class AddCustomerComponent {
       (res: any) => {
         console.log(res);
         this.toastr.success("Customer added successfully");
+        this.refreshList.emit();
         this.modalService.dismissAll(); 
       },
       (error) => {

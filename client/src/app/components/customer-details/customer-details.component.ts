@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { CustomerService } from 'src/app/services/customer/customer.service';
 import { TransactionService } from 'src/app/services/transaction/transaction.service';
 
@@ -12,7 +13,8 @@ export class CustomerDetailsComponent {
   constructor(
     private route: ActivatedRoute,
     private customerService: CustomerService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private toastr: ToastrService
   ) {}
 
   customer: any;
@@ -66,6 +68,7 @@ export class CustomerDetailsComponent {
   deleteTransaction(id: any) {
     this.transactionService.deleteTransaction(id).subscribe((res: any) => {
       if (res) {
+        this.toastr.success("Transaction deleted successfully")
         console.log("Delete successful");
       } else {
         console.log("Delete unsuccessful");

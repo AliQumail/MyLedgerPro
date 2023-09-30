@@ -54,8 +54,8 @@
 
         <div class="row">
           <div>
-            <app-add-customer></app-add-customer>
-            <app-add-transaction [customers]="customers"></app-add-transaction>
+            <app-add-customer (refreshList)="handleRefreshList()"></app-add-customer>
+            <app-add-transaction [customers]="customers" (refreshList)="handleRefreshList()"></app-add-transaction>
             <!-- <button (click)="testToast()">test toast</button> -->
           </div>
 

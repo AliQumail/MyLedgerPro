@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   ModalDismissReasons,
@@ -17,6 +17,7 @@ export class AddTransactionComponent {
   closeResult: string = '';
   modalOptions: NgbModalOptions;
   @Input() customers: any; 
+  @Output() refreshList : EventEmitter<any> = new EventEmitter(); 
   // customers: any = [
   //   {
   //     name: 'cust 1',
@@ -53,6 +54,7 @@ export class AddTransactionComponent {
         (res: any) => {
           console.log(res);
           this.toastr.success("Transaction successful")
+          this.refreshList.emit();
           this.modalService.dismissAll(); 
         },
         (error) => {
