@@ -21,60 +21,73 @@ export class CustomerDetailsComponent {
   transactions: any = [];
   totalToGive: number = 0;
   totalToTake: number = 0;
+  
+
+  userId: any;
+  customerId: any; 
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
-      const userId = params['userId'];
-      const customerId = params['customerId'];
+      this.userId = params['userId'];
+      this.customerId = params['customerId'];
 
-      this.customerService.getCustomer(customerId).subscribe(
-        (res: any) => {
-          this.customer = JSON.parse(res);
-          console.log(this.customer);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-
-      this.transactionService.getTransaction(userId, customerId).subscribe(
-        (res: any) => {
-          this.transactions = JSON.parse(res);
-          console.log('TRANSACTION:  ' + this.transactions);
-
-          this.transactions.forEach((transaction: any) => {
-            if (transaction.status == 'Give') {
-              this.totalToTake += transaction.amount;
-            } else {
-              this.totalToGive += transaction.amount;
-            }
-          });
-
-          if (this.totalToTake > this.totalToGive) {
-            this.totalToTake -= this.totalToGive;
-            this.totalToGive = 0;
-          } else {
-            this.totalToGive -= this.totalToTake;
-            this.totalToTake = 0;
-          }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      this.getCustomerDetails(this.customerId);
+      this.getCustomerTransactions(this.userId, this.customerId); 
     });
+  }
+
+  getCustomerDetails(customerId: any){
+    this.customerService.getCustomer(customerId).subscribe(
+      (res: any) => {
+        this.customer = JSON.parse(res);
+        console.log(this.customer);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  getCustomerTransactions(userId: any, customerId: any){
+    this.totalToGive = 0;
+    this.totalToTake = 0; 
+    this.transactionService.getTransaction(userId, customerId).subscribe(
+      (res: any) => {
+        this.transactions = JSON.parse(res);
+        console.log('TRANSACTION:  ' + this.transactions);
+
+        this.transactions.forEach((transaction: any) => {
+          if (transaction.status == 'Give') {
+            this.totalToTake += transaction.amount;
+          } else {
+            this.totalToGive += transaction.amount;
+          }
+        });
+
+        if (this.totalToTake > this.totalToGive) {
+          this.totalToTake -= this.totalToGive;
+          this.totalToGive = 0;
+        } else {
+          this.totalToGive -= this.totalToTake;
+          this.totalToTake = 0;
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
   }
 
   deleteTransaction(id: any) {
     this.transactionService.deleteTransaction(id).subscribe((res: any) => {
       if (res) {
         this.toastr.success("Transaction deleted successfully")
+        this.getCustomerTransactions(this.userId, this.customerId); 
         console.log("Delete successful");
       } else {
         console.log("Delete unsuccessful");
       }
     });
   }
-
-
 }

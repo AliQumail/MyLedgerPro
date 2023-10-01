@@ -51,6 +51,12 @@ export class DashboardComponent {
     this.generateSummary(localStorage.getItem("userId"));
   }
 
+  showGraphicalView: number = 0; 
+  
+  HandleGraphicalView(){
+    this.showGraphicalView = this.showGraphicalView == 1 ? 0 : 1; 
+  } 
+
   view(customerId: any) {
     console.log("customer id : " + customerId);
     console.log("user id: " + localStorage.getItem('userId'))
@@ -88,21 +94,18 @@ export class DashboardComponent {
   // }
 
   generateSummary( id : any) {
-    console.log("user id")
-    console.log(id);
+    this.totalToGive = 0;
+    this.totalToTake = 0; 
     this.customerService.getCustomerSummary({ id }).subscribe(
       (res: any) => {
         console.log(res); 
         const JsonString = JSON.stringify(res);
         this.summary = JSON.parse(JsonString);
-
         this.summary.forEach((item: any) => {
           this.totalToTake += item.toTake;
           this.totalToGive += item.toGive;
         });
-
         this.customers = this.summary.map((customer: any) => ({ id: customer.customerId, name: customer.customerName }));
-
       },
       (error) => {
         console.log(JSON.stringify(error));

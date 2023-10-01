@@ -47,6 +47,7 @@ export class AddCustomerComponent {
         console.log(res);
         this.toastr.success("Customer added successfully");
         this.refreshList.emit();
+        this.addCustomerForm.reset();
         this.modalService.dismissAll(); 
       },
       (error) => {

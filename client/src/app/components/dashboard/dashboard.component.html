@@ -56,12 +56,13 @@
           <div>
             <app-add-customer (refreshList)="handleRefreshList()"></app-add-customer>
             <app-add-transaction [customers]="customers" (refreshList)="handleRefreshList()"></app-add-transaction>
+            <button class="purple-button" (click)="HandleGraphicalView()">Graphical view</button>
             <!-- <button (click)="testToast()">test toast</button> -->
           </div>
 
           <div>
             <div class="row mt-5">
-              <table class="table align-middle mb-0 bg-white">
+              <table class="table align-middle mb-0 bg-white" *ngIf="showGraphicalView == 0">
                 <thead class="bg-light">
                   <tr>
                     <th>Name</th>

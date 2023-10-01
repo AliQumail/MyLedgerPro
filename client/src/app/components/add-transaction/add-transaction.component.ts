@@ -55,6 +55,7 @@ export class AddTransactionComponent {
           console.log(res);
           this.toastr.success("Transaction successful")
           this.refreshList.emit();
+          this.addTransactionForm.reset();
           this.modalService.dismissAll(); 
         },
         (error) => {
