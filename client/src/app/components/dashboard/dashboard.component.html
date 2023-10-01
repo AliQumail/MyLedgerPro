@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row mt-5" *ngIf="name != null">
       <h5>Hi {{ name }}!</h5>
-    
+
       <hr />
       <div>
         <div class="row">
@@ -18,7 +18,7 @@
                       To Give (RS)
                     </div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">
-                      {{totalToGive}}
+                      {{ totalToGive }}
                     </div>
                   </div>
                   <div class="col-auto">
@@ -40,7 +40,7 @@
                       To Take (RS)
                     </div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">
-                      {{totalToTake}}
+                      {{ totalToTake }}
                     </div>
                   </div>
                   <div class="col-auto">
@@ -54,15 +54,25 @@
 
         <div class="row">
           <div>
-            <app-add-customer (refreshList)="handleRefreshList()"></app-add-customer>
-            <app-add-transaction [customers]="customers" (refreshList)="handleRefreshList()"></app-add-transaction>
-            <button class="purple-button" (click)="HandleGraphicalView()">Graphical view</button>
+            <app-add-customer
+              (refreshList)="handleRefreshList()"
+            ></app-add-customer>
+            <app-add-transaction
+              [customers]="customers"
+              (refreshList)="handleRefreshList()"
+            ></app-add-transaction>
+            <button class="purple-button" (click)="HandleGraphicalView()">
+              Graphical view
+            </button>
             <!-- <button (click)="testToast()">test toast</button> -->
           </div>
 
           <div>
             <div class="row mt-5">
-              <table class="table align-middle mb-0 bg-white" *ngIf="showGraphicalView == 0">
+              <table
+                class="table align-middle mb-0 bg-white"
+                *ngIf="showGraphicalView == 0"
+              >
                 <thead class="bg-light">
                   <tr>
                     <th>Name</th>
@@ -72,20 +82,21 @@
                   </tr>
                 </thead>
                 <tbody>
-                  
                   <tr *ngFor="let item of summary">
                     <td>
                       <div class="d-flex align-items-center">
                         <div class="">
-                          <p class="fw-bold mb-1">{{item.customerName}}</p>
-                          <p class="text-muted mb-0">{{item.customerEmail}}</p>
+                          <p class="fw-bold mb-1">{{ item.customerName }}</p>
+                          <p class="text-muted mb-0">
+                            {{ item.customerEmail }}
+                          </p>
                         </div>
                       </div>
                     </td>
                     <td>
-                      <p class="fw-normal mb-1">{{item.toTake}}</p>
+                      <p class="fw-normal mb-1">{{ item.toTake }}</p>
                     </td>
-                    <td>{{item.toGive}}</td>
+                    <td>{{ item.toGive }}</td>
                     <td>
                       <button
                         type="button"
@@ -98,6 +109,22 @@
                   </tr>
                 </tbody>
               </table>
+              <div *ngIf="showGraphicalView == 1">
+                <ngx-charts-bar-vertical-2d
+                  [view]="[1000, 400]"
+                  [results]="dataset"
+                  [xAxisLabel]="'x-axis'"
+                  [legendTitle]="'legend'"
+                  [yAxisLabel]="'y-axis'"
+                  [legend]="true"
+                  [showXAxisLabel]="true"
+                  [showYAxisLabel]="true"
+                  [xAxis]="true"
+                  [yAxis]="true"
+                  [gradient]="true"
+                >
+                </ngx-charts-bar-vertical-2d>
+              </div>
             </div>
           </div>
         </div>

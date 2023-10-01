@@ -29,6 +29,14 @@ export class DashboardComponent {
   totalToTake: number = 0;
   totalToGive: number = 0;
 
+  title = 'barchartApp';
+  dataset = [
+    { name: "X", value: 1 },
+    { name: "Y", value: 2 }
+  ];
+
+
+  // for graph 
   ngOnInit() {
     if (
       localStorage.getItem('name') != null &&
@@ -52,7 +60,7 @@ export class DashboardComponent {
   }
 
   showGraphicalView: number = 0; 
-  
+
   HandleGraphicalView(){
     this.showGraphicalView = this.showGraphicalView == 1 ? 0 : 1; 
   } 
