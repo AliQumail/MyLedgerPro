@@ -19,7 +19,7 @@ import { HomeComponent } from './components/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxChartsModule }from '@swimlane/ngx-charts';  // added
-
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -43,7 +43,9 @@ import { NgxChartsModule }from '@swimlane/ngx-charts';  // added
     NgbModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
-    NgxChartsModule 
+    NgxChartsModule,
+    NgxSpinnerModule
+    
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

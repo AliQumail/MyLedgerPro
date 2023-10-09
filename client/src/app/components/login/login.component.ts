@@ -8,6 +8,7 @@ import {
   faLinkedin,
 } from '@fortawesome/free-brands-svg-icons';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginComponent {
   constructor(private router: Router, private authService: AuthService,
-    private toastr: ToastrService) {}
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService) {}
 
   facebookIcon = faFacebook;
   linkedinIcon = faLinkedin;
@@ -29,13 +31,15 @@ export class LoginComponent {
 
   // Login
   login(user: any) {
+    this.spinner.show();
     this.authService.login(user).subscribe(
       (res: any) => {
+        
         console.log('res: ', res);
         if (res == "User doesn't exist" || res == "Password doesn't match") {
           alert(res);
         } else {
-        
+          
           const response = JSON.parse(res);
           localStorage.setItem('userId', response.id);
           localStorage.setItem('token', response.token);
