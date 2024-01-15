@@ -5,6 +5,7 @@ import {
   ModalDismissReasons,
   NgbModalOptions,
 } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CustomerService } from 'src/app/services/customer/customer.service';
 
@@ -22,7 +23,8 @@ export class AddCustomerComponent {
   constructor(
     private modalService: NgbModal,
     private customerService: CustomerService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) {
     this.modalOptions = {
       backdrop: 'static',
@@ -39,11 +41,13 @@ export class AddCustomerComponent {
  
 
   addCustomer(customerDetails: any) {
+    this.spinner.show();
     customerDetails.userId = localStorage.getItem("userId"); 
     console.log("before add customer api ")
     console.log(customerDetails);
     this.customerService.addCustomer(customerDetails).subscribe(
       (res: any) => {
+        this.spinner.hide();
         console.log(res);
         this.toastr.success("Customer added successfully");
         this.refreshList.emit();
@@ -51,6 +55,7 @@ export class AddCustomerComponent {
         this.modalService.dismissAll(); 
       },
       (error) => {
+        this.spinner.hide(); 
         console.log(JSON.stringify(error));
         this.toastr.error("Failed to add customer");
         //alert(error.headers);

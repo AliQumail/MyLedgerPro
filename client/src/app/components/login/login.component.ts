@@ -34,7 +34,7 @@ export class LoginComponent {
     this.spinner.show();
     this.authService.login(user).subscribe(
       (res: any) => {
-        
+        this.spinner.hide(); 
         console.log('res: ', res);
         if (res == "User doesn't exist" || res == "Password doesn't match") {
           alert(res);
@@ -52,6 +52,7 @@ export class LoginComponent {
         }
       },
       (error) => {
+        this.spinner.hide(); 
         console.log(JSON.stringify(error));
         this.toastr.error("Invalid credentials");      }
     );

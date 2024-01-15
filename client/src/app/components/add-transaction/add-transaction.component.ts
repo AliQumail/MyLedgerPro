@@ -5,6 +5,7 @@ import {
   NgbModal,
   NgbModalOptions,
 } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { TransactionService } from 'src/app/services/transaction/transaction.service';
 
@@ -32,7 +33,8 @@ export class AddTransactionComponent {
   constructor(
     private modalService: NgbModal,
     private transactionService: TransactionService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) {
     this.modalOptions = {
       backdrop: 'static',
@@ -47,11 +49,14 @@ export class AddTransactionComponent {
   });
 
   addTransaction(transaction: any) {
+    this.spinner.show();
     transaction.userId = localStorage.getItem('userId');
     this.transactionService
       .addTransaction(transaction)
+      
       .subscribe(
         (res: any) => {
+          this.spinner.hide()
           console.log(res);
           this.toastr.success("Transaction successful")
           this.refreshList.emit();
@@ -59,6 +64,7 @@ export class AddTransactionComponent {
           this.modalService.dismissAll(); 
         },
         (error) => {
+          this.spinner.hide()
           console.log(JSON.stringify(error));
           this.toastr.error("Transaction failed");
           // alert(error.headers);
