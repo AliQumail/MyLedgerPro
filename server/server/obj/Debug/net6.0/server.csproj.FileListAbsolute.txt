@@ -138,3 +138,4 @@ C:\Users\aqasy\Desktop\Cashtrack\server\server\obj\Debug\net6.0\refint\server.dl
 C:\Users\aqasy\Desktop\Cashtrack\server\server\obj\Debug\net6.0\server.pdb
 C:\Users\aqasy\Desktop\Cashtrack\server\server\obj\Debug\net6.0\server.genruntimeconfig.cache
 C:\Users\aqasy\Desktop\Cashtrack\server\server\obj\Debug\net6.0\ref\server.dll
+C:\Users\aqasy\Desktop\Cashtrack\server\server\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll

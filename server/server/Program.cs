@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
+using server.Repositories.AuthRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,25 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+
+builder.Services.AddIdentityCore<IdentityUser>()
+    .AddRoles<IdentityRole>()
+    .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("CashBook")
+    .AddEntityFrameworkStores<CashBookAuthDbContext>()
+    .AddDefaultTokenProviders();
+
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 1;
+});
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -42,10 +63,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+
+
 builder.Services.AddDbContext<CashBookDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("ConnectionString"),
         sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()));
+
+builder.Services.AddDbContext<CashBookAuthDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnectionString")));
+
 
 
 
