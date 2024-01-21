@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Any;
 using server.Migrations;
 using server.Models;
 using server.Models.DTOs;
+using server.Repositories.CustomerRepository;
 
 namespace server.Controllers
 {
@@ -14,26 +15,28 @@ namespace server.Controllers
     {
 
         private readonly CashBookDbContext DbContext;
+        private readonly ICustomerRepository customerRepository;
 
-        public CustomerController(CashBookDbContext cashBookDbContext)
+        public CustomerController(CashBookDbContext cashBookDbContext, ICustomerRepository _customerRepository)
         {
             DbContext = cashBookDbContext;
+            customerRepository = _customerRepository;
         }
 
         [HttpPost]
         [Route("addcustomer")]
         public async Task<string> AddCustomer(AddCustomerDTO _customer) {
-
-            var customer = new Customer() {
+            var customer = new Customer()
+            {
                 Id = Guid.NewGuid(),
                 UserId = _customer.UserId,
                 Email = _customer.Email,
                 PhoneNo = _customer.PhoneNo,
                 Name = _customer.Name,
             };
-
-            await DbContext.Customer.AddAsync(customer);
-            DbContext.SaveChanges();
+            await customerRepository.AddCustomerAsync(customer);
+            //await DbContext.Customer.AddAsync(customer);
+            //DbContext.SaveChanges();
             return "Customer added successfully";
         }
 
@@ -51,12 +54,13 @@ namespace server.Controllers
         [HttpGet]
         [Route("getcustomer")]
         public async Task<Customer?> GetCustomer(Guid id) {
-            var customer = await DbContext.Customer.SingleOrDefaultAsync(u => u.Id == id);
-            if (customer != null )
-            {
-                return customer;
-            } 
-            return null; 
+            return await customerRepository.GetCustomerById(id);
+            //var customer = await DbContext.Customer.SingleOrDefaultAsync(u => u.Id == id);
+            //if (customer != null )
+            //{
+            //    return customer;
+            //} 
+            //return null; 
         }
         
 
@@ -75,9 +79,9 @@ namespace server.Controllers
             List<CustomersSummaryResponse> CustomersSummaryList = new List<CustomersSummaryResponse>();
 
             // Finding all the customers of the given user by email 
-            var customers = await DbContext.Customer.Where(u => u.UserId
-            == request.Id ).ToListAsync();
-
+            //var customers = await DbContext.Customer.Where(u => u.UserId
+            //== request.Id ).ToListAsync();
+            var customers = await customerRepository.GetCustomersByUserId(request.Id);
 
             // Looping through customers 
             foreach (var customer in customers)
