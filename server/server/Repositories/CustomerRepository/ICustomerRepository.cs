@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using server.Models;
-using server.Models.DTOs;
+﻿using server.Models;
 
 namespace server.Repositories.CustomerRepository
 {

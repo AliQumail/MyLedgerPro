@@ -35,52 +35,20 @@ namespace server.Controllers
                 Name = _customer.Name,
             };
             await customerRepository.AddCustomerAsync(customer);
-            //await DbContext.Customer.AddAsync(customer);
-            //DbContext.SaveChanges();
             return "Customer added successfully";
         }
-
-        /*
-        [HttpPost]
-        [Route("getcustomersbyuser")]
-        public async Task<List<Customer>> GetCustomersByUser(GetCustomersByUserDTO _user)
-        {
-            var customers = await DbContext.Customer.Where(u => u.UserEmail == _user.Email).ToListAsync();
-            return customers;
-        }
-        */
-
         
         [HttpGet]
         [Route("getcustomer")]
         public async Task<Customer?> GetCustomer(Guid id) {
             return await customerRepository.GetCustomerById(id);
-            //var customer = await DbContext.Customer.SingleOrDefaultAsync(u => u.Id == id);
-            //if (customer != null )
-            //{
-            //    return customer;
-            //} 
-            //return null; 
         }
-        
-
-        /*
-        [HttpPut]
-        [Route("update/customer")]
-        public async Task<bool> UpdateCustomer(Guid id, UpdateCustomerDTO request) { 
-        }
-        */ 
 
         [HttpPost]
         [Route("customers/summary")]
         public async Task<List<CustomersSummaryResponse>> GetCustomersSummary(UserIdRequest request )
         {
-
             List<CustomersSummaryResponse> CustomersSummaryList = new List<CustomersSummaryResponse>();
-
-            // Finding all the customers of the given user by email 
-            //var customers = await DbContext.Customer.Where(u => u.UserId
-            //== request.Id ).ToListAsync();
             var customers = await customerRepository.GetCustomersByUserId(request.Id);
 
             // Looping through customers 

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using server.Models;
 using server.Models.DTOs;
+using server.Repositories.TransactionRepository;
 
 namespace server.Controllers
 {
@@ -10,9 +11,11 @@ namespace server.Controllers
     public class TransactionController : ControllerBase
     {
         private readonly CashBookDbContext DbContext;
-        public TransactionController(CashBookDbContext dBContext)
+        private readonly ITransactionRepository transactionRepository;
+        public TransactionController(CashBookDbContext dBContext, ITransactionRepository _transactionRepository)
         {
             this.DbContext = dBContext;
+            this.transactionRepository = _transactionRepository;
         }
 
         [HttpPost]
@@ -27,8 +30,9 @@ namespace server.Controllers
                 Amount = _transaction.Amount,
                 Date = DateTime.Now,
             };
-            await DbContext.Transaction.AddAsync(transaction);
-            DbContext.SaveChanges();
+            //await DbContext.Transaction.AddAsync(transaction);
+            //DbContext.SaveChanges();
+            await transactionRepository.AddTransactionAsync(transaction);
             return "Transaction added successfully";
         }
 
@@ -36,33 +40,25 @@ namespace server.Controllers
 
         [HttpPost]
         [Route("gettransaction")]
-        public async Task<List<Transaction>> GetTransaction(GetTransactionRequest request)
+        public async Task<List<Transaction>?> GetTransaction(GetTransactionRequest request)
         {
-            var transactions = await DbContext.Transaction.Where(u => u.UserId == request.UserId && u.CustomerId == request.CustomerId).ToListAsync();            
-            return transactions;
+            //var transactions = await DbContext.Transaction.Where(u => u.UserId == request.UserId && u.CustomerId == request.CustomerId).ToListAsync();            
+            //return transactions;
+            return await transactionRepository.GetCustomerTransactionsByUserId(request.UserId, request.CustomerId);
         }
 
-        [HttpPost]
-        [Route("gettransactionsbyuser")]
-        public async Task<List<Transaction>> GetTransactionsByUser(GetTransactionsDTO _user){
-            var transactions = await DbContext.Transaction.Where(u => u.UserId == _user.Id).ToListAsync();
-            return transactions; 
-        }
+        //[HttpPost]
+        //[Route("gettransactionsbyuser")]
+        //public async Task<List<Transaction>> GetTransactionsByUser(GetTransactionsDTO _user){
+        //    var transactions = await DbContext.Transaction.Where(u => u.UserId == _user.Id).ToListAsync();
+        //    return transactions; 
+        //}
 
         
         [HttpDelete]
         [Route("deletetransaction/{id}")]
         public async Task<bool> DeleteTransaction(Guid id) {
-            var transaction = await DbContext.Transaction.FindAsync(id);
-            if (transaction != null)
-            {
-                DbContext.Transaction.Remove(transaction);
-                await DbContext.SaveChangesAsync();
-                return true;
-            }
-            else {
-                return false;
-            }
+            return await transactionRepository.RemoveTransactionAsync(id);
         }
 
         [HttpPut]
