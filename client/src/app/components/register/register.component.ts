@@ -21,8 +21,8 @@ export class RegisterComponent {
   twitterIcon = faTwitter;
 
   registerForm: FormGroup = new FormGroup({
-    name: new FormControl('', Validators.required),
-    phoneno: new FormControl('', Validators.required),
+    username: new FormControl('', Validators.required),
+    // phoneno: new FormControl('', Validators.required),
     email: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
   });

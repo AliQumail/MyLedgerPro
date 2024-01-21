@@ -9,13 +9,13 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   public register(user: any): Observable<string> {
-    return this.http.post('https://localhost:7277/api/User/register', user, {
+    return this.http.post('https://localhost:7277/api/Auth/register', user, {
       responseType: 'text',
     });
   }
 
   public login(user: any): Observable<string> {
-    return this.http.post('https://localhost:7277/api/User/login', user, {
+    return this.http.post('https://localhost:7277/api/Auth/login', user, {
       responseType: 'text',
     });
   }

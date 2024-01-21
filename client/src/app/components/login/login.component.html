@@ -14,16 +14,16 @@
               <h2 class="fw-bold mb-5 text-uppercase">Login</h2>
               <div class="form-outline form-white mb-4">
                 <!-- <label class="form-label" for="typeEmailX">Email</label> -->
-                <input type="email" id="typeEmailX" placeholder="Email" formControlName="email" class="form-control form-control-lg input-field" />
+                <input type="text" id="typeEmailX" placeholder="Username" formControlName="username" class="form-control form-control-lg input-field" />
                 <div
                     *ngIf="
-                      loginForm.controls['email'].invalid &&
-                      (loginForm.controls['email'].dirty ||
-                        loginForm.controls['email'].touched)
+                      loginForm.controls['username'].invalid &&
+                      (loginForm.controls['username'].dirty ||
+                        loginForm.controls['username'].touched)
                     "
                     class="text-danger"
                   >
-                    Email is required
+                    Username is required
                   </div>
               </div>
 

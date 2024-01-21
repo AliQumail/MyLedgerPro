@@ -25,7 +25,7 @@ export class LoginComponent {
   twitterIcon = faTwitter;
 
   loginForm: FormGroup = new FormGroup({
-    email: new FormControl('', Validators.required),
+    username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
   });
 
@@ -43,8 +43,8 @@ export class LoginComponent {
           const response = JSON.parse(res);
           localStorage.setItem('userId', response.id);
           localStorage.setItem('token', response.token);
-          localStorage.setItem('name', response.name);
-          localStorage.setItem('email', response.email);
+          localStorage.setItem('username', response.username);
+          // localStorage.setItem('email', response.email);
           this.toastr.success("Login successful");
           setTimeout(()=>{
             this.router.navigate(['/dashboard']);

@@ -43,7 +43,7 @@ namespace server.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginRequestDto)
+        public async Task<LoginResponseDTO> Login([FromBody] LoginRequestDTO loginRequestDto)
         {
             var user = await userManager.FindByNameAsync(loginRequestDto.Username);
             if (user != null)
@@ -53,10 +53,31 @@ namespace server.Controllers
                 {
                     var roles = await userManager.GetRolesAsync(user);
                     var token = authRepository.CreateJwtToken(user);
-                    if (token != null) return Ok(token);
+                    if (token != null)
+                    {
+                        var loginResponse = new LoginResponseDTO()
+                        {
+                            Id = user.Id,
+                            Username = user.UserName,
+                            Email = user.Email,
+                            Token = token,
+                        };
+                        return loginResponse;
+                    }
+                    else {
+                        throw new Exception("Something went wrong while logging in");
+                    }
+                }
+                else 
+                {
+                    throw new Exception("Password doesn't match");
                 }
             }
-            return BadRequest("Username or Password is incorrect");
+            else 
+            {
+                throw new Exception("User not found");
+            }
+            
         }
     }
 }
