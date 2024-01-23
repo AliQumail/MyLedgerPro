@@ -7,6 +7,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService, private spinner: NgxSpinnerService) {}
 
   facebookIcon = faFacebook;
   linkedinIcon = faLinkedin;
@@ -28,9 +29,10 @@ export class RegisterComponent {
   });
 
   register(user: any) {
+    this.spinner.show();
     this.authService.register(user).subscribe(
       (response) => {
-        console.log('Registration successful: ', response);
+        this.spinner.hide(); 
         alert('Registration successful');
         this.router.navigate(['/login']);
       },
