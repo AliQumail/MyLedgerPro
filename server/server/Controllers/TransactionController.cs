@@ -30,8 +30,6 @@ namespace server.Controllers
                 Amount = _transaction.Amount,
                 Date = DateTime.Now,
             };
-            //await DbContext.Transaction.AddAsync(transaction);
-            //DbContext.SaveChanges();
             await transactionRepository.AddTransactionAsync(transaction);
             return "Transaction added successfully";
         }
@@ -42,18 +40,8 @@ namespace server.Controllers
         [Route("gettransaction")]
         public async Task<List<Transaction>?> GetTransaction(GetTransactionRequest request)
         {
-            //var transactions = await DbContext.Transaction.Where(u => u.UserId == request.UserId && u.CustomerId == request.CustomerId).ToListAsync();            
-            //return transactions;
             return await transactionRepository.GetCustomerTransactionsByUserId(request.UserId, request.CustomerId);
         }
-
-        //[HttpPost]
-        //[Route("gettransactionsbyuser")]
-        //public async Task<List<Transaction>> GetTransactionsByUser(GetTransactionsDTO _user){
-        //    var transactions = await DbContext.Transaction.Where(u => u.UserId == _user.Id).ToListAsync();
-        //    return transactions; 
-        //}
-
         
         [HttpDelete]
         [Route("deletetransaction/{id}")]
