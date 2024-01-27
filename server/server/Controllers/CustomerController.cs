@@ -44,6 +44,14 @@ namespace server.Controllers
             return await customerRepository.GetCustomerById(id);
         }
 
+
+        //[HttpGet]
+        //[Route("GetCustomersByUserId")]
+        //public async Task<List<Customer>?> GetCustomersByUserId([FromQuery] Guid userId) 
+        //{
+        //    return await customerRepository.GetCustomersByUserId(userId);
+        //}
+
         [HttpPost]
         [Route("customers/summary")]
         public async Task<List<CustomersSummaryResponse>> GetCustomersSummary(UserIdRequest request )

@@ -93,6 +93,10 @@
                         >
                           {{tran.date}}
                         </button>
+                        
+                      </td>
+                      <td>
+                        <app-update-transaction [transaction]="tran" (refreshList)="handleRefreshList()"></app-update-transaction>
                       </td>
                       <td>
                         <button class="btn btn-danger" (click)='deleteTransaction(tran.id)'>Delete</button>

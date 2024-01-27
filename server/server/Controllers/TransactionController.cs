@@ -50,21 +50,9 @@ namespace server.Controllers
         }
 
         [HttpPut]
-        [Route("updatetransaction")]
-        public async Task<bool> UpdateTransaction(Guid id, UpdateTransactionDTO request) {
-
-            var transaction = await DbContext.Transaction.FindAsync(id);
-            if (transaction != null)
-            {
-                transaction.Status = request.Status;
-                transaction.Amount = request.Amount;
-
-                await DbContext.SaveChangesAsync();
-
-                return true;
-            }
-
-            return false; 
+        [Route("UpdateTransaction")]
+        public async Task<bool> UpdateTransaction([FromQuery] Guid id, [FromBody] UpdateTransactionDTO request) {
+            return await transactionRepository.UpdateTransactionAsync(id, request);
         }
         
     }

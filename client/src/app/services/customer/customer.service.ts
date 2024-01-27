@@ -29,6 +29,13 @@ export class CustomerService {
     );
   }
 
+  public getCustomersByUserId(userId: any): Observable<any> {
+    return this.http.get(
+      'https://localhost:7277/api/Customer/GetCustomersbyUserId'
+      , userId
+    );
+  }
+
   getCustomer(id: string): Observable<string> {
     const url = `https://localhost:7277/api/Customer/getcustomer?id=${id}`;
     return this.http.get<string>(url, {

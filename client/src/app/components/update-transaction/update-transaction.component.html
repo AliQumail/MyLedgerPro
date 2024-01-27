@@ -1,0 +1,106 @@
+<button class="btn btn-primary" (click)="open(mymodal)">
+    Update
+  </button>
+  
+  <ng-template #mymodal let-modal>
+    <form [formGroup]="updateTransactionForm">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Transaction</h4>
+      <button
+        type="button"
+        class="modal-cross-btn"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <!-- <div class="form-outline mb-3">
+          <select
+            formControlName="customerId"
+            class="form-select form-select-lg input-field"
+            aria-label=".form-select example"
+          >
+            <option value="">Choose customer</option>
+            <option
+              *ngFor="let customerName of customers"
+              [ngValue]="customerName.id"
+            >
+              {{ customerName.name }}
+            </option>
+          </select>
+  
+          <div
+            *ngIf="
+              updateTransactionForm.controls['customerId'].invalid &&
+              (updateTransactionForm.controls['customerId'].dirty ||
+                updateTransactionForm.controls['customerId'].touched)
+            "
+            class="text-danger"
+          >
+            Customer email is required
+          </div>
+        </div> -->
+  
+        <div class="form-outline mb-3">
+          <!-- <label class="form-label" for="form3Example4">Password</label> -->
+          <select
+          formControlName="status"
+          class="form-select form-select-lg input-field"
+          aria-label=".form-select example"
+        >
+          <option value="" disabled>Choose status</option>
+          <option [ngValue]="'Give'">Give</option>
+          <option [ngValue]="'Take'">Take</option>
+          
+        </select>
+          <div
+            *ngIf="
+              updateTransactionForm.controls['status'].invalid &&
+              (updateTransactionForm.controls['status'].dirty ||
+                updateTransactionForm.controls['status'].touched)
+            "
+            class="text-danger"
+          >
+            Status is required
+          </div>
+        </div>
+  
+        <div class="form-outline mb-4">
+          <input
+            type="number"
+            id="form3Example3"
+            class="form-control form-control-lg input-field"
+            formControlName="amount"
+            placeholder="Amount"
+          />
+          <div
+            *ngIf="
+              updateTransactionForm.controls['amount'].invalid &&
+              (updateTransactionForm.controls['amount'].dirty ||
+                updateTransactionForm.controls['amount'].touched)
+            "
+            class="text-danger"
+          >
+            Amount is required
+          </div>
+        </div>
+   
+    </div>
+    <div class="modal-footer">
+      <div class="text-center text-lg-start mt-4 pt-2">
+        <button
+          type="submit"
+          class="green-button"
+          style="padding-left: 2.5rem; padding-right: 2.5rem"
+          (click)="updateTransaction(updateTransactionForm.value)"
+          [disabled]="updateTransactionForm.invalid"
+        >
+          Update
+        </button>
+      </div>
+    </div>
+  </form>
+  </ng-template>
+  

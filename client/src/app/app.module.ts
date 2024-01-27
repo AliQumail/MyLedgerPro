@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxChartsModule }from '@swimlane/ngx-charts';  // added
 import { NgxSpinnerModule } from "ngx-spinner";
+import { UpdateTransactionComponent } from './components/update-transaction/update-transaction.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
     AddTransactionComponent,
     CustomerDetailsComponent,
     NavbarComponent,
-    HomeComponent
+    HomeComponent,
+    UpdateTransactionComponent
   ],
   imports: [
     BrowserModule,

@@ -48,6 +48,10 @@ export class CustomerDetailsComponent {
     );
   }
 
+  handleRefreshList(){
+    this.getCustomerTransactions(this.userId, this.customerId);
+  }
+
   getCustomerTransactions(userId: any, customerId: any){
     this.totalToGive = 0;
     this.totalToTake = 0; 
