@@ -19,6 +19,17 @@ export class CustomerService {
     );
   }
 
+  public updateCustomer(id: string, customer: any): Observable<string> {
+    return this.http.put(
+      `https://localhost:7277/api/Customer/Update?id=${id}`,
+      customer,
+      {
+        responseType: 'text',
+      }
+    );
+  }
+
+
   public getCustomers(email: any): Observable<string> {
     return this.http.post(
       'https://localhost:7277/api/Customer/getcustomersbyuser',
@@ -26,6 +37,12 @@ export class CustomerService {
       {
         responseType: 'text',
       }
+    );
+  }
+
+  public deleteCustomer(id: any): Observable<boolean> {
+    return this.http.delete<boolean>(
+      `https://localhost:7277/api/Customer/Delete?id=${id}`,
     );
   }
 

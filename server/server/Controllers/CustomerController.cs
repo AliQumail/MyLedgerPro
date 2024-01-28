@@ -39,24 +39,15 @@ namespace server.Controllers
         }
 
         [HttpPut]
-        [Route("update")]
-        public async Task<bool> UpdateCustomer(AddCustomerDTO _customer)
+        [Route("Update")]
+        public async Task<bool> UpdateCustomer([FromQuery] Guid id, [FromBody] AddCustomerDTO _customer)
         {
-            var customer = new Customer()
-            {
-                Id = Guid.NewGuid(),
-                UserId = _customer.UserId,
-                Email = _customer.Email,
-                PhoneNo = _customer.PhoneNo,
-                Name = _customer.Name,
-            };
-            return await customerRepository.UpdateCustomerAsync(customer);
-            
+            return await customerRepository.UpdateCustomerAsync(id, _customer);   
         }
 
         [HttpDelete]
-        [Route("delete")]
-        public async Task<bool> RemoveDeleteAsync(Guid id)
+        [Route("Delete")]
+        public async Task<bool> RemoveDeleteAsync([FromQuery] Guid id)
         {
            return await customerRepository.RemoveCustomerAsync(id);
         }
@@ -117,6 +108,7 @@ namespace server.Controllers
                     CustomerId = customer.Id.ToString(),
                     CustomerName = customer.Name,
                     CustomerEmail = customer.Email,
+                    CustomerPhoneNo = customer.PhoneNo,
                     ToTake = toTake,
                     ToGive = toGive
                 };

@@ -21,6 +21,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxChartsModule }from '@swimlane/ngx-charts';  // added
 import { NgxSpinnerModule } from "ngx-spinner";
 import { UpdateTransactionComponent } from './components/update-transaction/update-transaction.component';
+import { UpdateCustomerComponent } from './components/update-customer/update-customer.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { UpdateTransactionComponent } from './components/update-transaction/upda
     CustomerDetailsComponent,
     NavbarComponent,
     HomeComponent,
-    UpdateTransactionComponent
+    UpdateTransactionComponent,
+    UpdateCustomerComponent
   ],
   imports: [
     BrowserModule,

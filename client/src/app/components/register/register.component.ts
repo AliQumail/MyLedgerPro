@@ -8,6 +8,7 @@ import {
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  constructor(private router: Router, private authService: AuthService, private spinner: NgxSpinnerService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private spinner: NgxSpinnerService,
+    private toastr: ToastrService
+  ) {}
 
   facebookIcon = faFacebook;
   linkedinIcon = faLinkedin;
@@ -32,13 +38,12 @@ export class RegisterComponent {
     this.spinner.show();
     this.authService.register(user).subscribe(
       (response) => {
-        this.spinner.hide(); 
-        alert('Registration successful');
+        this.spinner.hide();
+        this.toastr.success("Registration successful")
         this.router.navigate(['/login']);
       },
       (error) => {
-        console.log('Registration failed: ', error);
-        alert('Registration failed');
+        this.toastr.error("Error while registering user")
       }
     );
   }

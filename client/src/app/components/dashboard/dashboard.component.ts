@@ -25,18 +25,28 @@ export class DashboardComponent {
   toTake: any;
   toGive: any;
   summary: any = [];
- 
+
   totalToTake: number = 0;
   totalToGive: number = 0;
 
   title = 'barchartApp';
   dataset = [
-    { name: "X", value: 1 },
-    { name: "Y", value: 2 }
+    { name: 'X', value: 1 },
+    { name: 'Y', value: 2 },
   ];
 
+  deleteCustomer(id: string) {
+    this.customerService.deleteCustomer(id).subscribe((res: any) => {
+      if (res) {
+        this.toastr.success('Customer deleted successfully');
+        this.generateSummary(localStorage.getItem('userId'));
+      } else {
+        this.toastr.error('Error while deleting customer');
+      }
+    });
+  }
 
-  // for graph 
+  // for graph
   ngOnInit() {
     if (
       localStorage.getItem('name') != null &&
@@ -44,30 +54,30 @@ export class DashboardComponent {
     ) {
       this.name = localStorage.getItem('name');
       this.email = localStorage.getItem('email');
-      console.log("userId")
+      console.log('userId');
       console.log(localStorage.getItem('userId'));
       this.generateSummary(localStorage.getItem('userId'));
     }
   }
-  
-    testToast(){
-      console.log("on click toast");
-      this.toastr.success('Hello world!', 'Toastr fun!');
-    }
-  
-  handleRefreshList(){
-    this.generateSummary(localStorage.getItem("userId"));
+
+  testToast() {
+    console.log('on click toast');
+    this.toastr.success('Hello world!', 'Toastr fun!');
   }
 
-  showGraphicalView: number = 0; 
+  handleRefreshList() {
+    this.generateSummary(localStorage.getItem('userId'));
+  }
 
-  HandleGraphicalView(){
-    this.showGraphicalView = this.showGraphicalView == 1 ? 0 : 1; 
-  } 
+  showGraphicalView: number = 0;
+
+  HandleGraphicalView() {
+    this.showGraphicalView = this.showGraphicalView == 1 ? 0 : 1;
+  }
 
   view(customerId: any) {
-    console.log("customer id : " + customerId);
-    console.log("user id: " + localStorage.getItem('userId'))
+    console.log('customer id : ' + customerId);
+    console.log('user id: ' + localStorage.getItem('userId'));
     this.router.navigate([
       'details/user/:userId/customer/:customerId',
       { userId: localStorage.getItem('userId'), customerId: customerId },
@@ -101,19 +111,22 @@ export class DashboardComponent {
   //   );
   // }
 
-  generateSummary( id : any) {
+  generateSummary(id: any) {
     this.totalToGive = 0;
-    this.totalToTake = 0; 
+    this.totalToTake = 0;
     this.customerService.getCustomerSummary({ id }).subscribe(
       (res: any) => {
-        console.log(res); 
+        console.log(res);
         const JsonString = JSON.stringify(res);
         this.summary = JSON.parse(JsonString);
         this.summary.forEach((item: any) => {
           this.totalToTake += item.toTake;
           this.totalToGive += item.toGive;
         });
-        this.customers = this.summary.map((customer: any) => ({ id: customer.customerId, name: customer.customerName }));
+        this.customers = this.summary.map((customer: any) => ({
+          id: customer.customerId,
+          name: customer.customerName,
+        }));
       },
       (error) => {
         console.log(JSON.stringify(error));

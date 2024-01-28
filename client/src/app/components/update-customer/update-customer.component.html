@@ -1,0 +1,98 @@
+<button class="add-transaction-btn" (click)="open(mymodal)">Update</button>
+
+<ng-template #mymodal let-modal>
+  <form [formGroup]="updateCustomerForm">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Update Customer</h4>
+      <button type="button" class="modal-cross-btn" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        
+           
+            <!-- Email input -->
+  
+            <div class="form-outline mb-3">
+              <!-- <label class="form-label" for="form3Example4">Password</label> -->
+              <input
+                type="text"
+                id="form3Example4"
+                formControlName="name"
+                class="form-control form-control-lg input-field"
+                placeholder="Name"
+              />
+              <div
+                *ngIf="
+                  updateCustomerForm.controls['name'].invalid &&
+                  (updateCustomerForm.controls['name'].dirty ||
+                    updateCustomerForm.controls['name'].touched)
+                "
+                class="text-danger"
+              >
+                Name is required
+              </div>
+            </div>
+  
+            <div class="form-outline mb-3">
+              <!-- <label class="form-label" for="form3Example4">Password</label> -->
+              <input
+                type="text"
+                id="form3Example4"
+                formControlName="phoneno"
+                class="form-control form-control-lg input-field"
+                placeholder="Phone No"
+              />
+              <div
+                *ngIf="
+                  updateCustomerForm.controls['phoneno'].invalid &&
+                  (updateCustomerForm.controls['phoneno'].dirty ||
+                    updateCustomerForm.controls['phoneno'].touched)
+                "
+                class="text-danger"
+              >
+                Phone no is required
+              </div>
+            </div>
+  
+            <div class="form-outline mb-4">
+              <!-- <label class="form-label" for="form3Example3">Username</label> -->
+              <input
+                type="email"
+                id="form3Example3"
+                class="form-control form-control-lg input-field"
+               
+                formControlName="email"
+                placeholder="Email"
+              />
+              <div
+                *ngIf="
+                  updateCustomerForm.controls['email'].invalid &&
+                  (updateCustomerForm.controls['email'].dirty ||
+                    updateCustomerForm.controls['email'].touched)
+                "
+                class="text-danger"
+              >
+                Email is required
+              </div>
+            </div>
+  
+    </div>
+    <div class="modal-footer">
+      <!-- <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button> -->
+      <div class="text-center text-lg-start mt-4 pt-2">
+        <button
+          type="submit"
+          class="green-button"
+          style="padding-left: 2.5rem; padding-right: 2.5rem"
+          (click)="updateCustomer(updateCustomerForm.value)"
+          [disabled]="updateCustomerForm.invalid"
+        >
+          Add
+        </button>
+
+      
+      </div>
+    </div>
+  </form>
+  </ng-template>

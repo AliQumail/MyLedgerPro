@@ -79,6 +79,8 @@
                     <th>To Take</th>
                     <th>To Give</th>
                     <th>Details</th>
+                    <th>Update</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -105,6 +107,18 @@
                       >
                         View
                       </button>
+                    </td>
+                    <td>
+                      <app-update-customer [customer]="item" (refreshList)="handleRefreshList()"></app-update-customer>
+                    </td>
+                    <td>
+                      <button
+                      type="button"
+                      class="btn btn-danger btn-sm"
+                      (click)="deleteCustomer(item.customerId)"
+                    >
+                      Delete
+                    </button>
                     </td>
                   </tr>
                 </tbody>

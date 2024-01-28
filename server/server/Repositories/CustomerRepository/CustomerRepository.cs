@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using server.Models;
+using server.Models.DTOs;
 
 namespace server.Repositories.CustomerRepository
 {
@@ -18,9 +19,9 @@ namespace server.Repositories.CustomerRepository
             return customer;
         }
 
-        public async Task<bool> UpdateCustomerAsync(Customer customer)
+        public async Task<bool> UpdateCustomerAsync(Guid id, AddCustomerDTO customer)
         {
-            var customerFound = await DbContext.Customer.SingleOrDefaultAsync(u => u.Id == customer.Id);
+            var customerFound = await DbContext.Customer.SingleOrDefaultAsync(u => u.Id == id);
             if (customerFound != null ) 
             {
                 customerFound.Email = customer.Email;

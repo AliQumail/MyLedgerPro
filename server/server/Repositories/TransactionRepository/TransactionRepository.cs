@@ -48,8 +48,7 @@ namespace server.Repositories.TransactionRepository
                 transaction.Amount = request.Amount;
                 transaction.Date = DateTime.Now;
 
-                await DbContext.SaveChangesAsync();
-
+                await DbContext.SaveChangesAsync(); 
                 return true;
             }
 
