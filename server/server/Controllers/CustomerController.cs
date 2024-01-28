@@ -37,7 +37,33 @@ namespace server.Controllers
             await customerRepository.AddCustomerAsync(customer);
             return "Customer added successfully";
         }
-        
+
+        [HttpPut]
+        [Route("update")]
+        public async Task<bool> UpdateCustomer(AddCustomerDTO _customer)
+        {
+            var customer = new Customer()
+            {
+                Id = Guid.NewGuid(),
+                UserId = _customer.UserId,
+                Email = _customer.Email,
+                PhoneNo = _customer.PhoneNo,
+                Name = _customer.Name,
+            };
+            return await customerRepository.UpdateCustomerAsync(customer);
+            
+        }
+
+        [HttpDelete]
+        [Route("delete")]
+        public async Task<bool> RemoveDeleteAsync(Guid id)
+        {
+           return await customerRepository.RemoveCustomerAsync(id);
+        }
+
+
+
+
         [HttpGet]
         [Route("getcustomer")]
         public async Task<Customer?> GetCustomer(Guid id) {

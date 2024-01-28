@@ -18,6 +18,33 @@ namespace server.Repositories.CustomerRepository
             return customer;
         }
 
+        public async Task<bool> UpdateCustomerAsync(Customer customer)
+        {
+            var customerFound = await DbContext.Customer.SingleOrDefaultAsync(u => u.Id == customer.Id);
+            if (customerFound != null ) 
+            {
+                customerFound.Email = customer.Email;
+                customerFound.PhoneNo = customer.PhoneNo;
+                customerFound.Name = customer.Name;
+                await DbContext.SaveChangesAsync();
+                return true; 
+            }
+            
+            return false;
+        }
+
+        public async Task<bool> RemoveCustomerAsync(Guid id)
+        {
+            var customer = await DbContext.Customer.FindAsync(id);
+            if (customer != null)
+            {
+                DbContext.Customer.Remove(customer);
+                await DbContext.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
         public async Task<Customer?> GetCustomerById(Guid id)
         {
             var customer = await DbContext.Customer.SingleOrDefaultAsync(u => u.Id == id);
