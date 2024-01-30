@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { TransactionService } from 'src/app/services/transaction/transaction.service';
 import { CustomerService } from 'src/app/services/customer/customer.service';
+import { faEdit } from '@fortawesome/free-regular-svg-icons';
 @Component({
   selector: 'app-update-transaction',
   templateUrl: './update-transaction.component.html',
@@ -20,6 +21,7 @@ export class UpdateTransactionComponent implements OnInit {
   @Input() transaction: any; 
   customers : any = [];
   @Output() refreshList : EventEmitter<any> = new EventEmitter(); 
+  faEdit= faEdit;
  
   constructor(
     private modalService: NgbModal,
@@ -31,9 +33,7 @@ export class UpdateTransactionComponent implements OnInit {
     this.modalOptions = {
       backdrop: 'static',
       backdropClass: 'customBackdrop',
-    };
-
-   
+    };   
   }
 
   ngOnInit() {
@@ -47,7 +47,6 @@ export class UpdateTransactionComponent implements OnInit {
       amount: this.transaction.amount
     })
   }
-  
 
   updateTransactionForm: FormGroup = new FormGroup({
     // customerId: new FormControl('', Validators.required),

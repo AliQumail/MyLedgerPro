@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CustomerService } from 'src/app/services/customer/customer.service';
 import { TransactionService } from 'src/app/services/transaction/transaction.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-customer-details',
@@ -27,6 +28,7 @@ export class CustomerDetailsComponent {
 
   userId: any;
   customerId: any; 
+  faTrashCan=faTrashCan;
 
   ngOnInit() {
     this.route.params.subscribe((params) => {

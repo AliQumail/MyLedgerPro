@@ -1,5 +1,5 @@
 <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type="la-ball-scale-multiple" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
-<button class="add-transaction-btn" (click)="open(mymodal)">Update</button>
+<button class="add-transaction-btn" (click)="open(mymodal)"><fa-icon [icon]="faEdit"></fa-icon></button>
 
 <ng-template #mymodal let-modal>
   <form [formGroup]="updateCustomerForm">

@@ -1,11 +1,11 @@
 <button class="btn btn-primary" (click)="open(mymodal)">
-    Update
+  <fa-icon [icon]="faEdit"></fa-icon>
   </button>
   
   <ng-template #mymodal let-modal>
     <form [formGroup]="updateTransactionForm">
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Add Transaction</h4>
+      <h4 class="modal-title" id="modal-basic-title">Update Transaction</h4>
       <button
         type="button"
         class="modal-cross-btn"

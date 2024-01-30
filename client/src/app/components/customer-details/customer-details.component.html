@@ -67,6 +67,7 @@
                       <th>Status</th>
                       <th>Amount</th>
                       <th>Date</th>
+                      <th>Update</th>
                       <th>Delete</th>
                     </tr>
                   </thead>
@@ -99,7 +100,7 @@
                         <app-update-transaction [transaction]="tran" (refreshList)="handleRefreshList()"></app-update-transaction>
                       </td>
                       <td>
-                        <button class="btn btn-danger" (click)='deleteTransaction(tran.id)'>Delete</button>
+                        <button class="btn btn-danger" (click)='deleteTransaction(tran.id)'><fa-icon [icon]="faTrashCan"></fa-icon></button>
                       </td>
                     </tr>
                   </tbody>

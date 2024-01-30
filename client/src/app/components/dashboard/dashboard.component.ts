@@ -5,6 +5,8 @@ import { CustomerService } from 'src/app/services/customer/customer.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -27,6 +29,7 @@ export class DashboardComponent {
   toTake: any;
   toGive: any;
   summary: any = [];
+  faTrashCan = faTrashCan;
 
   totalToTake: number = 0;
   totalToGive: number = 0;
