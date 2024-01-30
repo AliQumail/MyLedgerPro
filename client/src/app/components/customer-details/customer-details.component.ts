@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CustomerService } from 'src/app/services/customer/customer.service';
 import { TransactionService } from 'src/app/services/transaction/transaction.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-customer-details',
@@ -14,7 +15,8 @@ export class CustomerDetailsComponent {
     private route: ActivatedRoute,
     private customerService: CustomerService,
     private transactionService: TransactionService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) {}
 
   customer: any;
@@ -84,12 +86,15 @@ export class CustomerDetailsComponent {
   }
 
   deleteTransaction(id: any) {
+    this.spinner.show();
     this.transactionService.deleteTransaction(id).subscribe((res: any) => {
       if (res) {
+        this.spinner.hide();
         this.toastr.success("Transaction deleted successfully")
         this.getCustomerTransactions(this.userId, this.customerId); 
         console.log("Delete successful");
       } else {
+        this.spinner.hide();
         console.log("Delete unsuccessful");
       }
     });

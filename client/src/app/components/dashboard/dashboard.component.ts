@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CustomerService } from 'src/app/services/customer/customer.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -15,7 +16,8 @@ export class DashboardComponent {
     private customerService: CustomerService,
     private router: Router,
     private toastr: ToastrService,
-    private location: Location
+    private location: Location,
+    private spinner: NgxSpinnerService
   ) {}
 
   name: string | null = '';
@@ -36,11 +38,14 @@ export class DashboardComponent {
   ];
 
   deleteCustomer(id: string) {
+    this.spinner.show();
     this.customerService.deleteCustomer(id).subscribe((res: any) => {
       if (res) {
+        this.spinner.hide();
         this.toastr.success('Customer deleted successfully');
         this.generateSummary(localStorage.getItem('userId'));
       } else {
+        this.spinner.hide();
         this.toastr.error('Error while deleting customer');
       }
     });
@@ -76,8 +81,6 @@ export class DashboardComponent {
   }
 
   view(customerId: any) {
-    console.log('customer id : ' + customerId);
-    console.log('user id: ' + localStorage.getItem('userId'));
     this.router.navigate([
       'details/user/:userId/customer/:customerId',
       { userId: localStorage.getItem('userId'), customerId: customerId },
@@ -87,29 +90,14 @@ export class DashboardComponent {
   getTransactions(_userEmail: any) {
     this.authService.getTransactions({ _userEmail }).subscribe(
       (res: any) => {
-        // console.log('TRANSACTIONS: ', res);
         const response = JSON.parse(res);
         this.transactions = response;
       },
       (error) => {
-        // console.log(JSON.stringify(error));
         alert(error.headers);
       }
     );
   }
-
-  // getCustomers(email: any) {
-  //   this.customerService.getCustomers({ email }).subscribe(
-  //     (res: any) => {
-  //       console.log('CUSTOMERS: ', res);
-  //       const response = JSON.parse(res);
-  //       this.transactions = response;
-  //     },
-  //     (error) => {
-  //       console.log(JSON.stringify(error));
-  //     }
-  //   );
-  // }
 
   generateSummary(id: any) {
     this.totalToGive = 0;
