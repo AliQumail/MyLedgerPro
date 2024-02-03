@@ -104,10 +104,10 @@
                     <td>
                       <button
                         type="button"
-                        class="btn btn-link btn-sm btn-rounded"
+                        class="btn-styling-none"
                         (click)="view(item.customerId)"
                       >
-                        View
+                      <fa-icon [icon]="faEye"></fa-icon>
                       </button>
                     </td>
                     <td>
@@ -116,7 +116,7 @@
                     <td>
                       <button
                       type="button"
-                      class="btn btn-danger btn-sm"
+                      class="btn-styling-none"
                       (click)="deleteCustomer(item.customerId)"
                     >
                     <fa-icon [icon]="faTrashCan"></fa-icon>

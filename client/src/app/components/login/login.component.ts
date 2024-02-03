@@ -44,6 +44,7 @@ export class LoginComponent {
           localStorage.setItem('userId', response.id);
           localStorage.setItem('token', response.token);
           localStorage.setItem('username', response.username);
+          localStorage.setItem('isLoggedIn', 'true')
           // localStorage.setItem('email', response.email);
           this.toastr.success("Login successful");
           setTimeout(()=>{

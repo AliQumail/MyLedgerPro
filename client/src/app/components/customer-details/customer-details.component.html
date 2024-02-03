@@ -100,7 +100,7 @@
                         <app-update-transaction [transaction]="tran" (refreshList)="handleRefreshList()"></app-update-transaction>
                       </td>
                       <td>
-                        <button class="btn btn-danger" (click)='deleteTransaction(tran.id)'><fa-icon [icon]="faTrashCan"></fa-icon></button>
+                        <button class="btn-styling-none" (click)='deleteTransaction(tran.id)'><fa-icon [icon]="faTrashCan"></fa-icon></button>
                       </td>
                     </tr>
                   </tbody>

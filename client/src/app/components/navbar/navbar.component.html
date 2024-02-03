@@ -14,7 +14,7 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <button class="btn btn-outline-danger" (click)="handleLogout()">Logout</button>
+        <button *ngIf="userActive != null" class="btn-styling-none" (click)="handleLogout()"><fa-icon [icon]="faSignOut"></fa-icon></button>
         <!-- <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item active">
