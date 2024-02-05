@@ -22,6 +22,7 @@ import { NgxChartsModule }from '@swimlane/ngx-charts';  // added
 import { NgxSpinnerModule } from "ngx-spinner";
 import { UpdateTransactionComponent } from './components/update-transaction/update-transaction.component';
 import { UpdateCustomerComponent } from './components/update-customer/update-customer.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { UpdateCustomerComponent } from './components/update-customer/update-cus
     UpdateCustomerComponent
   ],
   imports: [
+    NgChartsModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

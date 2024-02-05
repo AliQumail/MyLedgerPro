@@ -28,6 +28,7 @@
     "@swimlane/ngx-charts": "^20.4.1",
     "@types/d3": "^7.4.1",
     "bootstrap": "^5.3.0",
+    "ng2-charts": "4.0",
     "ngx-spinner": "^15.0.1",
     "ngx-toastr": "^17.0.2",
     "rxjs": "~7.8.0",

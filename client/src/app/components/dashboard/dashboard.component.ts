@@ -5,7 +5,8 @@ import { CustomerService } from 'src/app/services/customer/customer.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { faTrashCan, faEye } from '@fortawesome/free-regular-svg-icons';
+import { faTrashCan, faEye, faHand } from '@fortawesome/free-regular-svg-icons';
+import { ChartConfiguration } from 'chart.js';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,6 +23,23 @@ export class DashboardComponent {
     private spinner: NgxSpinnerService
   ) {}
 
+  //title = 'ng2-charts-demo';
+
+  public barChartLegend = true;
+  public barChartPlugins = [];
+
+  public barChartData: ChartConfiguration<'bar'>['data'] = {
+    labels: [ '2006', '2007', '2008', '2009', '2010', '2011', '2012' ],
+    datasets: [
+      { data: [ 65, 59, 80, 81, 56, 55, 40 ], label: 'Series A' },
+      { data: [ 28, 48, 40, 19, 86, 27, 90 ], label: 'Series B' }
+    ]
+  };
+
+  public barChartOptions: ChartConfiguration<'bar'>['options'] = {
+    responsive: false,
+  };
+
   name: string | null = '';
   email: any = '';
   transactions: any;
@@ -31,11 +49,12 @@ export class DashboardComponent {
   summary: any = [];
   faTrashCan = faTrashCan;
   faEye = faEye; 
+  faHand= faHand; 
 
   totalToTake: number = 0;
   totalToGive: number = 0;
 
-  title = 'barchartApp';
+  title : any = 'barchartApp';
   dataset = [
     { name: 'X', value: 1 },
     { name: 'Y', value: 2 },
@@ -61,7 +80,7 @@ export class DashboardComponent {
       localStorage.getItem('name') != null &&
       localStorage.getItem('email') != null
     ) {
-      this.name = localStorage.getItem('name');
+      this.name = localStorage.getItem('username');
       this.email = localStorage.getItem('email');
       console.log('userId');
       console.log(localStorage.getItem('userId'));
@@ -119,10 +138,41 @@ export class DashboardComponent {
           id: customer.customerId,
           name: customer.customerName,
         }));
+        this.updateGraphicalView();
       },
       (error) => {
         console.log(JSON.stringify(error));
       }
     );
+  }
+
+  onSwitchChange(event: any){
+    const isChecked = event.target.checked;
+    
+    if (isChecked) {
+      this.showGraphicalView = 1; 
+    } else {
+      this.showGraphicalView = 0;
+    }
+  }
+
+  updateGraphicalView(){
+    
+    let labels : any = [];
+    let datasets : any = [
+      { data: [], label: 'To Take' },
+      { data: [], label: 'To Give' },
+    ];
+
+    for (var customer of this.summary) {
+      labels.push(customer.customerName);
+      datasets[0].data.push(customer.toTake);
+      datasets[1].data.push(customer.toGive)
+    }
+    const newData = {
+      labels: labels,
+      datasets: datasets
+    };
+    this.barChartData = newData;
   }
 }

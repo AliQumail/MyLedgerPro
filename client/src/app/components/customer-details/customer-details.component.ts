@@ -5,6 +5,7 @@ import { CustomerService } from 'src/app/services/customer/customer.service';
 import { TransactionService } from 'src/app/services/transaction/transaction.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-customer-details',
@@ -17,7 +18,8 @@ export class CustomerDetailsComponent {
     private customerService: CustomerService,
     private transactionService: TransactionService,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+  
   ) {}
 
   customer: any;
@@ -39,7 +41,7 @@ export class CustomerDetailsComponent {
       this.getCustomerTransactions(this.userId, this.customerId); 
     });
   }
-
+  
   getCustomerDetails(customerId: any){
     this.customerService.getCustomer(customerId).subscribe(
       (res: any) => {
@@ -65,6 +67,7 @@ export class CustomerDetailsComponent {
         console.log('TRANSACTION:  ' + this.transactions);
 
         this.transactions.forEach((transaction: any) => {
+          transaction.da
           if (transaction.status == 'Give') {
             this.totalToTake += transaction.amount;
           } else {
