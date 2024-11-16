@@ -77,13 +77,8 @@ export class DashboardComponent {
   // for graph
   ngOnInit() {
     if (
-      localStorage.getItem('name') != null &&
-      localStorage.getItem('email') != null
-    ) {
+      localStorage.getItem('username') != null ){
       this.name = localStorage.getItem('username');
-      this.email = localStorage.getItem('email');
-      console.log('userId');
-      console.log(localStorage.getItem('userId'));
       this.generateSummary(localStorage.getItem('userId'));
     }
   }

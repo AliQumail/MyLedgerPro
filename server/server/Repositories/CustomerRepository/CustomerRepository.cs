@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using server.Models;
 using server.Models.DTOs;
 
@@ -58,8 +59,9 @@ namespace server.Repositories.CustomerRepository
         }
 
         public async Task<List<Customer>?> GetCustomersByUserId(Guid id)
-        {      
-            var customers = await DbContext.Customer.Where(u => u.UserId == id).ToListAsync();
+        {
+            var userIdParam = new SqlParameter("@UserId", id);
+            var customers = await DbContext.Customer.FromSqlRaw("GetCustomersByUser @UserId", userIdParam).ToListAsync();
             return customers;
         }
     

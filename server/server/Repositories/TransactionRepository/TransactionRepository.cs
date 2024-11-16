@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using server.Models;
 using server.Models.DTOs;
 
@@ -20,7 +21,13 @@ namespace server.Repositories.TransactionRepository
         }
         public async Task<List<Transaction>?> GetCustomerTransactionsByUserId(Guid userId, Guid customerId)
         {
-            var transactions = await DbContext.Transaction.Where(u => u.UserId == userId && u.CustomerId == customerId).ToListAsync();
+            var userIdParam = new SqlParameter("@UserId", userId);
+            var customerIdParam = new SqlParameter("@CustomerId", customerId);
+
+            var transactions = await DbContext.Transaction
+                .FromSqlRaw("EXEC GetCustomerTransactionsByUser @UserId, @CustomerId", userIdParam, customerIdParam)
+                .ToListAsync();
+
             return transactions;
         }
 
