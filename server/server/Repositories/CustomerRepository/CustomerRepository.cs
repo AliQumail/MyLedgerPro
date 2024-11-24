@@ -15,6 +15,12 @@ namespace server.Repositories.CustomerRepository
         }
         public async Task<Customer> AddCustomerAsync(Customer customer)
         {
+            var customerFound = await DbContext.Customer.SingleOrDefaultAsync(x => x.Email == customer.Email && x.UserId == customer.UserId);
+            if (customerFound != null)
+            {
+                throw new Exception("Customer already exists");
+            }
+
             await DbContext.Customer.AddAsync(customer);
             await DbContext.SaveChangesAsync();
             return customer;
@@ -22,6 +28,12 @@ namespace server.Repositories.CustomerRepository
 
         public async Task<bool> UpdateCustomerAsync(Guid id, AddCustomerDTO customer)
         {
+            var emailDuplicate = await DbContext.Customer.AnyAsync(u => u.Email == customer.Email && u.Id != id && customer.UserId == u.UserId);
+
+            if (emailDuplicate)
+            {
+                throw new Exception("Email already exists");
+            }
             var customerFound = await DbContext.Customer.SingleOrDefaultAsync(u => u.Id == id);
             if (customerFound != null ) 
             {
