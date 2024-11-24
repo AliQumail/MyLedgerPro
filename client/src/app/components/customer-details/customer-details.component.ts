@@ -6,6 +6,7 @@ import { TransactionService } from 'src/app/services/transaction/transaction.ser
 import { NgxSpinnerService } from 'ngx-spinner';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { DatePipe } from '@angular/common';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-customer-details',
@@ -20,7 +21,8 @@ export class CustomerDetailsComponent {
     private transactionService: TransactionService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private authService: AuthService
   
   ) {}
 
@@ -35,6 +37,8 @@ export class CustomerDetailsComponent {
   faTrashCan=faTrashCan;
 
   ngOnInit() {
+    this.authService.isAuthenticated(); 
+
     this.route.params.subscribe((params) => {
       this.userId = params['userId'];
       this.customerId = params['customerId'];

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   public register(user: any): Observable<string> {
     return this.http.post('https://localhost:7277/api/Auth/register', user, {
@@ -20,16 +21,9 @@ export class AuthService {
     });
   }
 
- 
-  // public addCustomer(customer: any): Observable<string> {
-  //   return this.http.post(
-  //     'https://localhost:7277/api/Customer/addcustomer',
-  //     customer,
-  //     {
-  //       responseType: 'text',
-  //     }
-  //   );
-  // }
+  public isAuthenticated(){
+    if (localStorage.getItem('token') == null) this.router.navigate(['/login']);
+  }
 
   public getTransactions(email: any): Observable<string> {
     return this.http.post(
@@ -40,14 +34,4 @@ export class AuthService {
       }
     );
   }
-
-  // public getCustomers(email: any): Observable<string> {
-  //   return this.http.post(
-  //     'https://localhost:7277/api/Customer/getcustomersbyuser',
-  //     email,
-  //     {
-  //       responseType: 'text',
-  //     }
-  //   );
-  // }
 }

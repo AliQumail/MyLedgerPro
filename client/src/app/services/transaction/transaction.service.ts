@@ -6,11 +6,12 @@ import { Observable } from 'rxjs/internal/Observable';
   providedIn: 'root',
 })
 export class TransactionService {
+  url = 'https://localhost:7277/api/';
   constructor(private http: HttpClient) {}
 
   public addTransaction(transaction: any): Observable<string> {
     return this.http.post(
-      'https://localhost:7277/api/Transaction/addtransaction',
+      this.url + 'Transaction/AddTransaction',
       transaction,
       {
         responseType: 'text',
@@ -20,7 +21,7 @@ export class TransactionService {
 
   public getTransaction(userId: any, customerId: any): Observable<string> {
     return this.http.post(
-      'https://localhost:7277/api/Transaction/gettransaction',
+      this.url + 'Transaction/GetCustomerTransactionsByUser',
       { userId: userId, customerId: customerId },
       {
         responseType: 'text',
@@ -31,24 +32,13 @@ export class TransactionService {
 
   public deleteTransaction(id: any): Observable<boolean> {
     return this.http.delete<boolean>(
-      `https://localhost:7277/api/Transaction/deletetransaction/${id}`,
+      this.url + `Transaction/DeleteTransaction/${id}`,
     );
   }
 
-  // public updateTransaction(transaction: any): Observable<string> {
-  //   return this.http.post(
-  //     'https://localhost:7277/api/Transaction/addtransaction',
-  //     transaction,
-  //     {
-  //       responseType: 'text',
-  //     }
-  //   );
-  // }
-
   public updateTransaction(id: string, request: any): Observable<boolean> {
-    const url = `https://localhost:7277/api/Transaction/UpdateTransaction?id=${id}`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put<boolean>(url, request, { headers: headers });
+    return this.http.put<boolean>(this.url + `Transaction/UpdateTransaction?id=${id}`, request, { headers: headers });
   }
 
   
