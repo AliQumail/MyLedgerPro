@@ -1,4 +1,12 @@
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type="la-ball-scale-multiple" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="la-ball-scale-multiple"
+  [fullScreen]="true"
+>
+  <p style="color: white">Loading...</p>
+</ngx-spinner>
 
 <div class="login-outer-most-div">
   <app-navbar></app-navbar>
@@ -6,94 +14,93 @@
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-          <div class="card login-card" style="border-radius: 1rem;">
+          <div class="card login-card" style="border-radius: 1rem">
             <div class="card-body p-5 text-center">
-  
-              <form class="mb-md-1 mt-md-4 pb-4" [formGroup]="registerForm">
-  
+              <form class="mb-md-1 mt-md-4 pb-4" [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)">
                 <h2 class="fw-bold mb-5 text-uppercase">Register</h2>
-                <!-- <p class="text-white-50 mb-5">Please enter your login and password!</p>
-   -->
                 <div class="form-outline form-white mb-4">
-                  <!-- <label class="form-label" for="typeEmailX">Name</label> -->
-                  <input type="text" formControlName="username" placeholder="Username" class="form-control form-control-lg input-field" />
+                  <input
+                    type="text"
+                    formControlName="username"
+                    placeholder="Username"
+                    class="form-control form-control-lg input-field"
+                  />
                   <div
-                  *ngIf="
-                    registerForm.controls['username'].invalid &&
-                    (registerForm.controls['username'].dirty ||
-                      registerForm.controls['username'].touched)
-                  "
-                  class="text-danger"
-                >
-                  Username is required
-                </div>
-                  
-                </div>
-  
-                <!-- <div class="form-outline form-white mb-4">          
-                  <input type="text" id="typePasswordX"  formControlName="phoneno" placeholder="Phone number" class="form-control form-control-lg input-field"/>
-                  <div
-                  *ngIf="
-                    registerForm.controls['phoneno'].invalid &&
-                    (registerForm.controls['phoneno'].dirty ||
-                      registerForm.controls['phoneno'].touched)
-                  "
-                  class="text-danger"
-                >
-                  Phone no is required
-                </div>
-                  
-                     
-                </div> -->
-                <div class="form-outline form-white mb-4">
-                  <!-- <label class="form-label" for="typeEmailX">Password</label> -->
-                  <input type="email" id="typeEmailX" formControlName="email" placeholder="Email" class="form-control form-control-lg input-field" />
-                  <div
-                  *ngIf="
-                    registerForm.controls['email'].invalid &&
-                    (registerForm.controls['email'].dirty ||
-                      registerForm.controls['email'].touched)
-                  "
-                  class="text-danger"
-                >
-                  Email is required
-                </div>
-                  
+                    *ngIf="
+                      registerForm.controls['username'].invalid &&
+                      (registerForm.controls['username'].dirty || registerForm.controls['username'].touched)
+                    "
+                    class="text-danger"
+                  >
+                    <div *ngIf="registerForm.controls['username'].hasError('required')">
+                      Username is required.
+                    </div>
+                    <div *ngIf="registerForm.controls['username'].hasError('minlength')">
+                      Username must be at least 6 characters long.
+                    </div>
+                    <div *ngIf="registerForm.controls['username'].hasError('whitespace')">
+                      Username cannot contain spaces.
+                    </div>
+                  </div>
                 </div>
                 <div class="form-outline form-white mb-4">
-                  <!-- <label class="form-label" for="typeEmailX">Password</label> -->
-                  <input type="password" id="typeEmailX" formControlName="password" placeholder="Password" class="form-control form-control-lg input-field" />
+                  <input
+                    type="email"
+                    id="typeEmailX"
+                    formControlName="email"
+                    placeholder="Email"
+                    class="form-control form-control-lg input-field"
+                  />
                   <div
-                  *ngIf="
-                    registerForm.controls['password'].invalid &&
-                    (registerForm.controls['password'].dirty ||
-                      registerForm.controls['password'].touched)
-                  "
-                  class="text-danger"
+                    *ngIf="
+                      registerForm.controls['email'].invalid &&
+                      (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)
+                    "
+                    class="text-danger"
+                  >
+                    <div *ngIf="registerForm.controls['email'].hasError('required')">
+                      Email is required.
+                    </div>
+                    <div *ngIf="registerForm.controls['email'].hasError('email')">
+                      Please enter a valid email address.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-outline form-white mb-4">
+                  <input
+                    type="password"
+                    id="typePasswordX"
+                    formControlName="password"
+                    placeholder="Password"
+                    class="form-control form-control-lg input-field"
+                  />
+                  <div
+                    *ngIf="
+                      registerForm.controls['password'].invalid &&
+                      (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)
+                    "
+                    class="text-danger"
+                  >
+                    <div *ngIf="registerForm.controls['password'].hasError('required')">
+                      Password is required.
+                    </div>
+                    <div *ngIf="registerForm.controls['password'].hasError('minlength')">
+                      Password must be at least 8 characters long.
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="btn login-btn"
+                  type="submit"
+                  [disabled]="registerForm.invalid"
                 >
-                  Password is required
-                </div>
-                  
-                </div>
-  
-               
-                <!-- <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p> -->
-  
-                <button 
-                class="btn login-btn" 
-                type="submit" 
-                (click)="register(registerForm.value)"
-                [disabled]="registerForm.invalid"
-                > Register </button>
-  
-                <!-- <div class="d-flex justify-content-center text-center mt-4 pt-1">
-                  <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
-                  <a href="#!" class="text-white"><i class="fab fa-twitter fa-lg mx-4 px-2"></i></a>
-                  <a href="#!" class="text-white"><i class="fab fa-google fa-lg"></i></a>
-                </div> -->
+                  Register
+                </button>
               </form>
               <div>
-                <p class="mb-0">Already have an account? <a href="/login" class="text-primary"  routerLink="/login" >Login</a>
+                <p class="mb-0">
+                  Already have an account?
+                  <a href="/login" class="text-primary" routerLink="/login">Login</a>
                 </p>
               </div>
             </div>
@@ -102,7 +109,4 @@
       </div>
     </div>
   </section>
-  
-  </div>
-
-
+</div>

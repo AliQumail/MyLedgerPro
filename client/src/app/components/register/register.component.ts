@@ -28,10 +28,18 @@ export class RegisterComponent {
   twitterIcon = faTwitter;
 
   registerForm: FormGroup = new FormGroup({
-    username: new FormControl('', Validators.required),
-    // phoneno: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+    username: new FormControl('', [
+      Validators.required, 
+      Validators.minLength(6)
+    ]),
+    email: new FormControl('', [
+      Validators.required, 
+      Validators.email
+    ]),
+    password: new FormControl('', [
+      Validators.required, 
+      Validators.minLength(8)
+    ])
   });
 
   register(user: any) {
@@ -43,7 +51,8 @@ export class RegisterComponent {
         this.router.navigate(['/login']);
       },
       (error) => {
-        this.toastr.error("Error while registering user")
+        this.spinner.hide();
+        this.toastr.error("Please enter a valid user")
       }
     );
   }

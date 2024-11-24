@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
   selector: 'app-customer-details',
   templateUrl: './customer-details.component.html',
   styleUrls: ['./customer-details.component.css'],
+  providers: [DatePipe]
 })
 export class CustomerDetailsComponent {
   constructor(
@@ -19,6 +20,7 @@ export class CustomerDetailsComponent {
     private transactionService: TransactionService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
+    private datePipe: DatePipe
   
   ) {}
 
@@ -46,7 +48,6 @@ export class CustomerDetailsComponent {
     this.customerService.getCustomer(customerId).subscribe(
       (res: any) => {
         this.customer = JSON.parse(res);
-        console.log(this.customer);
       },
       (error) => {
         console.log(error);
@@ -64,10 +65,10 @@ export class CustomerDetailsComponent {
     this.transactionService.getTransaction(userId, customerId).subscribe(
       (res: any) => {
         this.transactions = JSON.parse(res);
-        console.log('TRANSACTION:  ' + this.transactions);
-
+        console.log(this.transactions)
         this.transactions.forEach((transaction: any) => {
-          transaction.da
+
+          transaction.date = this.formatDate(transaction.date);
           if (transaction.status == 'Give') {
             this.totalToTake += transaction.amount;
           } else {
@@ -84,7 +85,6 @@ export class CustomerDetailsComponent {
         }
       },
       (error) => {
-        console.log(error);
       }
     );
 
@@ -103,5 +103,9 @@ export class CustomerDetailsComponent {
         console.log("Delete unsuccessful");
       }
     });
+  }
+
+  formatDate(date: string): string {
+    return this.datePipe.transform(date, 'MMM dd, yyyy, h:mm a') || '';
   }
 }

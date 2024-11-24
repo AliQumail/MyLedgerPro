@@ -1,6 +1,7 @@
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type="la-ball-scale-multiple" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="la-ball-scale-multiple" [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>
 <button class="purple-button w-100 mt-5" (click)="open(mymodal)">Add Customer</button>
-
 <ng-template #mymodal let-modal>
   <form [formGroup]="addCustomerForm">
     <div class="modal-header">
@@ -10,77 +11,72 @@
       </button>
     </div>
     <div class="modal-body">
-        
-           
-            <!-- Email input -->
-  
-            <div class="form-outline mb-3">
-              <!-- <label class="form-label" for="form3Example4">Password</label> -->
-              <input
-                type="text"
-                id="form3Example4"
-                formControlName="name"
-                class="form-control form-control-lg input-field"
-                placeholder="Name"
-              />
-              <div
-                *ngIf="
-                  addCustomerForm.controls['name'].invalid &&
-                  (addCustomerForm.controls['name'].dirty ||
-                    addCustomerForm.controls['name'].touched)
-                "
-                class="text-danger"
-              >
-                Name is required
-              </div>
-            </div>
-  
-            <div class="form-outline mb-3">
-              <!-- <label class="form-label" for="form3Example4">Password</label> -->
-              <input
-                type="text"
-                id="form3Example4"
-                formControlName="phoneno"
-                class="form-control form-control-lg input-field"
-                placeholder="Phone No"
-              />
-              <div
-                *ngIf="
-                  addCustomerForm.controls['phoneno'].invalid &&
-                  (addCustomerForm.controls['phoneno'].dirty ||
-                    addCustomerForm.controls['phoneno'].touched)
-                "
-                class="text-danger"
-              >
-                Phone no is required
-              </div>
-            </div>
-  
-            <div class="form-outline mb-4">
-              <!-- <label class="form-label" for="form3Example3">Username</label> -->
-              <input
-                type="email"
-                id="form3Example3"
-                class="form-control form-control-lg input-field"
-               
-                formControlName="email"
-                placeholder="Email"
-              />
-              <div
-                *ngIf="
-                  addCustomerForm.controls['email'].invalid &&
-                  (addCustomerForm.controls['email'].dirty ||
-                    addCustomerForm.controls['email'].touched)
-                "
-                class="text-danger"
-              >
-                Email is required
-              </div>
-            </div>
-  
+      <div class="form-outline mb-3">
+        <input
+          type="text"
+          id="form3Example4"
+          formControlName="name"
+          class="form-control form-control-lg input-field"
+          placeholder="Name"
+        />
+        <div
+          *ngIf="addCustomerForm.controls['name'].invalid && (addCustomerForm.controls['name'].dirty || addCustomerForm.controls['name'].touched)"
+          class="text-danger"
+        >
+          <div *ngIf="addCustomerForm.controls['name'].hasError('required')">
+            Name is required.
+          </div>
+          <div *ngIf="addCustomerForm.controls['name'].hasError('minlength')">
+            Name must be at least 4 characters long.
+          </div>
+          <div *ngIf="addCustomerForm.controls['name'].hasError('onlyAlphabets')">
+            Name must contain only alphabets.
+          </div>
+        </div>
+      </div>
+      <div class="form-outline mb-3">
+        <input
+          type="text"
+          id="form3Example5"
+          formControlName="phoneno"
+          class="form-control form-control-lg input-field"
+          placeholder="Phone No"
+        />
+        <div
+          *ngIf="addCustomerForm.controls['phoneno'].invalid && (addCustomerForm.controls['phoneno'].dirty || addCustomerForm.controls['phoneno'].touched)"
+          class="text-danger"
+        >
+          <div *ngIf="addCustomerForm.controls['phoneno'].hasError('required')">
+            Phone number is required.
+          </div>
+          <div *ngIf="addCustomerForm.controls['phoneno'].hasError('pattern')">
+            Phone number must be exactly 11 digits.
+          </div>
+        </div>
+      </div>
+      <div class="form-outline mb-4">
+        <input
+          type="email"
+          id="form3Example3"
+          class="form-control form-control-lg input-field"
+          formControlName="email"
+          placeholder="Email"
+        />
+        <div
+          *ngIf="addCustomerForm.controls['email'].invalid && (addCustomerForm.controls['email'].dirty || addCustomerForm.controls['email'].touched)"
+          class="text-danger"
+        >
+          <div *ngIf="addCustomerForm.controls['email'].hasError('required')">
+            Email is required.
+          </div>
+          <div *ngIf="addCustomerForm.controls['email'].hasError('email')">
+            Please enter a valid email address.
+          </div>
+        </div>
+      </div>
+
     </div>
     <div class="modal-footer">
-      <!-- <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button> -->
       <div class="text-center text-lg-start mt-4 pt-2">
         <button
           type="submit"
@@ -91,9 +87,7 @@
         >
           Add
         </button>
-
-      
       </div>
     </div>
   </form>
-  </ng-template>
+</ng-template>

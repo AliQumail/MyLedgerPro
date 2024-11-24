@@ -33,22 +33,27 @@ export class AddCustomerComponent {
   }
 
   addCustomerForm: FormGroup = new FormGroup({
-    name: new FormControl('', Validators.required),
-    phoneno: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.required),
-    
+    name: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+    phoneno: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/^\d{11}$/)
+    ]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email
+    ])
   });
  
 
   addCustomer(customerDetails: any) {
     this.spinner.show();
     customerDetails.userId = localStorage.getItem("userId"); 
-    console.log("before add customer api ")
-    console.log(customerDetails);
     this.customerService.addCustomer(customerDetails).subscribe(
       (res: any) => {
         this.spinner.hide();
-        console.log(res);
         this.toastr.success("Customer added successfully");
         this.refreshList.emit();
         this.addCustomerForm.reset();
@@ -56,9 +61,7 @@ export class AddCustomerComponent {
       },
       (error) => {
         this.spinner.hide(); 
-        console.log(JSON.stringify(error));
-        this.toastr.error("Failed to add customer");
-        //alert(error.headers);
+        this.toastr.error("Customer already exists");
       }
     );
   }

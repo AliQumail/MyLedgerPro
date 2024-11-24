@@ -79,16 +79,22 @@
           placeholder="Amount"
         />
         <div
-          *ngIf="
-            addTransactionForm.controls['amount'].invalid &&
-            (addTransactionForm.controls['amount'].dirty ||
-              addTransactionForm.controls['amount'].touched)
-          "
+          *ngIf="addTransactionForm.controls['amount'].invalid && 
+                 (addTransactionForm.controls['amount'].dirty || addTransactionForm.controls['amount'].touched)"
           class="text-danger"
         >
-          Amount is required
+          <div *ngIf="addTransactionForm.controls['amount'].hasError('required')">
+            Amount is required.
+          </div>
+          <div *ngIf="addTransactionForm.controls['amount'].hasError('min')">
+            Amount must be greater than 0.
+          </div>
+          <div *ngIf="addTransactionForm.controls['amount'].hasError('max')">
+            Amount must be less than 100,000,000.
+          </div>
         </div>
       </div>
+      
  
   </div>
   <div class="modal-footer">

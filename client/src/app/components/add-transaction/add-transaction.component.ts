@@ -45,7 +45,7 @@ export class AddTransactionComponent {
   addTransactionForm: FormGroup = new FormGroup({
     customerId: new FormControl('', Validators.required),
     status: new FormControl('', Validators.required),
-    amount: new FormControl('', Validators.required),    
+    amount: new FormControl('', [ Validators.required, Validators.min(1), Validators.max(100000000)]),    
   });
 
   addTransaction(transaction: any) {
@@ -57,7 +57,6 @@ export class AddTransactionComponent {
       .subscribe(
         (res: any) => {
           this.spinner.hide()
-          console.log(res);
           this.toastr.success("Transaction successful")
           this.refreshList.emit();
           this.addTransactionForm.reset();
@@ -67,7 +66,6 @@ export class AddTransactionComponent {
           this.spinner.hide()
           console.log(JSON.stringify(error));
           this.toastr.error("Transaction failed");
-          // alert(error.headers);
         }
       );
   }
