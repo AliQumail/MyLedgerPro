@@ -23,6 +23,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { UpdateTransactionComponent } from './components/update-transaction/update-transaction.component';
 import { UpdateCustomerComponent } from './components/update-customer/update-customer.component';
 import { NgChartsModule } from 'ng2-charts';
+import { DynamicFormGenerationComponent } from './components/dynamic-form-generation/dynamic-form-generation.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { NgChartsModule } from 'ng2-charts';
     NavbarComponent,
     HomeComponent,
     UpdateTransactionComponent,
-    UpdateCustomerComponent
+    UpdateCustomerComponent,
+    DynamicFormGenerationComponent
   ],
   imports: [
     NgChartsModule,

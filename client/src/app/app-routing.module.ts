@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
 import { HomeComponent } from './components/home/home.component';
+import { DynamicFormGenerationComponent } from './components/dynamic-form-generation/dynamic-form-generation.component';
 
 
 const routes: Routes = [
@@ -12,7 +13,8 @@ const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: '', component: HomeComponent },  
     { path: 'dashboard', component: DashboardComponent },
-    { path: 'details/user/:useremail/customer/:customeremail', component: CustomerDetailsComponent}
+    { path: 'details/user/:useremail/customer/:customeremail', component: CustomerDetailsComponent},
+    { path: 'dynamic-form-generation', component: DynamicFormGenerationComponent}
    
   ];
   

@@ -37,7 +37,7 @@ namespace server.Controllers
 
 
         [HttpPost]
-        [Route("gettransaction")]
+        [Route("GetCustomerTransactionsByUser")]
         public async Task<List<Transaction>?> GetTransaction(GetTransactionRequest request)
         {
             return await transactionRepository.GetCustomerTransactionsByUserId(request.UserId, request.CustomerId);

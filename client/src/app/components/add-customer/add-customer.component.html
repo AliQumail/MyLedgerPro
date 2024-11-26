@@ -27,7 +27,7 @@
             Name is required.
           </div>
           <div *ngIf="addCustomerForm.controls['name'].hasError('minlength')">
-            Name must be at least 4 characters long.
+            Name must be at least 3 characters long.
           </div>
           <div *ngIf="addCustomerForm.controls['name'].hasError('onlyAlphabets')">
             Name must contain only alphabets.

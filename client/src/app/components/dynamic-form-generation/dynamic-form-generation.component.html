@@ -1,0 +1,74 @@
+<div class="container mt-5">
+  <h5 class="text-center">Edit data in Database</h5>
+  <form [formGroup]="dynamicForm"  class="mt-4" style="position: relative;">
+    <div>
+    <div *ngFor="let field of formsJson" class="form-group" 
+      [ngStyle]="{ 
+        'margin-bottom': '1rem', 
+        'position': 'absolute', 
+        'top': field.location?.y + 'px', 
+        'left': field.location?.x + 'px', 
+        'height': field.size?.height + 'px', 
+        'width': field.size?.width + 'px'
+      }">
+      
+      <!-- Render form input fields conditionally based on the field type -->
+      <div *ngIf="!field.hidden">
+        <label for="{{ field.name }}">{{ field.label }}</label>
+        
+        <!-- Textbox Input -->
+        <input
+          *ngIf="field.inputControlType == 'textbox'"
+          [type]="'text'"
+          [formControlName]="field.name"
+          [placeholder]="field.placeholder"
+          class="form-control"
+        />
+        
+        <!-- Dropdown Input -->
+        <select
+          *ngIf="field.inputControlType == 'dropdown'"
+          [formControlName]="field.name"
+          class="form-select"
+        >
+          <option value="" disabled selected>Select a country</option>
+          <option *ngFor="let option of field.options" [value]="option">
+            {{ option }}
+          </option>
+        </select>
+
+        <!-- Multi-select Dropdown -->
+        <select
+          *ngIf="field.inputControlType == 'multiselectdropdown'"
+          [formControlName]="field.name"
+          class="form-select"
+          multiple
+        >
+          <option *ngFor="let option of field.options" [value]="option">
+            {{ option }}
+          </option>
+        </select>
+      </div>
+
+    
+      <!-- Validation Error Message -->
+      <div 
+        style="text-align: center; position: relative; bottom: 2px;" 
+        *ngIf="dynamicForm.get(field.name)?.touched && dynamicForm.get(field.name)?.hasError('required')" 
+        class="text-danger"
+      >
+        This field is required.
+      </div>
+    </div>
+  </div>
+    
+  </form>
+
+  <button
+      (click)="onSubmit()"
+      class="btn btn-secondary"
+      [disabled]="dynamicForm.invalid"
+    >
+      Submit
+  </button>
+</div>
