@@ -2,6 +2,9 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+/server/server/obj
+/server/server/bin
+/server/.vs
 /server/.vs/server/FileContentIndex
 /server/server/bin/Debug/net6.0
 /server/server/obj/Debug/net6.0
