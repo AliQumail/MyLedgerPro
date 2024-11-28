@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  <h5 class="text-center">Edit data in Database</h5>
+  <h5 class="text-center">Create Work Item</h5>
   <form [formGroup]="dynamicForm"  class="mt-4" style="position: relative;">
     <div>
     <div *ngFor="let field of formsJson" class="form-group" 
@@ -14,7 +14,7 @@
       
       <!-- Render form input fields conditionally based on the field type -->
       <div *ngIf="!field.hidden">
-        <label for="{{ field.name }}">{{ field.label }}</label>
+        <label for="{{ field.name }}">{{ field.label }} <span *ngIf="field.required" style="color: red;">*</span></label>
         
         <!-- Textbox Input -->
         <input
@@ -23,6 +23,7 @@
           [formControlName]="field.name"
           [placeholder]="field.placeholder"
           class="form-control"
+          [ngStyle]="{'background-color': field.required ? '#ebc159' : 'transparent'}"
         />
         
         <!-- Dropdown Input -->
@@ -30,24 +31,15 @@
           *ngIf="field.inputControlType == 'dropdown'"
           [formControlName]="field.name"
           class="form-select"
+          [ngStyle]="{'background-color': field.required ? '#ebc159' : 'transparent'}"
         >
-          <option value="" disabled selected>Select a country</option>
-          <option *ngFor="let option of field.options" [value]="option">
-            {{ option }}
+          <option value="" disabled selected>Select</option>
+          <option *ngFor="let option of field.validValues" [value]="option.value">
+            {{ option.description }}
           </option>
         </select>
 
-        <!-- Multi-select Dropdown -->
-        <select
-          *ngIf="field.inputControlType == 'multiselectdropdown'"
-          [formControlName]="field.name"
-          class="form-select"
-          multiple
-        >
-          <option *ngFor="let option of field.options" [value]="option">
-            {{ option }}
-          </option>
-        </select>
+       
       </div>
 
     
@@ -67,8 +59,21 @@
   <button
       (click)="onSubmit()"
       class="btn btn-secondary"
-      [disabled]="dynamicForm.invalid"
+      style="position: absolute; bottom: 0;"
     >
       Submit
   </button>
 </div>
+
+
+ <!-- Multi-select Dropdown -->
+        <!-- <select
+          *ngIf="field.inputControlType == 'multiselectdropdown'"
+          [formControlName]="field.name"
+          class="form-select"
+          multiple
+        >
+          <option *ngFor="let value of field.validValues" [value]="value.name">
+            {{ value.description }}
+          </option>
+        </select> -->
