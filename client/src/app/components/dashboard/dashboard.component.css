@@ -197,6 +197,11 @@
     color: #1d8a5e;
 }
 
+.dashboard-chart-wrap {
+    position: relative;
+    height: 320px;
+}
+
 .dashboard-empty {
     color: #5a6b64;
     padding: 2rem 0;

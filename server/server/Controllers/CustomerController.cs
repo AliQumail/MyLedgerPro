@@ -61,6 +61,12 @@ namespace server.Controllers
             return await customerRepository.GetCustomerById(id);
         }
 
+        [HttpGet]
+        [Route("getcustomerbyname")]
+        public async Task<Customer?> GetCustomerByName([FromQuery] Guid userId, [FromQuery] string name) {
+            return await customerRepository.GetCustomerByName(userId, name);
+        }
+
 
         //[HttpGet]
         //[Route("GetCustomersByUserId")]
@@ -90,6 +96,10 @@ namespace server.Controllers
                     .Where(u => u.CustomerId == customer.Id  && u.UserId == request.Id && u.Status == "Take")
                     .SumAsync(u => u.Amount);
 
+                // Finding the total number of transactions for this customer
+                var transactionCount = await DbContext.Transaction
+                    .CountAsync(u => u.CustomerId == customer.Id && u.UserId == request.Id);
+
                 var toTake = 0;
                 var toGive = 0;
                 if (totalTake > totalGive)
@@ -110,7 +120,8 @@ namespace server.Controllers
                     CustomerEmail = customer.Email,
                     CustomerPhoneNo = customer.PhoneNo,
                     ToTake = toTake,
-                    ToGive = toGive
+                    ToGive = toGive,
+                    TransactionCount = transactionCount
                 };
 
                 CustomersSummaryList.Add(CustomersSummaryResponse);

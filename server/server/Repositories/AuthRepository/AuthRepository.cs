@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
+using server.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,12 +14,13 @@ namespace server.Repositories.AuthRepository
             configuration = _configuration;
         }
 
-        public string CreateJwtToken(IdentityUser user)
+        public string CreateJwtToken(ApplicationUser user)
         {
             // Create claims
             var claims = new List<Claim>();
 
             claims.Add(new Claim(ClaimTypes.Email, user.Email));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
 
             //foreach (var role in roles)
             //{

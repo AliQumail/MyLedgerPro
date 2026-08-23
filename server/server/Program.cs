@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using server.Repositories.AuthRepository;
 using server.Repositories.CustomerRepository;
 using server.Repositories.TransactionRepository;
+using server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,10 +36,11 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
-builder.Services.AddIdentityCore<IdentityUser>()
+builder.Services.AddIdentityCore<server.Models.ApplicationUser>()
     .AddRoles<IdentityRole>()
-    .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("CashBook")
+    .AddTokenProvider<DataProtectorTokenProvider<server.Models.ApplicationUser>>("CashBook")
     .AddEntityFrameworkStores<CashBookAuthDbContext>()
     .AddDefaultTokenProviders();
 

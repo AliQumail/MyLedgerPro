@@ -13,7 +13,7 @@ const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: '', component: HomeComponent },  
     { path: 'dashboard', component: DashboardComponent },
-    { path: 'details/user/:useremail/customer/:customeremail', component: CustomerDetailsComponent},
+    { path: 'customer/:customerName', component: CustomerDetailsComponent},
     { path: 'dynamic-form-generation', component: DynamicFormGenerationComponent}
    
   ];

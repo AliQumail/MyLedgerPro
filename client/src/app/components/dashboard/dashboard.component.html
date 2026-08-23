@@ -22,11 +22,11 @@
       <div class="col col-12 col-lg-3">
         <div class="dashboard-sidebar">
           <div class="stat-card stat-card-give">
-            <div class="stat-card-label">To Give (RS)</div>
+            <div class="stat-card-label">To Give ({{ currency }})</div>
             <div class="stat-card-value">{{ totalToGive | number }}</div>
           </div>
           <div class="stat-card stat-card-take">
-            <div class="stat-card-label">To Take (RS)</div>
+            <div class="stat-card-label">To Take ({{ currency }})</div>
             <div class="stat-card-value">{{ totalToTake | number }}</div>
           </div>
         </div>
@@ -47,6 +47,7 @@
                   placeholder="Search customers..."
                   [(ngModel)]="searchTerm"
                   (ngModelChange)="onSearchChange($event)"
+                  [disabled]="showGraphicalView == 1"
                 />
               </div>
               <button type="button" class="dashboard-pdf-btn" (click)="downloadPdf()">
@@ -54,7 +55,7 @@
               </button>
             </div>
           </div>
-          <div *ngIf="showGraphicalView == 1" class="mt-2">
+          <div *ngIf="showGraphicalView == 1" class="mt-2 dashboard-chart-wrap">
             <canvas baseChart
             class="w-100"
             [data]="barChartData"
@@ -77,6 +78,7 @@
                     To Give
                     <fa-icon [icon]="sortColumn === 'toGive' ? (sortDirection === 'asc' ? faSortUp : faSortDown) : faSort" class="dashboard-sort-icon"></fa-icon>
                   </th>
+                  <th>Transactions</th>
                   <th>Details</th>
                   <th>Update</th>
                   <th>Delete</th>
@@ -98,11 +100,12 @@
                     <p class="fw-normal mb-1">{{ item.toTake | number }}</p>
                   </td>
                   <td>{{ item.toGive | number }}</td>
+                  <td>{{ item.transactionCount }}</td>
                   <td>
                     <button
                       type="button"
                       class="btn-styling-none"
-                      (click)="view(item.customerId)"
+                      (click)="view(item.customerId, item.customerName)"
                     >
                     <fa-icon [icon]="faEye"></fa-icon>
                     </button>
@@ -121,7 +124,7 @@
                   </td>
                 </tr>
                 <tr *ngIf="filteredSummary.length === 0">
-                  <td colspan="6" class="text-center dashboard-empty">No Data</td>
+                  <td colspan="7" class="text-center dashboard-empty">No Data</td>
                 </tr>
               </tbody>
             </table>

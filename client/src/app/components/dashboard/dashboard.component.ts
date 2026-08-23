@@ -10,6 +10,7 @@ import { faSearch, faSortUp, faSortDown, faSort, faFilePdf } from '@fortawesome/
 import { ChartConfiguration } from 'chart.js';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { ConfirmDialogService } from 'src/app/shared/confirm-dialog/confirm-dialog.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +23,8 @@ export class DashboardComponent {
     private customerService: CustomerService,
     private router: Router,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private confirmDialog: ConfirmDialogService
   ) {}
 
   //title = 'ng2-charts-demo';
@@ -36,7 +38,31 @@ export class DashboardComponent {
   };
 
   public barChartOptions: ChartConfiguration<'bar'>['options'] = {
-    responsive: false,
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { color: '#5a6b64' },
+      },
+      y: {
+        beginAtZero: true,
+        grid: { color: '#eef2f0' },
+        ticks: { color: '#5a6b64' },
+      },
+    },
+    plugins: {
+      legend: {
+        position: 'top',
+        align: 'end',
+        labels: {
+          color: '#0b3d2e',
+          usePointStyle: true,
+          pointStyle: 'circle',
+          boxWidth: 8,
+        },
+      },
+    },
   };
 
   name: string | null = '';
@@ -58,6 +84,7 @@ export class DashboardComponent {
 
   totalToTake: number = 0;
   totalToGive: number = 0;
+  currency: string = 'RS';
 
   searchTerm: string = '';
   sortColumn: 'toTake' | 'toGive' | null = null;
@@ -68,7 +95,14 @@ export class DashboardComponent {
    
   ];
 
-  deleteCustomer(id: string) {
+  async deleteCustomer(id: string) {
+    const confirmed = await this.confirmDialog.confirm(
+      'Delete this customer?',
+      'This will permanently remove the customer and cannot be undone.',
+      'Delete Customer'
+    );
+    if (!confirmed) return;
+
     this.spinner.show();
     this.customerService.deleteCustomer(id).subscribe((res: any) => {
       if (res) {
@@ -84,10 +118,11 @@ export class DashboardComponent {
 
   // for graph
   ngOnInit() {
-    this.authService.isAuthenticated(); 
+    this.authService.isAuthenticated();
     if (
       localStorage.getItem('username') != null ){
       this.name = localStorage.getItem('username');
+      this.currency = localStorage.getItem('currency') || 'RS';
       this.generateSummary(localStorage.getItem('userId'));
     }
   }
@@ -107,11 +142,8 @@ export class DashboardComponent {
     this.showGraphicalView = this.showGraphicalView == 1 ? 0 : 1;
   }
 
-  view(customerId: any) {
-    this.router.navigate([
-      'details/user/:userId/customer/:customerId',
-      { userId: localStorage.getItem('userId'), customerId: customerId },
-    ]);
+  view(customerId: any, customerName: string) {
+    this.router.navigate(['customer', customerName]);
   }
 
   getTransactions(_userEmail: any) {
@@ -195,12 +227,13 @@ export class DashboardComponent {
 
     autoTable(doc, {
       startY: 22,
-      head: [['Name', 'Email', 'To Take (RS)', 'To Give (RS)']],
+      head: [['Name', 'Email', `To Take (${this.currency})`, `To Give (${this.currency})`, 'Transactions']],
       body: this.filteredSummary.map((item: any) => [
         item.customerName,
         item.customerEmail,
         item.toTake,
         item.toGive,
+        item.transactionCount,
       ]),
       headStyles: { fillColor: [15, 81, 50] },
     });
@@ -222,8 +255,22 @@ export class DashboardComponent {
     
     let labels : any = [];
     let datasets : any = [
-      { data: [], label: 'To Take' },
-      { data: [], label: 'To Give' },
+      {
+        data: [],
+        label: 'To Take',
+        backgroundColor: '#1d8a5e',
+        hoverBackgroundColor: '#0f5132',
+        borderRadius: 4,
+        maxBarThickness: 40,
+      },
+      {
+        data: [],
+        label: 'To Give',
+        backgroundColor: '#b7c1bc',
+        hoverBackgroundColor: '#8a9490',
+        borderRadius: 4,
+        maxBarThickness: 40,
+      },
     ];
 
     for (var customer of this.summary) {

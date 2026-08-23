@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using server.Models;
 
 namespace server.Repositories.AuthRepository
 {
     public interface IAuthRepository
     {
-        public string CreateJwtToken(IdentityUser user);
+        public string CreateJwtToken(ApplicationUser user);
     }
 }

@@ -24,6 +24,7 @@ import { UpdateTransactionComponent } from './components/update-transaction/upda
 import { UpdateCustomerComponent } from './components/update-customer/update-customer.component';
 import { NgChartsModule } from 'ng2-charts';
 import { DynamicFormGenerationComponent } from './components/dynamic-form-generation/dynamic-form-generation.component';
+import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { DynamicFormGenerationComponent } from './components/dynamic-form-genera
     HomeComponent,
     UpdateTransactionComponent,
     UpdateCustomerComponent,
-    DynamicFormGenerationComponent
+    DynamicFormGenerationComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     NgChartsModule,

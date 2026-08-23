@@ -1,37 +1,73 @@
 <div *ngIf="customer.name != null" class="dashboard-outer">
    <app-navbar></app-navbar>
     <div class="container">
-        <div class="dashboard-header-row">
-          <div class="dashboard-greeting">Customer: {{ customer.name }}</div>
+        <div class="dashboard-header-row customer-header-row">
+          <div class="customer-header-identity">
+            <div class="customer-avatar">{{ customer.name.charAt(0) }}</div>
+            <div>
+              <div class="customer-header-label">Customer</div>
+              <div class="dashboard-greeting customer-header-name">{{ customer.name }}</div>
+            </div>
+          </div>
+          <a routerLink="/dashboard" class="customer-back-link">
+            <fa-icon [icon]="faArrowLeft"></fa-icon> Back to Dashboard
+          </a>
         </div>
         <div class="row">
           <div class="col col-12 col-lg-3">
             <div class="dashboard-sidebar">
               <div class="stat-card stat-card-give">
-                <div class="stat-card-label">To Give (RS)</div>
+                <div class="stat-card-label">To Give ({{ currency }})</div>
                 <div class="stat-card-value">{{ totalToGive | number }}</div>
               </div>
               <div class="stat-card stat-card-take">
-                <div class="stat-card-label">To Take (RS)</div>
+                <div class="stat-card-label">To Take ({{ currency }})</div>
                 <div class="stat-card-value">{{ totalToTake | number }}</div>
+              </div>
+              <div class="customer-reminder-actions">
+                <div class="customer-reminder-label">Send Reminder</div>
+                <button type="button" class="customer-reminder-btn customer-reminder-email" (click)="sendEmailReminder()">
+                  <fa-icon [icon]="faEnvelope" class="me-2"></fa-icon>Email
+                </button>
+                <button type="button" class="customer-reminder-btn customer-reminder-whatsapp" (click)="sendWhatsAppReminder()">
+                  <fa-icon [icon]="faWhatsapp" class="me-2"></fa-icon>WhatsApp
+                </button>
               </div>
             </div>
           </div>
           <div class="col col-12 col-lg-9">
             <div class="dashboard-panel">
+              <div class="customer-panel-toolbar">
+                <div class="customer-date-filter">
+                  <div class="customer-date-field">
+                    <label class="auth-label">From</label>
+                    <input type="date" class="form-control input-field" [(ngModel)]="startDate" (ngModelChange)="onDateFilterChange()" />
+                  </div>
+                  <div class="customer-date-field">
+                    <label class="auth-label">To</label>
+                    <input type="date" class="form-control input-field" [(ngModel)]="endDate" (ngModelChange)="onDateFilterChange()" />
+                  </div>
+                  <button type="button" class="dashboard-pdf-btn customer-clear-filter-btn" (click)="clearDateFilter()" *ngIf="startDate || endDate">
+                    Clear
+                  </button>
+                </div>
+                <button type="button" class="customer-download-btn" (click)="downloadPdf()">
+                  <fa-icon [icon]="faFilePdf" class="me-1"></fa-icon>Download PDF
+                </button>
+              </div>
               <div class="table-responsive">
                 <table class="table align-middle mb-0 dashboard-table">
                   <thead>
                     <tr>
                       <th>Status</th>
-                      <th>Amount</th>
+                      <th>Amount ({{ currency }})</th>
                       <th>Date</th>
                       <th>Update</th>
                       <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let tran of transactions">
+                    <tr *ngFor="let tran of filteredTransactions">
                       <td>
                         <span class="status-badge" [ngClass]="tran.status === 'Take' ? 'status-badge-take' : 'status-badge-give'">{{tran.status}}</span>
                       </td>
@@ -46,7 +82,7 @@
                         <button class="btn-styling-none" (click)='deleteTransaction(tran.id)'><fa-icon [icon]="faTrashCan"></fa-icon></button>
                       </td>
                     </tr>
-                    <tr *ngIf="transactions.length === 0">
+                    <tr *ngIf="filteredTransactions.length === 0">
                       <td colspan="5" class="text-center dashboard-empty">No Data</td>
                     </tr>
                   </tbody>

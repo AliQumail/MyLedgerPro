@@ -25,6 +25,14 @@ export class AuthService {
     if (localStorage.getItem('token') == null) this.router.navigate(['/login']);
   }
 
+  public getProfile(id: string): Observable<any> {
+    return this.http.get(`https://localhost:7277/api/Auth/profile?id=${id}`);
+  }
+
+  public updateProfile(id: string, profile: any): Observable<any> {
+    return this.http.put(`https://localhost:7277/api/Auth/profile?id=${id}`, profile);
+  }
+
   public getTransactions(email: any): Observable<string> {
     return this.http.post(
       'https://localhost:7277/api/Transaction/gettransactionsbyuser',

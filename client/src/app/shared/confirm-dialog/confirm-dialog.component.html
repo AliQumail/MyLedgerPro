@@ -1,0 +1,11 @@
+<div class="modal-body confirm-dialog-body">
+  <div class="confirm-dialog-icon">
+    <fa-icon [icon]="faTriangleExclamation"></fa-icon>
+  </div>
+  <h5 class="confirm-dialog-title">{{ title }}</h5>
+  <p class="confirm-dialog-message">{{ message }}</p>
+</div>
+<div class="modal-footer confirm-dialog-footer">
+  <button type="button" class="confirm-dialog-cancel-btn" (click)="cancel()">Cancel</button>
+  <button type="button" class="confirm-dialog-confirm-btn" (click)="confirm()">{{ confirmLabel }}</button>
+</div>

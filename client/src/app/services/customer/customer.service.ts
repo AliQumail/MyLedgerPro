@@ -60,6 +60,19 @@ export class CustomerService {
     });
   }
 
+  getCustomerByName(userId: string, name: string): Observable<any> {
+    const url = `https://localhost:7277/api/Customer/getcustomerbyname?userId=${userId}&name=${encodeURIComponent(name)}`;
+    return this.http.get<any>(url);
+  }
+
+  public sendEmailReminder(request: any): Observable<any> {
+    return this.http.post(
+      'https://localhost:7277/api/Reminder/send-email',
+      request,
+      { responseType: 'text' }
+    );
+  }
+
   public getCustomerSummary(id: any): Observable<CustomerSummary[]> {
     return this.http.post<CustomerSummary[]>(
       'https://localhost:7277/api/Customer/customers/summary',

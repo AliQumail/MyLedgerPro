@@ -18,11 +18,105 @@
     font-weight: 700;
 }
 
+.customer-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #5a6b64;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.customer-back-link:hover {
+    color: #0f5132;
+}
+
+.customer-header-identity {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.customer-avatar {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f5132, #1d8a5e);
+    color: #ffffff;
+    font-size: 1.35rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.customer-header-label {
+    color: #5a6b64;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.customer-header-name {
+    font-size: 1.4rem;
+    margin-top: 0.1rem;
+}
+
 .dashboard-sidebar {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
     padding: 0.5rem 0.75rem 1.5rem 0;
+}
+
+.customer-reminder-actions {
+    background-color: #f7faf8;
+    border: 1px solid #e7ece9;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.customer-reminder-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #5a6b64;
+    margin-bottom: 0.1rem;
+}
+
+.customer-reminder-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .15s;
+    border: none;
+}
+
+.customer-reminder-btn:hover {
+    opacity: 0.9;
+}
+
+.customer-reminder-email {
+    background: linear-gradient(135deg, #0f5132, #1d8a5e);
+    color: #ffffff;
+}
+
+.customer-reminder-whatsapp {
+    background-color: #25d366;
+    color: #ffffff;
 }
 
 .stat-card {
@@ -119,6 +213,72 @@
 .status-badge-give {
     background-color: #eceeed;
     color: #5a6b64;
+}
+
+.customer-panel-toolbar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.customer-date-filter {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.customer-date-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.customer-date-field input {
+    height: 38px;
+    font-size: 0.85rem;
+    min-width: 160px;
+}
+
+.customer-clear-filter-btn {
+    display: inline-flex;
+    align-items: center;
+    height: 38px;
+    padding: 0 1rem;
+    border: 1px solid #dfe9e4;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #5a6b64;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .15s;
+}
+
+.customer-clear-filter-btn:hover {
+    background-color: #f5f9f7;
+}
+
+.customer-download-btn {
+    display: inline-flex;
+    align-items: center;
+    height: 38px;
+    padding: 0 1rem;
+    border: 1px solid #1d8a5e;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #0f5132;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .15s;
+}
+
+.customer-download-btn:hover {
+    background-color: #eaf6f0;
 }
 
 .dashboard-date-pill {

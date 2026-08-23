@@ -8,5 +8,6 @@
         public string CustomerPhoneNo { set; get; } = string.Empty;
         public int ToTake { set; get; }
         public int ToGive { set; get; }
+        public int TransactionCount { set; get; }
     }
 }

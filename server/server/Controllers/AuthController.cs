@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using server.Models;
 using server.Models.DTOs;
 using server.Models.DTOs.AuthDTOs;
 using server.Repositories.AuthRepository;
@@ -12,9 +13,9 @@ namespace server.Controllers
     public class AuthController : ControllerBase
     {
 
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly IAuthRepository authRepository;
-        public AuthController(UserManager<IdentityUser> _userManager, IAuthRepository _authRepository)
+        public AuthController(UserManager<ApplicationUser> _userManager, IAuthRepository _authRepository)
         {
             this.userManager = _userManager;
             this.authRepository = _authRepository;
@@ -24,10 +25,11 @@ namespace server.Controllers
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDTO registerRequestDto)
         {
-            var identityUser = new IdentityUser()
+            var identityUser = new ApplicationUser()
             {
                 UserName = registerRequestDto.Username,
                 Email = registerRequestDto.Email,
+                Currency = "RS",
             };
 
             var identityResult = await userManager.CreateAsync(identityUser, registerRequestDto.Password);
@@ -61,6 +63,7 @@ namespace server.Controllers
                             Username = user.UserName,
                             Email = user.Email,
                             Token = token,
+                            Currency = string.IsNullOrEmpty(user.Currency) ? "RS" : user.Currency,
                         };
                         return loginResponse;
                     }
@@ -68,16 +71,75 @@ namespace server.Controllers
                         throw new Exception("Something went wrong while logging in");
                     }
                 }
-                else 
+                else
                 {
                     throw new Exception("Password doesn't match");
                 }
             }
-            else 
+            else
             {
                 throw new Exception("User not found");
             }
-            
+
+        }
+
+        [HttpGet]
+        [Route("profile")]
+        public async Task<ProfileResponseDTO> GetProfile([FromQuery] string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            return new ProfileResponseDTO()
+            {
+                Id = user.Id,
+                Username = user.UserName,
+                Email = user.Email,
+                Currency = string.IsNullOrEmpty(user.Currency) ? "RS" : user.Currency,
+            };
+        }
+
+        [HttpPut]
+        [Route("profile")]
+        public async Task<ProfileResponseDTO> UpdateProfile([FromQuery] string id, [FromBody] UpdateProfileDTO request)
+        {
+            var user = await userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            if (!string.Equals(user.UserName, request.Username, StringComparison.Ordinal))
+            {
+                var setUsernameResult = await userManager.SetUserNameAsync(user, request.Username);
+                if (!setUsernameResult.Succeeded)
+                {
+                    throw new Exception("Failed to update username");
+                }
+            }
+
+            if (!string.Equals(user.Email, request.Email, StringComparison.Ordinal))
+            {
+                var setEmailResult = await userManager.SetEmailAsync(user, request.Email);
+                if (!setEmailResult.Succeeded)
+                {
+                    throw new Exception("Failed to update email");
+                }
+            }
+
+            user.Currency = request.Currency;
+            await userManager.UpdateAsync(user);
+
+            return new ProfileResponseDTO()
+            {
+                Id = user.Id,
+                Username = user.UserName,
+                Email = user.Email,
+                Currency = user.Currency,
+            };
         }
     }
 }

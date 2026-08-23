@@ -136,3 +136,9 @@
 	outline: inherit;
     font-size: 1.5rem;
 }
+
+/* toastr theming */
+
+.toast-success {
+    background-color: #1d8a5e !important;
+}

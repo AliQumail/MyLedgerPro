@@ -7,6 +7,7 @@ namespace server.Repositories.CustomerRepository
     {
         public Task<Customer> AddCustomerAsync(Customer customer);
         public Task<Customer?> GetCustomerById(Guid id);
+        public Task<Customer?> GetCustomerByName(Guid userId, string name);
         public Task<List<Customer>?> GetCustomersByUserId(Guid id);
         public Task<bool> UpdateCustomerAsync(Guid id, AddCustomerDTO customer);
         public Task<bool> RemoveCustomerAsync(Guid id);

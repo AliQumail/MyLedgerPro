@@ -21,6 +21,12 @@ namespace server.Repositories.CustomerRepository
                 throw new Exception("Customer already exists");
             }
 
+            var nameDuplicate = await DbContext.Customer.AnyAsync(x => x.Name == customer.Name && x.UserId == customer.UserId);
+            if (nameDuplicate)
+            {
+                throw new Exception("A customer with this name already exists");
+            }
+
             await DbContext.Customer.AddAsync(customer);
             await DbContext.SaveChangesAsync();
             return customer;
@@ -34,6 +40,14 @@ namespace server.Repositories.CustomerRepository
             {
                 throw new Exception("Email already exists");
             }
+
+            var nameDuplicate = await DbContext.Customer.AnyAsync(u => u.Name == customer.Name && u.Id != id && customer.UserId == u.UserId);
+
+            if (nameDuplicate)
+            {
+                throw new Exception("A customer with this name already exists");
+            }
+
             var customerFound = await DbContext.Customer.SingleOrDefaultAsync(u => u.Id == id);
             if (customerFound != null ) 
             {
@@ -68,6 +82,11 @@ namespace server.Repositories.CustomerRepository
             }
             return null;
 
+        }
+
+        public async Task<Customer?> GetCustomerByName(Guid userId, string name)
+        {
+            return await DbContext.Customer.SingleOrDefaultAsync(u => u.UserId == userId && u.Name == name);
         }
 
         public async Task<List<Customer>?> GetCustomersByUserId(Guid id)

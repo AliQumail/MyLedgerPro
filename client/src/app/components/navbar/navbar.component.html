@@ -21,6 +21,9 @@
             <fa-icon [icon]="faEllipsisVertical"></fa-icon>
           </button>
           <div ngbDropdownMenu aria-labelledby="navUserMenu" class="nav-menu-dropdown">
+            <button ngbDropdownItem (click)="openProfile(profileModal)">
+              <fa-icon [icon]="faUserGear" class="me-2"></fa-icon>Profile Settings
+            </button>
             <button ngbDropdownItem (click)="handleLogout()">
               <fa-icon [icon]="faSignOut" class="me-2"></fa-icon>Logout
             </button>
@@ -30,4 +33,57 @@
     </nav>
 
   </div>
+
+  <ng-template #profileModal let-modal>
+    <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="themed-modal-form">
+      <div class="modal-header themed-modal-header">
+        <h4 class="modal-title">Profile Settings</h4>
+        <button type="button" class="modal-cross-btn" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label auth-label">Username</label>
+          <div class="input-with-icon">
+            <fa-icon [icon]="faUser" class="field-icon"></fa-icon>
+            <input type="text" formControlName="username" class="form-control form-control-lg input-field" placeholder="Username" />
+          </div>
+          <div
+            *ngIf="profileForm.controls['username'].invalid && (profileForm.controls['username'].dirty || profileForm.controls['username'].touched)"
+            class="text-danger small mt-1"
+          >
+            Username is required
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label auth-label">Email</label>
+          <div class="input-with-icon">
+            <fa-icon [icon]="faEnvelope" class="field-icon"></fa-icon>
+            <input type="email" formControlName="email" class="form-control form-control-lg input-field" placeholder="Email" />
+          </div>
+          <div
+            *ngIf="profileForm.controls['email'].invalid && (profileForm.controls['email'].dirty || profileForm.controls['email'].touched)"
+            class="text-danger small mt-1"
+          >
+            Please enter a valid email address
+          </div>
+        </div>
+        <div class="mb-2">
+          <label class="form-label auth-label">Currency</label>
+          <div class="input-with-icon">
+            <fa-icon [icon]="faMoneyBill" class="field-icon"></fa-icon>
+            <select formControlName="currency" class="form-select form-select-lg input-field">
+              <option *ngFor="let c of currencyOptions" [ngValue]="c">{{ c }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer themed-modal-footer">
+        <button type="submit" class="green-button" style="padding-left: 2.5rem; padding-right: 2.5rem" [disabled]="profileForm.invalid">
+          Save Changes
+        </button>
+      </div>
+    </form>
+  </ng-template>
   </div>
