@@ -16,6 +16,9 @@
           [customers]="customers"
           (refreshList)="handleRefreshList()"
         ></app-add-transaction>
+        <button class="purple-button" routerLink="/reminders">
+          <fa-icon [icon]="faClock" class="me-2"></fa-icon>Schedule Reminders
+        </button>
       </div>
     </div>
     <div class="row">
@@ -50,9 +53,7 @@
                   [disabled]="showGraphicalView == 1"
                 />
               </div>
-              <button type="button" class="dashboard-pdf-btn" (click)="downloadPdf()">
-                <fa-icon [icon]="faFilePdf" class="me-1"></fa-icon>Download PDF
-              </button>
+              <app-download-dropdown (download)="handleDownload($event)"></app-download-dropdown>
             </div>
           </div>
           <div *ngIf="showGraphicalView == 1" class="mt-2 dashboard-chart-wrap">

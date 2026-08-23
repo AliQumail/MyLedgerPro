@@ -1,0 +1,55 @@
+.download-dropdown-trigger {
+    display: inline-flex;
+    align-items: center;
+    height: 38px;
+    padding: 0 1rem;
+    border: 1px solid #1d8a5e;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #0f5132;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .15s;
+}
+
+.download-dropdown-trigger:hover {
+    background-color: #eaf6f0;
+}
+
+.download-dropdown-trigger::after {
+    display: none !important;
+}
+
+.download-dropdown-menu {
+    border: 1px solid #e7ece9;
+    border-radius: 10px;
+    box-shadow: rgba(15, 81, 50, .12) 0 8px 24px 0;
+    padding: 0.4rem;
+    min-width: 10rem;
+}
+
+.download-dropdown-menu .dropdown-item {
+    border-radius: 6px;
+    color: #0b3d2e;
+    font-weight: 500;
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    align-items: center;
+}
+
+.download-dropdown-menu .dropdown-item:hover {
+    background-color: #eaf6f0;
+}
+
+.download-icon-pdf {
+    color: #d9432e;
+}
+
+.download-icon-excel {
+    color: #1d8a5e;
+}
+
+.download-icon-csv {
+    color: #5a6b64;
+}

@@ -6,13 +6,15 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { faTrashCan, faEye, faHand } from '@fortawesome/free-regular-svg-icons';
-import { faSearch, faSortUp, faSortDown, faSort, faFilePdf, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSortUp, faSortDown, faSort, faFilePdf, faEnvelope, faClock } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { ChartConfiguration } from 'chart.js';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { ConfirmDialogService } from 'src/app/shared/confirm-dialog/confirm-dialog.service';
 import { buildReminderMessage, openWhatsAppReminder } from 'src/app/shared/reminder/reminder.util';
+import { downloadExcel, downloadCsv } from 'src/app/shared/export/export.util';
+import { DownloadFormat } from 'src/app/shared/download-dropdown/download-dropdown.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -83,6 +85,7 @@ export class DashboardComponent {
   faSortDown = faSortDown;
   faSort = faSort;
   faFilePdf = faFilePdf;
+  faClock = faClock;
   faEnvelope = faEnvelope;
   faWhatsapp = faWhatsapp;
 
@@ -259,6 +262,30 @@ export class DashboardComponent {
     this.applyFilterAndSort();
   }
 
+  handleDownload(format: DownloadFormat) {
+    if (format === 'pdf') {
+      this.downloadPdf();
+    } else if (format === 'excel') {
+      this.downloadExcel();
+    } else {
+      this.downloadCsv();
+    }
+  }
+
+  private summaryHeaders(): string[] {
+    return ['Name', 'Email', `To Take (${this.currency})`, `To Give (${this.currency})`, 'Transactions'];
+  }
+
+  private summaryRows(): any[][] {
+    return this.filteredSummary.map((item: any) => [
+      item.customerName,
+      item.customerEmail,
+      item.toTake,
+      item.toGive,
+      item.transactionCount,
+    ]);
+  }
+
   downloadPdf() {
     const doc = new jsPDF();
     doc.setFontSize(14);
@@ -266,18 +293,20 @@ export class DashboardComponent {
 
     autoTable(doc, {
       startY: 22,
-      head: [['Name', 'Email', `To Take (${this.currency})`, `To Give (${this.currency})`, 'Transactions']],
-      body: this.filteredSummary.map((item: any) => [
-        item.customerName,
-        item.customerEmail,
-        item.toTake,
-        item.toGive,
-        item.transactionCount,
-      ]),
+      head: [this.summaryHeaders()],
+      body: this.summaryRows(),
       headStyles: { fillColor: [15, 81, 50] },
     });
 
     doc.save('customer-summary.pdf');
+  }
+
+  downloadExcel() {
+    downloadExcel('customer-summary.xlsx', 'Summary', this.summaryHeaders(), this.summaryRows());
+  }
+
+  downloadCsv() {
+    downloadCsv('customer-summary.csv', this.summaryHeaders(), this.summaryRows());
   }
 
   onSwitchChange(event: any){

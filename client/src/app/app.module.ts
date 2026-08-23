@@ -25,6 +25,8 @@ import { UpdateCustomerComponent } from './components/update-customer/update-cus
 import { NgChartsModule } from 'ng2-charts';
 import { DynamicFormGenerationComponent } from './components/dynamic-form-generation/dynamic-form-generation.component';
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
+import { DownloadDropdownComponent } from './shared/download-dropdown/download-dropdown.component';
+import { ScheduledRemindersComponent } from './components/scheduled-reminders/scheduled-reminders.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.c
     UpdateTransactionComponent,
     UpdateCustomerComponent,
     DynamicFormGenerationComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    DownloadDropdownComponent,
+    ScheduledRemindersComponent
   ],
   imports: [
     NgChartsModule,

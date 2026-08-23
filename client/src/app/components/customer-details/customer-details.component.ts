@@ -13,6 +13,8 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { ConfirmDialogService } from 'src/app/shared/confirm-dialog/confirm-dialog.service';
 import { buildReminderMessage, openWhatsAppReminder } from 'src/app/shared/reminder/reminder.util';
+import { downloadExcel, downloadCsv } from 'src/app/shared/export/export.util';
+import { DownloadFormat } from 'src/app/shared/download-dropdown/download-dropdown.component';
 
 @Component({
   selector: 'app-customer-details',
@@ -153,6 +155,32 @@ export class CustomerDetailsComponent {
     this.startDate = '';
     this.endDate = '';
     this.applyDateFilter();
+  }
+
+  handleDownload(format: DownloadFormat) {
+    if (format === 'pdf') {
+      this.downloadPdf();
+    } else if (format === 'excel') {
+      this.downloadExcelFile();
+    } else {
+      this.downloadCsvFile();
+    }
+  }
+
+  private transactionHeaders(): string[] {
+    return ['Status', `Amount (${this.currency})`, 'Date'];
+  }
+
+  private transactionRows(): any[][] {
+    return this.filteredTransactions.map((t: any) => [t.status, t.amount, t.date]);
+  }
+
+  downloadExcelFile() {
+    downloadExcel(`${this.customer.name}-transactions.xlsx`, 'Transactions', this.transactionHeaders(), this.transactionRows());
+  }
+
+  downloadCsvFile() {
+    downloadCsv(`${this.customer.name}-transactions.csv`, this.transactionHeaders(), this.transactionRows());
   }
 
   downloadPdf() {

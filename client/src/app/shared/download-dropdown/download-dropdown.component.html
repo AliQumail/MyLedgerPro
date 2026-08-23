@@ -1,0 +1,16 @@
+<div ngbDropdown class="d-inline-block" placement="bottom-end">
+  <button type="button" class="download-dropdown-trigger" id="downloadDropdownToggle" ngbDropdownToggle>
+    <fa-icon [icon]="faDownload" class="me-2"></fa-icon>Download
+  </button>
+  <div ngbDropdownMenu aria-labelledby="downloadDropdownToggle" class="download-dropdown-menu">
+    <button ngbDropdownItem (click)="choose('pdf')">
+      <fa-icon [icon]="faFilePdf" class="me-2 download-icon-pdf"></fa-icon>PDF
+    </button>
+    <button ngbDropdownItem (click)="choose('excel')">
+      <fa-icon [icon]="faFileExcel" class="me-2 download-icon-excel"></fa-icon>Excel
+    </button>
+    <button ngbDropdownItem (click)="choose('csv')">
+      <fa-icon [icon]="faFileCsv" class="me-2 download-icon-csv"></fa-icon>CSV
+    </button>
+  </div>
+</div>

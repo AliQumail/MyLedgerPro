@@ -25,6 +25,7 @@
 
 .dashboard-header-actions {
     display: flex;
+    align-items: center;
     gap: 0.75rem;
     flex-wrap: wrap;
 }
@@ -32,7 +33,10 @@
 .dashboard-header-actions .purple-button,
 .dashboard-header-actions .green-button {
     width: auto;
+    height: 44px;
     margin: 0;
+    display: inline-flex;
+    align-items: center;
 }
 
 .dashboard-sidebar {

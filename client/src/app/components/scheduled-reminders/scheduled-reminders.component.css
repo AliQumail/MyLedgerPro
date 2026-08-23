@@ -1,0 +1,84 @@
+.dashboard-outer {
+    background-color: #ffffff;
+    min-height: 100vh;
+}
+
+.dashboard-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 2rem 0 1rem;
+}
+
+.dashboard-greeting {
+    color: #0b3d2e;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.greeting-icon {
+    color: #1d8a5e;
+    margin-right: 0.4rem;
+}
+
+.dashboard-header-actions .purple-button {
+    width: auto;
+    margin: 0;
+}
+
+.dashboard-panel {
+    background-color: #ffffff;
+    border: 1px solid #e7ece9;
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem 1.5rem;
+    box-shadow: rgba(15, 81, 50, .08) 0 6px 20px 0;
+    margin-top: 0.5rem;
+}
+
+.scheduled-reminders-subtext {
+    color: #5a6b64;
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+.dashboard-table thead th {
+    color: #5a6b64;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 2px solid #e7ece9;
+    padding-bottom: 0.75rem;
+}
+
+.dashboard-table td {
+    border-bottom: 1px solid #eef2f0;
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
+}
+
+.dashboard-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.dashboard-table .btn-styling-none {
+    color: #1d8a5e;
+}
+
+.dashboard-empty {
+    color: #5a6b64;
+    padding: 2rem 0;
+}
+
+.scheduled-reminders-status-label {
+    font-size: 0.85rem;
+    color: #0b3d2e;
+    font-weight: 600;
+}
+
+.form-check-input:checked {
+    background-color: #1d8a5e;
+    border-color: #1d8a5e;
+}

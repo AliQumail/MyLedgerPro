@@ -51,9 +51,7 @@
                     Clear
                   </button>
                 </div>
-                <button type="button" class="customer-download-btn" (click)="downloadPdf()">
-                  <fa-icon [icon]="faFilePdf" class="me-1"></fa-icon>Download PDF
-                </button>
+                <app-download-dropdown (download)="handleDownload($event)"></app-download-dropdown>
               </div>
               <div class="table-responsive">
                 <table class="table align-middle mb-0 dashboard-table">

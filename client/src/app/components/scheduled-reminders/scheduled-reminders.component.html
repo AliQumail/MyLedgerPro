@@ -1,0 +1,116 @@
+<ngx-spinner bdColor="rgba(255, 255, 255, 0.6)" size="medium" color="#1d8a5e" type="la-ball-scale-multiple" [fullScreen]="true"></ngx-spinner>
+
+<div class="dashboard-outer">
+  <app-navbar></app-navbar>
+  <div class="container">
+    <div class="dashboard-header-row">
+      <div class="dashboard-greeting">
+        <fa-icon [icon]="faClock" class="greeting-icon"></fa-icon>
+        Scheduled Reminders
+      </div>
+      <div class="dashboard-header-actions">
+        <button class="purple-button" (click)="openCreate(scheduleModal)">
+          <fa-icon [icon]="faPlus" class="me-2"></fa-icon>New Schedule
+        </button>
+      </div>
+    </div>
+
+    <div class="dashboard-panel">
+      <p class="scheduled-reminders-subtext">
+        Automatically email a payment reminder to a customer on a repeating schedule. Only email reminders can be scheduled automatically &mdash; WhatsApp reminders still require a manual click from the dashboard.
+      </p>
+      <div class="table-responsive mt-2">
+        <table class="table align-middle mb-0 dashboard-table">
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Schedule</th>
+              <th>Next Run</th>
+              <th>Last Sent</th>
+              <th>Status</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let schedule of schedules">
+              <td><p class="fw-bold mb-0">{{ schedule.customerName }}</p></td>
+              <td>{{ frequencyLabel(schedule) }}</td>
+              <td>{{ schedule.nextRunAt | date:'MMM dd, yyyy, h:mm a' }}</td>
+              <td>{{ schedule.lastRunAt ? (schedule.lastRunAt | date:'MMM dd, yyyy, h:mm a') : 'Never' }}</td>
+              <td>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" [checked]="schedule.isActive" (change)="toggleActive(schedule)">
+                  <label class="form-check-label scheduled-reminders-status-label">{{ schedule.isActive ? 'Active' : 'Paused' }}</label>
+                </div>
+              </td>
+              <td>
+                <button class="btn-styling-none" (click)="deleteSchedule(schedule)"><fa-icon [icon]="faTrashCan"></fa-icon></button>
+              </td>
+            </tr>
+            <tr *ngIf="schedules.length === 0">
+              <td colspan="6" class="text-center dashboard-empty">No scheduled reminders yet</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #scheduleModal let-modal>
+  <form [formGroup]="scheduleForm" class="themed-modal-form">
+    <div class="modal-header themed-modal-header">
+      <h4 class="modal-title">New Scheduled Reminder</h4>
+      <button type="button" class="modal-cross-btn" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label class="form-label auth-label">Customer</label>
+        <select formControlName="customerId" class="form-select form-select-lg input-field">
+          <option value="">Choose customer</option>
+          <option *ngFor="let c of customers" [ngValue]="c.id">{{ c.name }}</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label auth-label">Frequency</label>
+        <select formControlName="frequency" class="form-select form-select-lg input-field">
+          <option value="Once">Once</option>
+          <option value="Daily">Daily</option>
+          <option value="Weekly">Weekly</option>
+          <option value="Monthly">Monthly</option>
+        </select>
+      </div>
+
+      <div class="mb-3" *ngIf="scheduleForm.value.frequency === 'Weekly'">
+        <label class="form-label auth-label">Day of Week</label>
+        <select formControlName="dayOfWeek" class="form-select form-select-lg input-field">
+          <option *ngFor="let d of weekDays" [ngValue]="d.value">{{ d.label }}</option>
+        </select>
+      </div>
+
+      <div class="mb-3" *ngIf="scheduleForm.value.frequency === 'Monthly'">
+        <label class="form-label auth-label">Day of Month</label>
+        <input type="number" min="1" max="28" formControlName="dayOfMonth" class="form-control form-control-lg input-field" />
+      </div>
+
+      <div class="mb-2">
+        <label class="form-label auth-label">Time of Day</label>
+        <input type="time" formControlName="timeOfDay" class="form-control form-control-lg input-field" />
+      </div>
+    </div>
+    <div class="modal-footer themed-modal-footer">
+      <button
+        type="submit"
+        class="green-button"
+        style="padding-left: 2.5rem; padding-right: 2.5rem"
+        (click)="createSchedule()"
+        [disabled]="scheduleForm.invalid"
+      >
+        Create Schedule
+      </button>
+    </div>
+  </form>
+</ng-template>

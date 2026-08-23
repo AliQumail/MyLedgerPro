@@ -37,6 +37,7 @@ builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddHostedService<ReminderSchedulerBackgroundService>();
 
 builder.Services.AddIdentityCore<server.Models.ApplicationUser>()
     .AddRoles<IdentityRole>()
