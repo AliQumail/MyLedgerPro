@@ -1,3 +1,38 @@
+.demo-strip {
+    width: 100%;
+    background: linear-gradient(135deg, #0f5132, #1d8a5e);
+    color: #ffffff;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.demo-strip-link {
+    display: inline-flex;
+    align-items: center;
+    background-color: #ffffff;
+    color: #0f5132;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.demo-strip-link:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: #0f5132;
+}
+
 .ledger-navbar-wrap {
     background-color: #ffffff;
     border-bottom: 1px solid #e7ece9;

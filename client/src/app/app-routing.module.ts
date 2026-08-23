@@ -7,11 +7,12 @@ import { CustomerDetailsComponent } from './components/customer-details/customer
 import { HomeComponent } from './components/home/home.component';
 import { DynamicFormGenerationComponent } from './components/dynamic-form-generation/dynamic-form-generation.component';
 import { ScheduledRemindersComponent } from './components/scheduled-reminders/scheduled-reminders.component';
+import { GuestGuard } from './guards/guest.guard';
 
 
 const routes: Routes = [
-    { path: 'login', component: LoginComponent},
-    { path: 'register', component: RegisterComponent },
+    { path: 'login', component: LoginComponent, canActivate: [GuestGuard]},
+    { path: 'register', component: RegisterComponent, canActivate: [GuestGuard] },
     { path: '', component: HomeComponent },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'reminders', component: ScheduledRemindersComponent },

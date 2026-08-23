@@ -9,5 +9,6 @@ namespace server.Models
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Transaction> Transaction { get; set; }
         public DbSet<ReminderSchedule> ReminderSchedule { get; set; }
+        public DbSet<ReminderScheduleCustomer> ReminderScheduleCustomer { get; set; }
     }
 }

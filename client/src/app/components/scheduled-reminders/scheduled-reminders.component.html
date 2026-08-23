@@ -8,7 +8,10 @@
         <fa-icon [icon]="faClock" class="greeting-icon"></fa-icon>
         Scheduled Reminders
       </div>
-      <div class="dashboard-header-actions">
+      <div class="dashboard-header-actions scheduled-reminders-actions-stacked">
+        <a routerLink="/dashboard" class="scheduled-reminders-back-link">
+          <fa-icon [icon]="faArrowLeft"></fa-icon> Back to Dashboard
+        </a>
         <button class="purple-button" (click)="openCreate(scheduleModal)">
           <fa-icon [icon]="faPlus" class="me-2"></fa-icon>New Schedule
         </button>
@@ -32,7 +35,10 @@
           </thead>
           <tbody>
             <tr *ngFor="let schedule of schedules">
-              <td><p class="fw-bold mb-0">{{ schedule.customerName }}</p></td>
+              <td>
+                <p class="fw-bold mb-0">{{ customerNames(schedule) }}</p>
+                <p class="text-muted mb-0" *ngIf="schedule.customers.length > 1">{{ schedule.customers.length }} customers</p>
+              </td>
               <td>{{ frequencyLabel(schedule) }}</td>
               <td>{{ schedule.nextRunAt | date:'MMM dd, yyyy, h:mm a' }}</td>
               <td>{{ schedule.lastRunAt ? (schedule.lastRunAt | date:'MMM dd, yyyy, h:mm a') : 'Never' }}</td>
@@ -46,7 +52,7 @@
                 <button class="btn-styling-none" (click)="openEdit(scheduleModal, schedule)"><fa-icon [icon]="faPenToSquare"></fa-icon></button>
               </td>
               <td>
-                <button class="btn-styling-none" (click)="deleteSchedule(schedule)"><fa-icon [icon]="faTrashCan"></fa-icon></button>
+                <button class="btn-styling-none btn-delete-icon" (click)="deleteSchedule(schedule)"><fa-icon [icon]="faTrashCan"></fa-icon></button>
               </td>
             </tr>
             <tr *ngIf="schedules.length === 0">
@@ -68,13 +74,14 @@
       </button>
     </div>
     <div class="modal-body">
-      <div class="mb-3" *ngIf="!editingScheduleId">
+      <div class="mb-3">
         <div class="scheduled-reminders-customer-header">
           <label class="form-label auth-label mb-0">Customers</label>
           <button type="button" class="scheduled-reminders-select-all-btn" (click)="toggleSelectAll()" *ngIf="availableCustomers.length > 0">
             {{ allAvailableSelected ? 'Clear all' : 'Select all' }}
           </button>
         </div>
+        <p class="scheduled-reminders-hint">Only customers who currently owe you money can be scheduled.</p>
         <div class="scheduled-reminders-customer-list">
           <div class="form-check" *ngFor="let c of availableCustomers">
             <input
@@ -87,14 +94,9 @@
             <label class="form-check-label" [for]="'cust-' + c.id">{{ c.name }}</label>
           </div>
           <p class="scheduled-reminders-empty-note" *ngIf="availableCustomers.length === 0">
-            All customers already have a scheduled reminder.
+            No customers currently owe you money, or they're already scheduled.
           </p>
         </div>
-      </div>
-
-      <div class="mb-3" *ngIf="editingScheduleId">
-        <label class="form-label auth-label">Customer</label>
-        <p class="scheduled-reminders-locked-customer">{{ editingCustomerName }}</p>
       </div>
 
       <div class="mb-3">

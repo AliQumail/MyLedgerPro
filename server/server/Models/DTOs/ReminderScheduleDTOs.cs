@@ -12,6 +12,7 @@ namespace server.Models.DTOs
 
     public class UpdateReminderScheduleDTO
     {
+        public List<Guid> CustomerIds { get; set; } = new List<Guid>();
         public string Frequency { get; set; } = string.Empty;
         public string TimeOfDay { get; set; } = string.Empty;
         public int? DayOfWeek { get; set; }
@@ -19,11 +20,16 @@ namespace server.Models.DTOs
         public bool IsActive { get; set; }
     }
 
+    public class ReminderScheduleCustomerDTO
+    {
+        public string CustomerId { get; set; } = string.Empty;
+        public string CustomerName { get; set; } = string.Empty;
+    }
+
     public class ReminderScheduleResponseDTO
     {
         public string Id { get; set; } = string.Empty;
-        public string CustomerId { get; set; } = string.Empty;
-        public string CustomerName { get; set; } = string.Empty;
+        public List<ReminderScheduleCustomerDTO> Customers { get; set; } = new List<ReminderScheduleCustomerDTO>();
         public string Frequency { get; set; } = string.Empty;
         public string TimeOfDay { get; set; } = string.Empty;
         public int? DayOfWeek { get; set; }

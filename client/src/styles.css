@@ -1,3 +1,9 @@
+/* global font */
+
+body {
+    font-family: 'Inter', -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif;
+}
+
 /* buttons */
 
 .purple-button,
@@ -12,7 +18,7 @@
     box-sizing: border-box;
     color: #fff;
     cursor: pointer;
-    font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
+    font-family: inherit;
     font-size: 100%;
     font-weight: 600;
     height: 44px;
@@ -135,6 +141,14 @@
 	cursor: pointer;
 	outline: inherit;
     font-size: 1.5rem;
+}
+
+.btn-delete-icon {
+    color: #dc3545 !important;
+}
+
+.btn-delete-icon:hover {
+    color: #a61e2b !important;
 }
 
 /* floating outline field (Material-style notched label) */

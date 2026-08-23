@@ -3,12 +3,8 @@
     min-height: 100vh;
 }
 
-.dashboard-header-row {
-    display: flex;
+.dashboard-header-row-grid {
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
     padding: 2rem 0 1rem;
 }
 
@@ -16,6 +12,8 @@
     color: #0b3d2e;
     font-size: 1.25rem;
     font-weight: 700;
+    display: flex;
+    align-items: center;
 }
 
 .greeting-icon {
@@ -26,12 +24,20 @@
 .dashboard-header-actions {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 0.75rem;
     flex-wrap: wrap;
 }
 
-.dashboard-header-actions app-add-customer,
-.dashboard-header-actions app-add-transaction {
+.dashboard-header-actions-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.dashboard-header-actions-right app-add-customer,
+.dashboard-header-actions-right app-add-transaction {
     display: flex;
     align-items: center;
 }
@@ -276,6 +282,7 @@
 .dashboard-chart-wrap {
     position: relative;
     height: 320px;
+    margin-top: 2.5rem;
 }
 
 .dashboard-empty {

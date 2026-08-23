@@ -39,22 +39,22 @@ namespace server.Repositories.TransactionRepository
             return transactions;
         }
 
-        public async Task<bool> RemoveTransactionAsync(Guid id)
+        public async Task<Transaction?> RemoveTransactionAsync(Guid id)
         {
             var transaction = await DbContext.Transaction.FindAsync(id);
             if (transaction != null)
             {
                 DbContext.Transaction.Remove(transaction);
                 await DbContext.SaveChangesAsync();
-                return true;
+                return transaction;
             }
             else
             {
-                return false;
+                return null;
             }
         }
 
-        public async Task<bool> UpdateTransactionAsync(Guid id, UpdateTransactionDTO request) 
+        public async Task<Transaction?> UpdateTransactionAsync(Guid id, UpdateTransactionDTO request)
         {
             var transaction = await DbContext.Transaction.FindAsync(id);
             if (transaction != null)
@@ -63,11 +63,11 @@ namespace server.Repositories.TransactionRepository
                 transaction.Amount = request.Amount;
                 transaction.Date = DateTime.Now;
 
-                await DbContext.SaveChangesAsync(); 
-                return true;
+                await DbContext.SaveChangesAsync();
+                return transaction;
             }
 
-            return false;
+            return null;
         }
     }
 }

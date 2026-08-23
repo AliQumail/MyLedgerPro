@@ -1,0 +1,41 @@
+MyLedgerPro - Remaining Tasks
+==============================
+
+1. Demo banner + demo user account + demo data for testing
+   - [DONE] Added a green full-width demo strip above the navbar (shows on
+     every page via navbar.component.html) saying it's a demo project with
+     capped data.
+   - Still remaining: set up a dedicated demo account (separate from
+     claude11) pre-seeded with sample customers and transactions for
+     visitors to explore without registering.
+
+2. Loader
+   - Revisit the ngx-spinner loading indicator across the app (login,
+     register, dashboard, modals) - confirm it looks right everywhere after
+     the light-backdrop change; polish further if needed.
+
+3. Email config
+   - Fill in real Gmail SMTP credentials in server/server/appsettings.json
+     (Smtp:Username, Smtp:AppPassword - 16-char Google App Password, requires
+     2FA enabled on that Gmail account).
+   - Until this is done, reminder emails (manual + scheduled) return a clean
+     "Email is not configured on the server yet." error instead of sending.
+
+4. [DONE] Recurring schedulers with multiple customers should be ONE record
+   - Added a ReminderScheduleCustomer join table; one ReminderSchedule row
+     now covers many customers as a single group (one edit/pause/delete
+     affects the whole group, counts as ONE slot toward the 10-schedule cap).
+   - Background scheduler fans out and sends one email per linked customer
+     using each customer's own live balance when the group's schedule fires.
+   - Verified end-to-end: creating a schedule for 5 customers produces
+     exactly 1 row in the list.
+   - [DONE] Scheduler customer picker now only shows customers who
+     currently owe money (toTake > 0). Added ReminderScheduleCleanupService,
+     triggered after every transaction add/update/delete: if a customer's
+     balance clears (toTake <= 0), they're auto-removed from any active
+     schedule, and the schedule itself is deleted if that leaves it with
+     zero customers. Verified end-to-end.
+
+5. Update hero image and description (home page)
+   - Replace /assets/cash-rabbit.png with a new hero image.
+   - Rewrite the hero headline/description copy on the home page to match.

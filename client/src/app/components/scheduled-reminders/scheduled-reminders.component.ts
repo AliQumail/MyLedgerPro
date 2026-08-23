@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { faPlus, faClock, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faClock, faPenToSquare, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomerService } from 'src/app/services/customer/customer.service';
@@ -30,6 +30,7 @@ export class ScheduledRemindersComponent implements OnInit {
   faClock = faClock;
   faTrashCan = faTrashCan;
   faPenToSquare = faPenToSquare;
+  faArrowLeft = faArrowLeft;
 
   userId: any;
   schedules: any[] = [];
@@ -37,7 +38,6 @@ export class ScheduledRemindersComponent implements OnInit {
   scheduledCustomerIds: Set<string> = new Set();
 
   editingScheduleId: string | null = null;
-  editingCustomerName: string = '';
   selectedCustomerIds: Set<string> = new Set();
 
   weekDays = [
@@ -67,7 +67,9 @@ export class ScheduledRemindersComponent implements OnInit {
   loadCustomers() {
     this.customerService.getCustomerSummary({ id: this.userId }).subscribe(
       (res: any) => {
-        this.customers = (res || []).map((c: any) => ({ id: c.customerId, name: c.customerName }));
+        this.customers = (res || [])
+          .filter((c: any) => c.toTake > 0)
+          .map((c: any) => ({ id: c.customerId, name: c.customerName }));
       },
       () => {}
     );
@@ -79,7 +81,9 @@ export class ScheduledRemindersComponent implements OnInit {
       (res: any) => {
         this.spinner.hide();
         this.schedules = res || [];
-        this.scheduledCustomerIds = new Set(this.schedules.map((s) => s.customerId));
+        this.scheduledCustomerIds = new Set(
+          this.schedules.flatMap((s) => s.customers.map((c: any) => c.customerId))
+        );
       },
       () => {
         this.spinner.hide();
@@ -89,7 +93,9 @@ export class ScheduledRemindersComponent implements OnInit {
   }
 
   get availableCustomers() {
-    return this.customers.filter((c) => !this.scheduledCustomerIds.has(c.id));
+    return this.customers.filter(
+      (c) => !this.scheduledCustomerIds.has(c.id) || this.selectedCustomerIds.has(c.id)
+    );
   }
 
   get allAvailableSelected(): boolean {
@@ -127,8 +133,7 @@ export class ScheduledRemindersComponent implements OnInit {
 
   openEdit(content: any, schedule: any) {
     this.editingScheduleId = schedule.id;
-    this.editingCustomerName = schedule.customerName;
-    this.selectedCustomerIds = new Set([schedule.customerId]);
+    this.selectedCustomerIds = new Set(schedule.customers.map((c: any) => c.customerId));
     this.scheduleForm.reset({
       frequency: schedule.frequency,
       timeOfDay: schedule.timeOfDay,
@@ -168,7 +173,7 @@ export class ScheduledRemindersComponent implements OnInit {
     this.reminderScheduleService.create(request).subscribe(
       () => {
         this.spinner.hide();
-        this.toastr.success('Reminder(s) scheduled');
+        this.toastr.success('Reminder schedule created');
         this.modalService.dismissAll();
         this.loadSchedules();
       },
@@ -180,8 +185,14 @@ export class ScheduledRemindersComponent implements OnInit {
   }
 
   private updateSchedule() {
+    if (this.selectedCustomerIds.size === 0) {
+      this.toastr.error('Select at least one customer');
+      return;
+    }
+
     const value = this.scheduleForm.value;
     const request = {
+      customerIds: Array.from(this.selectedCustomerIds),
       frequency: value.frequency,
       timeOfDay: value.timeOfDay,
       dayOfWeek: value.frequency === 'Weekly' ? value.dayOfWeek : null,
@@ -228,12 +239,16 @@ export class ScheduledRemindersComponent implements OnInit {
       () => {
         this.toastr.success('Reminder schedule deleted');
         this.schedules = this.schedules.filter((s) => s.id !== schedule.id);
-        this.scheduledCustomerIds.delete(schedule.customerId);
+        this.loadSchedules();
       },
       () => {
         this.toastr.error('Failed to delete reminder schedule');
       }
     );
+  }
+
+  customerNames(schedule: any): string {
+    return schedule.customers.map((c: any) => c.customerName).join(', ');
   }
 
   frequencyLabel(schedule: any): string {

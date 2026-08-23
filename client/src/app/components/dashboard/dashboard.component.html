@@ -3,23 +3,29 @@
 <div *ngIf="name != null" class="dashboard-outer">
   <app-navbar></app-navbar>
   <div class="container">
-    <div class="dashboard-header-row">
-      <div class="dashboard-greeting">
-        <fa-icon [icon]="faHand" class="greeting-icon"></fa-icon>
-        Hi {{ name }}!
+    <div class="row dashboard-header-row-grid">
+      <div class="col col-12 col-lg-3">
+        <div class="dashboard-greeting">
+          <fa-icon [icon]="faHand" class="greeting-icon"></fa-icon>
+          Hi {{ name }}!
+        </div>
       </div>
-      <div class="dashboard-header-actions">
-        <app-add-customer
-          (refreshList)="handleRefreshList()"
-        ></app-add-customer>
-        <app-add-transaction
-          [customers]="customers"
-          (refreshList)="handleRefreshList()"
-        ></app-add-transaction>
-        <button class="purple-button dashboard-reminders-btn" routerLink="/reminders">
-          Schedule Reminders
-          <span class="dashboard-new-badge">New</span>
-        </button>
+      <div class="col col-12 col-lg-9">
+        <div class="dashboard-header-actions">
+          <button class="purple-button dashboard-reminders-btn" routerLink="/reminders">
+            Schedule Reminders
+            <span class="dashboard-new-badge">New</span>
+          </button>
+          <div class="dashboard-header-actions-right">
+            <app-add-customer
+              (refreshList)="handleRefreshList()"
+            ></app-add-customer>
+            <app-add-transaction
+              [customers]="customers"
+              (refreshList)="handleRefreshList()"
+            ></app-add-transaction>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row">
@@ -57,7 +63,7 @@
               <app-download-dropdown (download)="handleDownload($event)"></app-download-dropdown>
             </div>
           </div>
-          <div *ngIf="showGraphicalView == 1" class="mt-2 dashboard-chart-wrap">
+          <div *ngIf="showGraphicalView == 1" class="dashboard-chart-wrap">
             <canvas baseChart
             class="w-100"
             [data]="barChartData"
@@ -119,7 +125,7 @@
                   <td>
                     <button
                     type="button"
-                    class="btn-styling-none"
+                    class="btn-styling-none btn-delete-icon"
                     (click)="deleteCustomer(item.customerId)"
                   >
                   <fa-icon [icon]="faTrashCan"></fa-icon>

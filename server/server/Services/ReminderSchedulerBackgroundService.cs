@@ -53,12 +53,24 @@ namespace server.Services
             if (dueSchedules.Count == 0) return;
 
             var schedulesToRemove = new List<ReminderSchedule>();
+            var scheduleIds = dueSchedules.Select(s => s.Id).ToList();
+            var links = await dbContext.ReminderScheduleCustomer
+                .Where(l => scheduleIds.Contains(l.ReminderScheduleId))
+                .ToListAsync(stoppingToken);
 
             foreach (var schedule in dueSchedules)
             {
-                var customer = await dbContext.Customer.FindAsync(new object[] { schedule.CustomerId }, stoppingToken);
-                if (customer != null && !string.IsNullOrWhiteSpace(customer.Email))
+                var customerIds = links.Where(l => l.ReminderScheduleId == schedule.Id).Select(l => l.CustomerId).ToList();
+                var anySent = false;
+
+                foreach (var customerId in customerIds)
                 {
+                    var customer = await dbContext.Customer.FindAsync(new object[] { customerId }, stoppingToken);
+                    if (customer == null || string.IsNullOrWhiteSpace(customer.Email))
+                    {
+                        continue;
+                    }
+
                     try
                     {
                         var totalGive = await dbContext.Transaction
@@ -79,12 +91,16 @@ namespace server.Services
 
                         await emailService.SendReminderEmailAsync(customer.Email, customer.Name, "Payment Reminder - MyLedgerPro", message);
                         logger.LogInformation("Sent scheduled reminder email to {Email} for customer {CustomerId}", customer.Email, customer.Id);
+                        anySent = true;
                     }
                     catch (Exception ex)
                     {
-                        logger.LogWarning(ex, "Failed to send scheduled reminder for schedule {ScheduleId}", schedule.Id);
+                        logger.LogWarning(ex, "Failed to send scheduled reminder for schedule {ScheduleId}, customer {CustomerId}", schedule.Id, customerId);
                     }
+                }
 
+                if (anySent)
+                {
                     schedule.LastRunAt = now;
                 }
 
@@ -101,6 +117,9 @@ namespace server.Services
 
             if (schedulesToRemove.Count > 0)
             {
+                var removeIds = schedulesToRemove.Select(s => s.Id).ToList();
+                var linksToRemove = links.Where(l => removeIds.Contains(l.ReminderScheduleId));
+                dbContext.ReminderScheduleCustomer.RemoveRange(linksToRemove);
                 dbContext.ReminderSchedule.RemoveRange(schedulesToRemove);
             }
 

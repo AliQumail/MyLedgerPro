@@ -7,7 +7,7 @@ namespace server.Repositories.TransactionRepository
     {
         public Task<Transaction> AddTransactionAsync(Transaction transaction);
         public Task<List<Transaction>?> GetCustomerTransactionsByUserId(Guid userId, Guid customerId);
-        public Task<bool> RemoveTransactionAsync(Guid id);
-        public Task<bool> UpdateTransactionAsync(Guid id, UpdateTransactionDTO request);
+        public Task<Transaction?> RemoveTransactionAsync(Guid id);
+        public Task<Transaction?> UpdateTransactionAsync(Guid id, UpdateTransactionDTO request);
     }
 }

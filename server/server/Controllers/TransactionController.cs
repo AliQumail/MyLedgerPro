@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using server.Models;
 using server.Models.DTOs;
 using server.Repositories.TransactionRepository;
+using server.Services;
 
 namespace server.Controllers
 {
@@ -12,10 +13,15 @@ namespace server.Controllers
     {
         private readonly CashBookDbContext DbContext;
         private readonly ITransactionRepository transactionRepository;
-        public TransactionController(CashBookDbContext dBContext, ITransactionRepository _transactionRepository)
+        private readonly IReminderScheduleCleanupService reminderScheduleCleanupService;
+        public TransactionController(
+            CashBookDbContext dBContext,
+            ITransactionRepository _transactionRepository,
+            IReminderScheduleCleanupService _reminderScheduleCleanupService)
         {
             this.DbContext = dBContext;
             this.transactionRepository = _transactionRepository;
+            this.reminderScheduleCleanupService = _reminderScheduleCleanupService;
         }
 
         [HttpPost]
@@ -34,6 +40,7 @@ namespace server.Controllers
             try
             {
                 await transactionRepository.AddTransactionAsync(transaction);
+                await reminderScheduleCleanupService.PruneClearedCustomerAsync(transaction.UserId, transaction.CustomerId);
                 return Ok("Transaction added successfully");
             }
             catch (Exception ex)
@@ -50,18 +57,30 @@ namespace server.Controllers
         {
             return await transactionRepository.GetCustomerTransactionsByUserId(request.UserId, request.CustomerId);
         }
-        
+
         [HttpDelete]
         [Route("deletetransaction/{id}")]
         public async Task<bool> DeleteTransaction(Guid id) {
-            return await transactionRepository.RemoveTransactionAsync(id);
+            var transaction = await transactionRepository.RemoveTransactionAsync(id);
+            if (transaction != null)
+            {
+                await reminderScheduleCleanupService.PruneClearedCustomerAsync(transaction.UserId, transaction.CustomerId);
+                return true;
+            }
+            return false;
         }
 
         [HttpPut]
         [Route("UpdateTransaction")]
         public async Task<bool> UpdateTransaction([FromQuery] Guid id, [FromBody] UpdateTransactionDTO request) {
-            return await transactionRepository.UpdateTransactionAsync(id, request);
+            var transaction = await transactionRepository.UpdateTransactionAsync(id, request);
+            if (transaction != null)
+            {
+                await reminderScheduleCleanupService.PruneClearedCustomerAsync(transaction.UserId, transaction.CustomerId);
+                return true;
+            }
+            return false;
         }
-        
+
     }
 }
