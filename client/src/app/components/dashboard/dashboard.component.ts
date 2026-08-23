@@ -6,7 +6,10 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { faTrashCan, faEye, faHand } from '@fortawesome/free-regular-svg-icons';
+import { faSearch, faSortUp, faSortDown, faSort, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { ChartConfiguration } from 'chart.js';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-dashboard',
@@ -43,12 +46,22 @@ export class DashboardComponent {
   toTake: any;
   toGive: any;
   summary: any = [];
+  filteredSummary: any = [];
   faTrashCan = faTrashCan;
-  faEye = faEye; 
-  faHand= faHand; 
+  faEye = faEye;
+  faHand= faHand;
+  faSearch = faSearch;
+  faSortUp = faSortUp;
+  faSortDown = faSortDown;
+  faSort = faSort;
+  faFilePdf = faFilePdf;
 
   totalToTake: number = 0;
   totalToGive: number = 0;
+
+  searchTerm: string = '';
+  sortColumn: 'toTake' | 'toGive' | null = null;
+  sortDirection: 'asc' | 'desc' = 'asc';
 
   title : any;
   dataset = [
@@ -130,11 +143,69 @@ export class DashboardComponent {
           name: customer.customerName,
         }));
         this.updateGraphicalView();
+        this.applyFilterAndSort();
       },
       (error) => {
         console.log(JSON.stringify(error));
       }
     );
+  }
+
+  applyFilterAndSort() {
+    let result = [...this.summary];
+
+    if (this.searchTerm.trim()) {
+      const term = this.searchTerm.trim().toLowerCase();
+      result = result.filter((item: any) =>
+        item.customerName?.toLowerCase().includes(term) ||
+        item.customerEmail?.toLowerCase().includes(term)
+      );
+    }
+
+    if (this.sortColumn) {
+      const col = this.sortColumn;
+      result.sort((a: any, b: any) => {
+        const diff = a[col] - b[col];
+        return this.sortDirection === 'asc' ? diff : -diff;
+      });
+    }
+
+    this.filteredSummary = result;
+  }
+
+  onSearchChange(term: string) {
+    this.searchTerm = term;
+    this.applyFilterAndSort();
+  }
+
+  toggleSort(column: 'toTake' | 'toGive') {
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+    this.applyFilterAndSort();
+  }
+
+  downloadPdf() {
+    const doc = new jsPDF();
+    doc.setFontSize(14);
+    doc.text('MyLedgerPro - Customer Summary', 14, 15);
+
+    autoTable(doc, {
+      startY: 22,
+      head: [['Name', 'Email', 'To Take (RS)', 'To Give (RS)']],
+      body: this.filteredSummary.map((item: any) => [
+        item.customerName,
+        item.customerEmail,
+        item.toTake,
+        item.toGive,
+      ]),
+      headStyles: { fillColor: [15, 81, 50] },
+    });
+
+    doc.save('customer-summary.pdf');
   }
 
   onSwitchChange(event: any){

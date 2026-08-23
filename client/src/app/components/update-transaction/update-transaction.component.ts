@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TransactionService } from 'src/app/services/transaction/transaction.service';
 import { CustomerService } from 'src/app/services/customer/customer.service';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import { faArrowRightArrowLeft, faCoins } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-update-transaction',
   templateUrl: './update-transaction.component.html',
@@ -22,6 +23,8 @@ export class UpdateTransactionComponent implements OnInit {
   customers : any = [];
   @Output() refreshList : EventEmitter<any> = new EventEmitter(); 
   faEdit= faEdit;
+  statusIcon = faArrowRightArrowLeft;
+  coinsIcon = faCoins;
  
   constructor(
     private modalService: NgbModal,

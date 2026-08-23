@@ -11,97 +11,130 @@
 <div class="login-outer-most-div">
   <app-navbar></app-navbar>
   <section class="">
-    <div class="container py-5 h-100">
+    <div class="container py-3 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-          <div class="card login-card" style="border-radius: 1rem">
-            <div class="card-body p-5 text-center">
-              <form class="mb-md-1 mt-md-4 pb-4" [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)">
-                <h2 class="fw-bold mb-5 text-uppercase">Register</h2>
-                <div class="form-outline form-white mb-4">
-                  <input
-                    type="text"
-                    formControlName="username"
-                    placeholder="Username"
-                    class="form-control form-control-lg input-field"
-                  />
-                  <div
-                    *ngIf="
-                      registerForm.controls['username'].invalid &&
-                      (registerForm.controls['username'].dirty || registerForm.controls['username'].touched)
-                    "
-                    class="text-danger"
-                  >
-                    <div *ngIf="registerForm.controls['username'].hasError('required')">
-                      Username is required.
+        <div class="col-12 col-lg-9 col-xl-8">
+          <div class="card login-card overflow-hidden" style="border-radius: 1.25rem">
+            <div class="row g-0">
+              <div class="col-md-5 auth-side-panel d-none d-md-flex">
+                <div>
+                  <div class="brand-mark-lg">M</div>
+                  <h3 class="side-panel-title">Join MyLedgerPro</h3>
+                  <p class="side-panel-text">
+                    Create an account to start managing your customers' cash transactions with a clear, organized ledger.
+                  </p>
+                  <ul class="side-panel-points">
+                    <li>Set up your ledger in minutes</li>
+                    <li>Analytics dashboards built in</li>
+                    <li>Free to get started</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-md-7">
+                <div class="card-body p-4">
+                  <form class="mb-md-1" [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)">
+                    <h2 class="fw-bold mb-1">Register</h2>
+                    <p class="auth-subtext mb-3">Create your account to get started.</p>
+
+                    <div class="mb-3">
+                      <label class="form-label auth-label">Username</label>
+                      <div class="input-with-icon">
+                        <fa-icon [icon]="userIcon" class="field-icon"></fa-icon>
+                        <input
+                          type="text"
+                          formControlName="username"
+                          placeholder="Choose a username"
+                          class="form-control form-control-lg input-field"
+                        />
+                      </div>
+                      <div
+                        *ngIf="
+                          registerForm.controls['username'].invalid &&
+                          (registerForm.controls['username'].dirty || registerForm.controls['username'].touched)
+                        "
+                        class="text-danger small mt-1"
+                      >
+                        <div *ngIf="registerForm.controls['username'].hasError('required')">
+                          Username is required.
+                        </div>
+                        <div *ngIf="registerForm.controls['username'].hasError('minlength')">
+                          Username must be at least 6 characters long.
+                        </div>
+                        <div *ngIf="registerForm.controls['username'].hasError('whitespace')">
+                          Username cannot contain spaces.
+                        </div>
+                      </div>
                     </div>
-                    <div *ngIf="registerForm.controls['username'].hasError('minlength')">
-                      Username must be at least 6 characters long.
+                    <div class="mb-3">
+                      <label class="form-label auth-label">Email</label>
+                      <div class="input-with-icon">
+                        <fa-icon [icon]="emailIcon" class="field-icon"></fa-icon>
+                        <input
+                          type="email"
+                          id="typeEmailX"
+                          formControlName="email"
+                          placeholder="you@example.com"
+                          class="form-control form-control-lg input-field"
+                        />
+                      </div>
+                      <div
+                        *ngIf="
+                          registerForm.controls['email'].invalid &&
+                          (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)
+                        "
+                        class="text-danger small mt-1"
+                      >
+                        <div *ngIf="registerForm.controls['email'].hasError('required')">
+                          Email is required.
+                        </div>
+                        <div *ngIf="registerForm.controls['email'].hasError('email')">
+                          Please enter a valid email address.
+                        </div>
+                      </div>
                     </div>
-                    <div *ngIf="registerForm.controls['username'].hasError('whitespace')">
-                      Username cannot contain spaces.
+                    <div class="mb-3">
+                      <label class="form-label auth-label">Password</label>
+                      <div class="input-with-icon">
+                        <fa-icon [icon]="lockIcon" class="field-icon"></fa-icon>
+                        <input
+                          type="password"
+                          id="typePasswordX"
+                          formControlName="password"
+                          placeholder="At least 8 characters"
+                          class="form-control form-control-lg input-field"
+                        />
+                      </div>
+                      <div
+                        *ngIf="
+                          registerForm.controls['password'].invalid &&
+                          (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)
+                        "
+                        class="text-danger small mt-1"
+                      >
+                        <div *ngIf="registerForm.controls['password'].hasError('required')">
+                          Password is required.
+                        </div>
+                        <div *ngIf="registerForm.controls['password'].hasError('minlength')">
+                          Password must be at least 8 characters long.
+                        </div>
+                      </div>
                     </div>
+                    <button
+                      class="btn login-btn"
+                      type="submit"
+                      [disabled]="registerForm.invalid"
+                    >
+                      Register
+                    </button>
+                  </form>
+                  <div>
+                    <p class="mb-0 mt-3 text-center">
+                      Already have an account?
+                      <a href="/login" class="text-primary fw-semibold" routerLink="/login">Login</a>
+                    </p>
                   </div>
                 </div>
-                <div class="form-outline form-white mb-4">
-                  <input
-                    type="email"
-                    id="typeEmailX"
-                    formControlName="email"
-                    placeholder="Email"
-                    class="form-control form-control-lg input-field"
-                  />
-                  <div
-                    *ngIf="
-                      registerForm.controls['email'].invalid &&
-                      (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)
-                    "
-                    class="text-danger"
-                  >
-                    <div *ngIf="registerForm.controls['email'].hasError('required')">
-                      Email is required.
-                    </div>
-                    <div *ngIf="registerForm.controls['email'].hasError('email')">
-                      Please enter a valid email address.
-                    </div>
-                  </div>
-                </div>
-                <div class="form-outline form-white mb-4">
-                  <input
-                    type="password"
-                    id="typePasswordX"
-                    formControlName="password"
-                    placeholder="Password"
-                    class="form-control form-control-lg input-field"
-                  />
-                  <div
-                    *ngIf="
-                      registerForm.controls['password'].invalid &&
-                      (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)
-                    "
-                    class="text-danger"
-                  >
-                    <div *ngIf="registerForm.controls['password'].hasError('required')">
-                      Password is required.
-                    </div>
-                    <div *ngIf="registerForm.controls['password'].hasError('minlength')">
-                      Password must be at least 8 characters long.
-                    </div>
-                  </div>
-                </div>
-                <button
-                  class="btn login-btn"
-                  type="submit"
-                  [disabled]="registerForm.invalid"
-                >
-                  Register
-                </button>
-              </form>
-              <div>
-                <p class="mb-0">
-                  Already have an account?
-                  <a href="/login" class="text-primary" routerLink="/login">Login</a>
-                </p>
               </div>
             </div>
           </div>

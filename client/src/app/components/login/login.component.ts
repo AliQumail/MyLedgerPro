@@ -7,6 +7,7 @@ import {
   faTwitter,
   faLinkedin,
 } from '@fortawesome/free-brands-svg-icons';
+import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -23,6 +24,8 @@ export class LoginComponent {
   facebookIcon = faFacebook;
   linkedinIcon = faLinkedin;
   twitterIcon = faTwitter;
+  userIcon = faUser;
+  lockIcon = faLock;
 
   loginForm: FormGroup = new FormGroup({
     username: new FormControl('', Validators.required),

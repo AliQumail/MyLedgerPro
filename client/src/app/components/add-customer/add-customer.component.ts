@@ -8,6 +8,7 @@ import {
 import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CustomerService } from 'src/app/services/customer/customer.service';
+import { faUser, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-add-customer',
@@ -19,6 +20,9 @@ export class AddCustomerComponent {
   closeResult: string = '';
   modalOptions: NgbModalOptions;
   @Output() refreshList: EventEmitter<string> = new EventEmitter();
+  userIcon = faUser;
+  phoneIcon = faPhone;
+  emailIcon = faEnvelope;
 
   constructor(
     private modalService: NgbModal,

@@ -9,6 +9,7 @@ import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CustomerService } from 'src/app/services/customer/customer.service';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import { faUser, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-update-customer',
   templateUrl: './update-customer.component.html',
@@ -21,6 +22,9 @@ export class UpdateCustomerComponent implements OnInit {
   @Output() refreshList: EventEmitter<string> = new EventEmitter();
   @Input() customer: any; 
   faEdit = faEdit;
+  userIcon = faUser;
+  phoneIcon = faPhone;
+  emailIcon = faEnvelope;
 
   constructor(
     private modalService: NgbModal,

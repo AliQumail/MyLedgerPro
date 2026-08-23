@@ -8,6 +8,7 @@ import {
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { TransactionService } from 'src/app/services/transaction/transaction.service';
+import { faUserGroup, faArrowRightArrowLeft, faCoins } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-add-transaction',
@@ -17,8 +18,11 @@ import { TransactionService } from 'src/app/services/transaction/transaction.ser
 export class AddTransactionComponent {
   closeResult: string = '';
   modalOptions: NgbModalOptions;
-  @Input() customers: any; 
-  @Output() refreshList : EventEmitter<any> = new EventEmitter(); 
+  @Input() customers: any;
+  @Output() refreshList : EventEmitter<any> = new EventEmitter();
+  userGroupIcon = faUserGroup;
+  statusIcon = faArrowRightArrowLeft;
+  coinsIcon = faCoins;
   // customers: any = [
   //   {
   //     name: 'cust 1',

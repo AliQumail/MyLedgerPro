@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {  faSignOut } from '@fortawesome/free-solid-svg-icons';
+import {  faSignOut, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -14,6 +14,7 @@ export class NavbarComponent implements OnInit {
   };
   userActive: any;
   faSignOut = faSignOut;
+  faEllipsisVertical = faEllipsisVertical;
 
   ngOnInit(): void {
      this.userActive = localStorage.getItem('userId');

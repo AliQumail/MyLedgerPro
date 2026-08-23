@@ -5,6 +5,7 @@ import {
   faTwitter,
   faLinkedin,
 } from '@fortawesome/free-brands-svg-icons';
+import { faUser, faLock, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -26,6 +27,9 @@ export class RegisterComponent {
   facebookIcon = faFacebook;
   linkedinIcon = faLinkedin;
   twitterIcon = faTwitter;
+  userIcon = faUser;
+  lockIcon = faLock;
+  emailIcon = faEnvelope;
 
   registerForm: FormGroup = new FormGroup({
     username: new FormControl('', [

@@ -1,13 +1,13 @@
 <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type="la-ball-scale-multiple" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
 
-<button class="green-button mt-2 w-100" (click)="open(mymodal)">
+<button class="green-button" (click)="open(mymodal)">
   Add Transaction
 </button>
 
 
 <ng-template #mymodal let-modal>
-  <form [formGroup]="addTransactionForm">
-  <div class="modal-header">
+  <form [formGroup]="addTransactionForm" class="themed-modal-form">
+  <div class="modal-header themed-modal-header">
     <h4 class="modal-title" id="modal-basic-title">Add Transaction</h4>
     <button
       type="button"
@@ -19,20 +19,24 @@
     </button>
   </div>
   <div class="modal-body">
-      <div class="form-outline mb-3">
-        <select
-          formControlName="customerId"
-          class="form-select form-select-lg input-field"
-          aria-label=".form-select example"
-        >
-          <option value="">Choose customer</option>
-          <option
-            *ngFor="let customerName of customers"
-            [ngValue]="customerName.id"
+      <div class="mb-3">
+        <label class="form-label auth-label">Customer</label>
+        <div class="input-with-icon">
+          <fa-icon [icon]="userGroupIcon" class="field-icon"></fa-icon>
+          <select
+            formControlName="customerId"
+            class="form-select form-select-lg input-field"
+            aria-label=".form-select example"
           >
-            {{ customerName.name }}
-          </option>
-        </select>
+            <option value="">Choose customer</option>
+            <option
+              *ngFor="let customerName of customers"
+              [ngValue]="customerName.id"
+            >
+              {{ customerName.name }}
+            </option>
+          </select>
+        </div>
 
         <div
           *ngIf="
@@ -40,48 +44,54 @@
             (addTransactionForm.controls['customerId'].dirty ||
               addTransactionForm.controls['customerId'].touched)
           "
-          class="text-danger"
+          class="text-danger small mt-1"
         >
           Customer email is required
         </div>
       </div>
 
-      <div class="form-outline mb-3">
-        <!-- <label class="form-label" for="form3Example4">Password</label> -->
-        <select
-        formControlName="status"
-        class="form-select form-select-lg input-field"
-        aria-label=".form-select example"
-      >
-        <option value="" disabled>Choose status</option>
-        <option [ngValue]="'Give'">Give</option>
-        <option [ngValue]="'Take'">Take</option>
-        
-      </select>
+      <div class="mb-3">
+        <label class="form-label auth-label">Status</label>
+        <div class="input-with-icon">
+          <fa-icon [icon]="statusIcon" class="field-icon"></fa-icon>
+          <select
+            formControlName="status"
+            class="form-select form-select-lg input-field"
+            aria-label=".form-select example"
+          >
+            <option value="" disabled>Choose status</option>
+            <option [ngValue]="'Give'">Give</option>
+            <option [ngValue]="'Take'">Take</option>
+          </select>
+        </div>
         <div
           *ngIf="
             addTransactionForm.controls['status'].invalid &&
             (addTransactionForm.controls['status'].dirty ||
               addTransactionForm.controls['status'].touched)
           "
-          class="text-danger"
+          class="text-danger small mt-1"
         >
           Status is required
         </div>
       </div>
 
-      <div class="form-outline mb-4">
-        <input
-          type="number"
-          id="form3Example3"
-          class="form-control form-control-lg input-field"
-          formControlName="amount"
-          placeholder="Amount"
-        />
+      <div class="mb-2">
+        <label class="form-label auth-label">Amount</label>
+        <div class="input-with-icon">
+          <fa-icon [icon]="coinsIcon" class="field-icon"></fa-icon>
+          <input
+            type="number"
+            id="form3Example3"
+            class="form-control form-control-lg input-field"
+            formControlName="amount"
+            placeholder="Enter amount"
+          />
+        </div>
         <div
-          *ngIf="addTransactionForm.controls['amount'].invalid && 
+          *ngIf="addTransactionForm.controls['amount'].invalid &&
                  (addTransactionForm.controls['amount'].dirty || addTransactionForm.controls['amount'].touched)"
-          class="text-danger"
+          class="text-danger small mt-1"
         >
           <div *ngIf="addTransactionForm.controls['amount'].hasError('required')">
             Amount is required.
@@ -94,21 +104,19 @@
           </div>
         </div>
       </div>
-      
- 
+
+
   </div>
-  <div class="modal-footer">
-    <div class="text-center text-lg-start mt-4 pt-2">
-      <button
-        type="submit"
-        class="green-button"
-        style="padding-left: 2.5rem; padding-right: 2.5rem"
-        (click)="addTransaction(addTransactionForm.value)"
-        [disabled]="addTransactionForm.invalid"
-      >
-        Add
-      </button>
-    </div>
+  <div class="modal-footer themed-modal-footer">
+    <button
+      type="submit"
+      class="green-button"
+      style="padding-left: 2.5rem; padding-right: 2.5rem"
+      (click)="addTransaction(addTransactionForm.value)"
+      [disabled]="addTransactionForm.invalid"
+    >
+      Add
+    </button>
   </div>
 </form>
 </ng-template>

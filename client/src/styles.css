@@ -1,75 +1,20 @@
 /* buttons */
 
-.purple-button {
-    appearance: button;
-    backface-visibility: hidden;
-    background-color: #405cf5;
-    border-radius: 6px;
-    border-width: 0;
-    box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
-    box-sizing: border-box;
-    color: #fff;
-    cursor: pointer;
-    font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
-    font-size: 100%;
-    height: 44px;
-    line-height: 1.15;
-    margin: 12px 0 0;
-    outline: none;
-    overflow: hidden;
-    padding: 0 25px;
-    position: relative;
-    text-align: center;
-    text-transform: none;
-    transform: translateZ(0);
-    transition: all .2s,box-shadow .08s ease-in;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-}
-
-.blue-button {
-    appearance: button;
-    backface-visibility: hidden;
-    background-color: #b8b20c;
-    border-radius: 6px;
-    border-width: 0;
-    box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
-    box-sizing: border-box;
-    color: #fff;
-    cursor: pointer;
-    font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
-    font-size: 100%;
-    height: 44px;
-    line-height: 1.15;
-    margin: 12px 0 0;
-    outline: none;
-    overflow: hidden;
-    padding: 0 25px;
-    position: relative;
-    text-align: center;
-    text-transform: none;
-    transform: translateZ(0);
-    transition: all .2s,box-shadow .08s ease-in;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-}
-
-
+.purple-button,
+.blue-button,
 .green-button {
-    
     appearance: button;
     backface-visibility: hidden;
-    background-color: #27897d;
+    background: linear-gradient(135deg, #0f5132, #1d8a5e);
     border-radius: 6px;
     border-width: 0;
-    box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
+    box-shadow: rgba(15, 81, 50, .25) 0 4px 10px 0;
     box-sizing: border-box;
     color: #fff;
     cursor: pointer;
     font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
     font-size: 100%;
+    font-weight: 600;
     height: 44px;
     line-height: 1.15;
     margin: 12px 0 0;
@@ -84,11 +29,88 @@
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-    
-  }
+}
+
+.purple-button:hover,
+.blue-button:hover,
+.green-button:hover {
+    transform: translateY(-1px);
+    box-shadow: rgba(15, 81, 50, .35) 0 6px 14px 0;
+}
+
+.purple-button:disabled,
+.blue-button:disabled,
+.green-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
 
 .input-field {
-    background-color: rgb(246, 247, 248) !important; border-radius: 0 !important;
+    background-color: #f5f9f7 !important;
+    border: 1px solid #dfe9e4 !important;
+    border-radius: 6px !important;
+}
+
+.input-field:focus {
+    border-color: #1d8a5e !important;
+    box-shadow: 0 0 0 0.2rem rgba(29, 138, 94, 0.15) !important;
+}
+
+/* shared form field styling (login, register, modals) */
+
+.auth-label {
+    color: #0b3d2e;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+.field-icon {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+    color: #1d8a5e;
+    opacity: 0.75;
+    pointer-events: none;
+}
+
+.input-with-icon .input-field,
+.input-with-icon .form-select {
+    padding-left: 2.6rem !important;
+}
+
+/* themed modal chrome (Add Customer / Add Transaction / Update Customer) */
+
+.themed-modal-header {
+    background: linear-gradient(135deg, #0f5132, #1d8a5e);
+    border-bottom: none;
+    padding: 1.25rem 1.5rem;
+}
+
+.themed-modal-header .modal-title {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.themed-modal-header .modal-cross-btn {
+    color: #ffffff;
+}
+
+.themed-modal-footer {
+    border-top: 1px solid #eef2f0;
+    padding: 1rem 1.5rem;
+    justify-content: flex-end;
+}
+
+.themed-modal-footer .green-button,
+.themed-modal-footer .purple-button {
+    margin: 0;
 }
 
 

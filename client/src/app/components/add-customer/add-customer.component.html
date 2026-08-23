@@ -1,27 +1,31 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="la-ball-scale-multiple" [fullScreen]="true">
   <p style="color: white">Loading...</p>
 </ngx-spinner>
-<button class="purple-button w-100 mt-5" (click)="open(mymodal)">Add Customer</button>
+<button class="purple-button" (click)="open(mymodal)">Add Customer</button>
 <ng-template #mymodal let-modal>
-  <form [formGroup]="addCustomerForm">
-    <div class="modal-header">
+  <form [formGroup]="addCustomerForm" class="themed-modal-form">
+    <div class="modal-header themed-modal-header">
       <h4 class="modal-title" id="modal-basic-title">Add Customer</h4>
       <button type="button" class="modal-cross-btn" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <div class="form-outline mb-3">
-        <input
-          type="text"
-          id="form3Example4"
-          formControlName="name"
-          class="form-control form-control-lg input-field"
-          placeholder="Name"
-        />
+      <div class="mb-3">
+        <label class="form-label auth-label">Name</label>
+        <div class="input-with-icon">
+          <fa-icon [icon]="userIcon" class="field-icon"></fa-icon>
+          <input
+            type="text"
+            id="form3Example4"
+            formControlName="name"
+            class="form-control form-control-lg input-field"
+            placeholder="Enter customer name"
+          />
+        </div>
         <div
           *ngIf="addCustomerForm.controls['name'].invalid && (addCustomerForm.controls['name'].dirty || addCustomerForm.controls['name'].touched)"
-          class="text-danger"
+          class="text-danger small mt-1"
         >
           <div *ngIf="addCustomerForm.controls['name'].hasError('required')">
             Name is required.
@@ -34,17 +38,21 @@
           </div>
         </div>
       </div>
-      <div class="form-outline mb-3">
-        <input
-          type="text"
-          id="form3Example5"
-          formControlName="phoneno"
-          class="form-control form-control-lg input-field"
-          placeholder="Phone No"
-        />
+      <div class="mb-3">
+        <label class="form-label auth-label">Phone No</label>
+        <div class="input-with-icon">
+          <fa-icon [icon]="phoneIcon" class="field-icon"></fa-icon>
+          <input
+            type="text"
+            id="form3Example5"
+            formControlName="phoneno"
+            class="form-control form-control-lg input-field"
+            placeholder="11-digit phone number"
+          />
+        </div>
         <div
           *ngIf="addCustomerForm.controls['phoneno'].invalid && (addCustomerForm.controls['phoneno'].dirty || addCustomerForm.controls['phoneno'].touched)"
-          class="text-danger"
+          class="text-danger small mt-1"
         >
           <div *ngIf="addCustomerForm.controls['phoneno'].hasError('required')">
             Phone number is required.
@@ -54,17 +62,21 @@
           </div>
         </div>
       </div>
-      <div class="form-outline mb-4">
-        <input
-          type="email"
-          id="form3Example3"
-          class="form-control form-control-lg input-field"
-          formControlName="email"
-          placeholder="Email"
-        />
+      <div class="mb-2">
+        <label class="form-label auth-label">Email</label>
+        <div class="input-with-icon">
+          <fa-icon [icon]="emailIcon" class="field-icon"></fa-icon>
+          <input
+            type="email"
+            id="form3Example3"
+            class="form-control form-control-lg input-field"
+            formControlName="email"
+            placeholder="customer@example.com"
+          />
+        </div>
         <div
           *ngIf="addCustomerForm.controls['email'].invalid && (addCustomerForm.controls['email'].dirty || addCustomerForm.controls['email'].touched)"
-          class="text-danger"
+          class="text-danger small mt-1"
         >
           <div *ngIf="addCustomerForm.controls['email'].hasError('required')">
             Email is required.
@@ -76,18 +88,16 @@
       </div>
 
     </div>
-    <div class="modal-footer">
-      <div class="text-center text-lg-start mt-4 pt-2">
-        <button
-          type="submit"
-          class="green-button"
-          style="padding-left: 2.5rem; padding-right: 2.5rem"
-          (click)="addCustomer(addCustomerForm.value)"
-          [disabled]="addCustomerForm.invalid"
-        >
-          Add
-        </button>
-      </div>
+    <div class="modal-footer themed-modal-footer">
+      <button
+        type="submit"
+        class="green-button"
+        style="padding-left: 2.5rem; padding-right: 2.5rem"
+        (click)="addCustomer(addCustomerForm.value)"
+        [disabled]="addCustomerForm.invalid"
+      >
+        Add
+      </button>
     </div>
   </form>
 </ng-template>

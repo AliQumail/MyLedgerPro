@@ -4,55 +4,81 @@
 <div class="login-outer-most-div">
 <app-navbar></app-navbar>
 <section class="">
-  <div class="container py-5 h-100">
+  <div class="container py-3 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-        <div class="card login-card" style="border-radius: 1rem;">
-          <div class="card-body p-5 text-center">
-
-            <form class="mb-md-1 mt-md-4 pb-4" [formGroup]="loginForm">
-              <h2 class="fw-bold mb-5 text-uppercase">Login</h2>
-              <div class="form-outline form-white mb-4">
-                <!-- <label class="form-label" for="typeEmailX">Email</label> -->
-                <input type="text" id="typeEmailX" placeholder="Username" formControlName="username" class="form-control form-control-lg input-field" />
-                <div
-                    *ngIf="
-                      loginForm.controls['username'].invalid &&
-                      (loginForm.controls['username'].dirty ||
-                        loginForm.controls['username'].touched)
-                    "
-                    class="text-danger"
-                  >
-                    Username is required
-                  </div>
+      <div class="col-12 col-lg-9 col-xl-8">
+        <div class="card login-card overflow-hidden" style="border-radius: 1.25rem;">
+          <div class="row g-0">
+            <div class="col-md-5 auth-side-panel d-none d-md-flex">
+              <div>
+                <div class="brand-mark-lg">M</div>
+                <h3 class="side-panel-title">Welcome back</h3>
+                <p class="side-panel-text">
+                  Sign in to keep track of every cash inflow and outflow across your ledger, all in one place.
+                </p>
+                <ul class="side-panel-points">
+                  <li>Real-time transaction tracking</li>
+                  <li>Customer-wise cash summaries</li>
+                  <li>Secure, always-on access</li>
+                </ul>
               </div>
-
-              <div class="form-outline form-white mb-4">
-                <!-- <label class="form-label" for="typePasswordX">Password</label> -->
-                <input type="password" id="typePasswordX" placeholder="Password" formControlName="password" class="form-control form-control-lg input-field" />
-                <div
-                    *ngIf="
-                      loginForm.controls['password'].invalid &&
-                      (loginForm.controls['password'].dirty ||
-                        loginForm.controls['password'].touched)
-                    "
-                    class="text-danger"
-                  >
-                    Password is required
-                  </div>
-              </div>
-
-         
-              <button class="btn login-btn" type="submit" (click)="login(loginForm.value)"[disabled]="loginForm.invalid">
-                Login</button>
-                
-            </form>
-
-            <div>
-              <p class="mb-0">Don't have an account? <a href="/register" class="text-primary"  routerLink="/register" >Register</a>
-              </p>
             </div>
 
+            <div class="col-md-7">
+              <div class="card-body p-4 p-md-5">
+
+                <form class="mb-md-1" [formGroup]="loginForm">
+                  <h2 class="fw-bold mb-1">Login</h2>
+                  <p class="auth-subtext mb-4">Enter your credentials to access your account.</p>
+
+                  <div class="mb-4">
+                    <label class="form-label auth-label" for="typeEmailX">Username</label>
+                    <div class="input-with-icon">
+                      <fa-icon [icon]="userIcon" class="field-icon"></fa-icon>
+                      <input type="text" id="typeEmailX" placeholder="Enter your username" formControlName="username" class="form-control form-control-lg input-field" />
+                    </div>
+                    <div
+                        *ngIf="
+                          loginForm.controls['username'].invalid &&
+                          (loginForm.controls['username'].dirty ||
+                            loginForm.controls['username'].touched)
+                        "
+                        class="text-danger small mt-1"
+                      >
+                        Username is required
+                      </div>
+                  </div>
+
+                  <div class="mb-4">
+                    <label class="form-label auth-label" for="typePasswordX">Password</label>
+                    <div class="input-with-icon">
+                      <fa-icon [icon]="lockIcon" class="field-icon"></fa-icon>
+                      <input type="password" id="typePasswordX" placeholder="Enter your password" formControlName="password" class="form-control form-control-lg input-field" />
+                    </div>
+                    <div
+                        *ngIf="
+                          loginForm.controls['password'].invalid &&
+                          (loginForm.controls['password'].dirty ||
+                            loginForm.controls['password'].touched)
+                        "
+                        class="text-danger small mt-1"
+                      >
+                        Password is required
+                      </div>
+                  </div>
+
+                  <button class="btn login-btn" type="submit" (click)="login(loginForm.value)"[disabled]="loginForm.invalid">
+                    Login</button>
+
+                </form>
+
+                <div>
+                  <p class="mb-0 mt-4 text-center">Don't have an account? <a href="/register" class="text-primary fw-semibold"  routerLink="/register" >Register</a>
+                  </p>
+                </div>
+
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -61,6 +87,5 @@
 </section>
 
 </div>
-
 
 
