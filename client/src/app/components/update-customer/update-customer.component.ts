@@ -69,9 +69,9 @@ export class UpdateCustomerComponent implements OnInit {
         this.modalService.dismissAll(); 
       },
       (error) => {
-        this.spinner.hide(); 
+        this.spinner.hide();
         console.log(JSON.stringify(error));
-        this.toastr.error("Failed to add customer");
+        this.toastr.error(error?.error || "Failed to update customer");
         //alert(error.headers);
       }
     );

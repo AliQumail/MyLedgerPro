@@ -13,8 +13,16 @@ namespace server.Repositories.TransactionRepository
         {
             DbContext = cashBookDbContext;
         }
+        private const int MaxTransactionsPerCustomer = 50;
+
         public async Task<Transaction> AddTransactionAsync(Transaction transaction)
         {
+            var transactionCount = await DbContext.Transaction.CountAsync(t => t.CustomerId == transaction.CustomerId);
+            if (transactionCount >= MaxTransactionsPerCustomer)
+            {
+                throw new Exception($"This demo is limited to {MaxTransactionsPerCustomer} transactions per customer");
+            }
+
             await DbContext.Transaction.AddAsync(transaction);
             await DbContext.SaveChangesAsync();
             return transaction;

@@ -69,7 +69,7 @@ export class AddTransactionComponent {
         (error) => {
           this.spinner.hide()
           console.log(JSON.stringify(error));
-          this.toastr.error("Transaction failed");
+          this.toastr.error(error?.error || "Transaction failed");
         }
       );
   }

@@ -64,8 +64,8 @@ export class AddCustomerComponent {
         this.modalService.dismissAll(); 
       },
       (error) => {
-        this.spinner.hide(); 
-        this.toastr.error("Customer already exists");
+        this.spinner.hide();
+        this.toastr.error(error?.error || "Customer already exists");
       }
     );
   }

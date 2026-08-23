@@ -25,7 +25,7 @@ namespace server.Controllers
 
         [HttpPost]
         [Route("addcustomer")]
-        public async Task<string> AddCustomer(AddCustomerDTO _customer) {
+        public async Task<IActionResult> AddCustomer(AddCustomerDTO _customer) {
             var customer = new Customer()
             {
                 Id = Guid.NewGuid(),
@@ -34,15 +34,31 @@ namespace server.Controllers
                 PhoneNo = _customer.PhoneNo,
                 Name = _customer.Name,
             };
-            await customerRepository.AddCustomerAsync(customer);
-            return "Customer added successfully";
+
+            try
+            {
+                await customerRepository.AddCustomerAsync(customer);
+                return Ok("Customer added successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
         [Route("Update")]
-        public async Task<bool> UpdateCustomer([FromQuery] Guid id, [FromBody] AddCustomerDTO _customer)
+        public async Task<IActionResult> UpdateCustomer([FromQuery] Guid id, [FromBody] AddCustomerDTO _customer)
         {
-            return await customerRepository.UpdateCustomerAsync(id, _customer);   
+            try
+            {
+                var updated = await customerRepository.UpdateCustomerAsync(id, _customer);
+                return Ok(updated);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete]

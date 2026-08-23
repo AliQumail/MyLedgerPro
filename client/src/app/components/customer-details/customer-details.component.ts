@@ -38,7 +38,7 @@ export class CustomerDetailsComponent {
   filteredTransactions: any = [];
   totalToGive: number = 0;
   totalToTake: number = 0;
-  currency: string = 'RS';
+  currency: string = 'PKR';
 
   userId: any;
   customerId: any;
@@ -54,7 +54,7 @@ export class CustomerDetailsComponent {
 
   ngOnInit() {
     this.authService.isAuthenticated();
-    this.currency = localStorage.getItem('currency') || 'RS';
+    this.currency = localStorage.getItem('currency') || 'PKR';
     this.userId = localStorage.getItem('userId');
 
     this.route.params.subscribe((params) => {

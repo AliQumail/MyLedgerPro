@@ -21,15 +21,23 @@ namespace server.Controllers
             this.authRepository = _authRepository;
         }
 
+        private const int MaxAccounts = 20;
+
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDTO registerRequestDto)
         {
+            var accountCount = userManager.Users.Count();
+            if (accountCount >= MaxAccounts)
+            {
+                return BadRequest($"This demo is limited to {MaxAccounts} accounts. Please try again later.");
+            }
+
             var identityUser = new ApplicationUser()
             {
                 UserName = registerRequestDto.Username,
                 Email = registerRequestDto.Email,
-                Currency = "RS",
+                Currency = "PKR",
             };
 
             var identityResult = await userManager.CreateAsync(identityUser, registerRequestDto.Password);
@@ -63,7 +71,7 @@ namespace server.Controllers
                             Username = user.UserName,
                             Email = user.Email,
                             Token = token,
-                            Currency = string.IsNullOrEmpty(user.Currency) ? "RS" : user.Currency,
+                            Currency = string.IsNullOrEmpty(user.Currency) ? "PKR" : user.Currency,
                         };
                         return loginResponse;
                     }
@@ -98,7 +106,7 @@ namespace server.Controllers
                 Id = user.Id,
                 Username = user.UserName,
                 Email = user.Email,
-                Currency = string.IsNullOrEmpty(user.Currency) ? "RS" : user.Currency,
+                Currency = string.IsNullOrEmpty(user.Currency) ? "PKR" : user.Currency,
             };
         }
 

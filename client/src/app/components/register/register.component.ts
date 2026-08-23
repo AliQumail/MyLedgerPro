@@ -56,7 +56,7 @@ export class RegisterComponent {
       },
       (error) => {
         this.spinner.hide();
-        this.toastr.error("Please enter a valid user")
+        this.toastr.error(error?.error || "Please enter a valid user")
       }
     );
   }

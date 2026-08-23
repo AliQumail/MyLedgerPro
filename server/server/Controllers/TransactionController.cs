@@ -20,7 +20,7 @@ namespace server.Controllers
 
         [HttpPost]
         [Route("addtransaction")]
-        public async Task<string> AddTransaction(AddTransactionDTO _transaction) 
+        public async Task<IActionResult> AddTransaction(AddTransactionDTO _transaction)
         {
             var transaction = new Transaction()
             {
@@ -30,8 +30,16 @@ namespace server.Controllers
                 Amount = _transaction.Amount,
                 Date = DateTime.Now,
             };
-            await transactionRepository.AddTransactionAsync(transaction);
-            return "Transaction added successfully";
+
+            try
+            {
+                await transactionRepository.AddTransactionAsync(transaction);
+                return Ok("Transaction added successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 

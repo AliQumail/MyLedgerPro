@@ -48,7 +48,7 @@ export class LoginComponent {
           localStorage.setItem('token', response.token);
           localStorage.setItem('username', response.username);
           localStorage.setItem('email', response.email);
-          localStorage.setItem('currency', response.currency || 'RS');
+          localStorage.setItem('currency', response.currency || 'PKR');
           this.toastr.success("Login successful");
           setTimeout(()=>{
             this.router.navigate(['/dashboard']);

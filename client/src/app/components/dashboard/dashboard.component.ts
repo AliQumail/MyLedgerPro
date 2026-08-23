@@ -84,7 +84,7 @@ export class DashboardComponent {
 
   totalToTake: number = 0;
   totalToGive: number = 0;
-  currency: string = 'RS';
+  currency: string = 'PKR';
 
   searchTerm: string = '';
   sortColumn: 'toTake' | 'toGive' | null = null;
@@ -98,7 +98,7 @@ export class DashboardComponent {
   async deleteCustomer(id: string) {
     const confirmed = await this.confirmDialog.confirm(
       'Delete this customer?',
-      'This will permanently remove the customer and cannot be undone.',
+      'This will permanently remove the customer and all of their transactions. This cannot be undone.',
       'Delete Customer'
     );
     if (!confirmed) return;
@@ -122,7 +122,7 @@ export class DashboardComponent {
     if (
       localStorage.getItem('username') != null ){
       this.name = localStorage.getItem('username');
-      this.currency = localStorage.getItem('currency') || 'RS';
+      this.currency = localStorage.getItem('currency') || 'PKR';
       this.generateSummary(localStorage.getItem('userId'));
     }
   }

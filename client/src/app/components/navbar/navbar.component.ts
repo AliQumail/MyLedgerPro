@@ -37,12 +37,12 @@ export class NavbarComponent implements OnInit {
   faEnvelope = faEnvelope;
   faMoneyBill = faMoneyBill;
 
-  currencyOptions = ['RS', 'USD', 'EUR', 'GBP', 'INR', 'AED', 'SAR'];
+  currencyOptions = ['PKR', 'USD', 'EUR', 'GBP', 'INR', 'AED', 'SAR'];
 
   profileForm: FormGroup = new FormGroup({
     username: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
-    currency: new FormControl('RS', Validators.required),
+    currency: new FormControl('PKR', Validators.required),
   });
 
   ngOnInit(): void {
@@ -70,7 +70,7 @@ export class NavbarComponent implements OnInit {
         this.profileForm.patchValue({
           username: res.username,
           email: res.email,
-          currency: res.currency || 'RS',
+          currency: res.currency || 'PKR',
         });
         this.modalService.open(content, { backdrop: 'static', backdropClass: 'customBackdrop' });
       },

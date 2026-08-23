@@ -4,6 +4,6 @@ namespace server.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public string Currency { get; set; } = "RS";
+        public string Currency { get; set; } = "PKR";
     }
 }

@@ -13,6 +13,8 @@ namespace server.Repositories.CustomerRepository
         {
             DbContext = cashBookDbContext;
         }
+        private const int MaxCustomersPerUser = 10;
+
         public async Task<Customer> AddCustomerAsync(Customer customer)
         {
             var customerFound = await DbContext.Customer.SingleOrDefaultAsync(x => x.Email == customer.Email && x.UserId == customer.UserId);
@@ -25,6 +27,12 @@ namespace server.Repositories.CustomerRepository
             if (nameDuplicate)
             {
                 throw new Exception("A customer with this name already exists");
+            }
+
+            var customerCount = await DbContext.Customer.CountAsync(x => x.UserId == customer.UserId);
+            if (customerCount >= MaxCustomersPerUser)
+            {
+                throw new Exception($"This demo is limited to {MaxCustomersPerUser} customers per account");
             }
 
             await DbContext.Customer.AddAsync(customer);
@@ -66,6 +74,11 @@ namespace server.Repositories.CustomerRepository
             var customer = await DbContext.Customer.FindAsync(id);
             if (customer != null)
             {
+                var relatedTransactions = await DbContext.Transaction
+                    .Where(t => t.CustomerId == id)
+                    .ToListAsync();
+                DbContext.Transaction.RemoveRange(relatedTransactions);
+
                 DbContext.Customer.Remove(customer);
                 await DbContext.SaveChangesAsync();
                 return true;
