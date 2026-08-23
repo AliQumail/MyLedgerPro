@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { ConfirmDialogService } from 'src/app/shared/confirm-dialog/confirm-dialog.service';
+import { buildReminderMessage, openWhatsAppReminder } from 'src/app/shared/reminder/reminder.util';
 
 @Component({
   selector: 'app-customer-details',
@@ -213,27 +214,19 @@ export class CustomerDetailsComponent {
     doc.save(`${this.customer.name}-transactions.pdf`);
   }
 
-  buildReminderMessage(): string {
-    if (this.totalToTake > 0) {
-      return `Hi ${this.customer.name}, this is a friendly reminder that you have an outstanding balance of ${this.currency} ${this.totalToTake.toLocaleString()} with us. Please arrange payment at your earliest convenience. Thank you! - MyLedgerPro`;
-    }
-    if (this.totalToGive > 0) {
-      return `Hi ${this.customer.name}, just a note that we owe you ${this.currency} ${this.totalToGive.toLocaleString()}. We'll settle this soon. Thank you! - MyLedgerPro`;
-    }
-    return `Hi ${this.customer.name}, your account is fully settled. Thank you for being a valued customer! - MyLedgerPro`;
-  }
-
   sendEmailReminder() {
     if (!this.customer.email) {
       this.toastr.error('This customer has no email on file');
       return;
     }
 
+    const message = buildReminderMessage(this.customer.name, this.currency, this.totalToTake, this.totalToGive);
+
     this.spinner.show();
     this.customerService.sendEmailReminder({
       customerEmail: this.customer.email,
       customerName: this.customer.name,
-      message: this.buildReminderMessage(),
+      message,
     }).subscribe(
       () => {
         this.spinner.hide();
@@ -252,9 +245,8 @@ export class CustomerDetailsComponent {
       return;
     }
 
-    const digits = this.customer.phoneNo.replace(/\D/g, '');
-    const text = encodeURIComponent(this.buildReminderMessage());
-    window.open(`https://wa.me/${digits}?text=${text}`, '_blank');
+    const message = buildReminderMessage(this.customer.name, this.currency, this.totalToTake, this.totalToGive);
+    openWhatsAppReminder(this.customer.phoneNo, message);
   }
 
   async deleteTransaction(id: any) {

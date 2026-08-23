@@ -6,11 +6,13 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { faTrashCan, faEye, faHand } from '@fortawesome/free-regular-svg-icons';
-import { faSearch, faSortUp, faSortDown, faSort, faFilePdf } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSortUp, faSortDown, faSort, faFilePdf, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { ChartConfiguration } from 'chart.js';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { ConfirmDialogService } from 'src/app/shared/confirm-dialog/confirm-dialog.service';
+import { buildReminderMessage, openWhatsAppReminder } from 'src/app/shared/reminder/reminder.util';
 
 @Component({
   selector: 'app-dashboard',
@@ -81,6 +83,8 @@ export class DashboardComponent {
   faSortDown = faSortDown;
   faSort = faSort;
   faFilePdf = faFilePdf;
+  faEnvelope = faEnvelope;
+  faWhatsapp = faWhatsapp;
 
   totalToTake: number = 0;
   totalToGive: number = 0;
@@ -144,6 +148,41 @@ export class DashboardComponent {
 
   view(customerId: any, customerName: string) {
     this.router.navigate(['customer', customerName]);
+  }
+
+  sendEmailReminder(item: any) {
+    if (!item.customerEmail) {
+      this.toastr.error('This customer has no email on file');
+      return;
+    }
+
+    const message = buildReminderMessage(item.customerName, this.currency, item.toTake, item.toGive);
+
+    this.spinner.show();
+    this.customerService.sendEmailReminder({
+      customerEmail: item.customerEmail,
+      customerName: item.customerName,
+      message,
+    }).subscribe(
+      () => {
+        this.spinner.hide();
+        this.toastr.success('Reminder email sent');
+      },
+      (error) => {
+        this.spinner.hide();
+        this.toastr.error(error?.error || 'Failed to send reminder email');
+      }
+    );
+  }
+
+  sendWhatsAppReminder(item: any) {
+    if (!item.customerPhoneNo) {
+      this.toastr.error('This customer has no phone number on file');
+      return;
+    }
+
+    const message = buildReminderMessage(item.customerName, this.currency, item.toTake, item.toGive);
+    openWhatsAppReminder(item.customerPhoneNo, message);
   }
 
   getTransactions(_userEmail: any) {

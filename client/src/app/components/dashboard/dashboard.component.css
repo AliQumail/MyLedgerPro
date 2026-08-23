@@ -195,6 +195,47 @@
 
 .dashboard-table .btn-styling-none {
     color: #1d8a5e;
+    font-size: 1.1rem;
+}
+
+.dashboard-reminder-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: #f7faf8;
+    border: 1px solid #e7ece9;
+    border-radius: 999px;
+    padding: 0.3rem 0.5rem;
+}
+
+.dashboard-reminder-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color .15s;
+}
+
+.dashboard-reminder-email {
+    color: #1d8a5e;
+}
+
+.dashboard-reminder-email:hover {
+    background-color: #d9ede3;
+}
+
+.dashboard-reminder-whatsapp {
+    color: #25d366;
+}
+
+.dashboard-reminder-whatsapp:hover {
+    background-color: #d4f5e0;
 }
 
 .dashboard-chart-wrap {

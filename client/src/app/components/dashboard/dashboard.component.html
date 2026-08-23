@@ -82,6 +82,7 @@
                   <th>Details</th>
                   <th>Update</th>
                   <th>Delete</th>
+                  <th>Reminder</th>
                 </tr>
               </thead>
               <tbody>
@@ -122,9 +123,29 @@
                   <fa-icon [icon]="faTrashCan"></fa-icon>
                   </button>
                   </td>
+                  <td>
+                    <div class="dashboard-reminder-group">
+                      <button
+                        type="button"
+                        class="dashboard-reminder-btn dashboard-reminder-email"
+                        (click)="sendEmailReminder(item)"
+                        title="Send email reminder"
+                      >
+                      <fa-icon [icon]="faEnvelope"></fa-icon>
+                      </button>
+                      <button
+                        type="button"
+                        class="dashboard-reminder-btn dashboard-reminder-whatsapp"
+                        (click)="sendWhatsAppReminder(item)"
+                        title="Send WhatsApp reminder"
+                      >
+                      <fa-icon [icon]="faWhatsapp"></fa-icon>
+                      </button>
+                    </div>
+                  </td>
                 </tr>
                 <tr *ngIf="filteredSummary.length === 0">
-                  <td colspan="7" class="text-center dashboard-empty">No Data</td>
+                  <td colspan="8" class="text-center dashboard-empty">No Data</td>
                 </tr>
               </tbody>
             </table>
