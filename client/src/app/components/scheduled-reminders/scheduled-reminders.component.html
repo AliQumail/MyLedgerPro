@@ -16,9 +16,7 @@
     </div>
 
     <div class="dashboard-panel">
-      <p class="scheduled-reminders-subtext">
-        Automatically email a payment reminder to a customer on a repeating schedule. Only email reminders can be scheduled automatically &mdash; WhatsApp reminders still require a manual click from the dashboard.
-      </p>
+      <p class="scheduled-reminders-subtext">Only for Emails</p>
       <div class="table-responsive mt-2">
         <table class="table align-middle mb-0 dashboard-table">
           <thead>
@@ -28,6 +26,7 @@
               <th>Next Run</th>
               <th>Last Sent</th>
               <th>Status</th>
+              <th>Edit</th>
               <th>Delete</th>
             </tr>
           </thead>
@@ -44,11 +43,14 @@
                 </div>
               </td>
               <td>
+                <button class="btn-styling-none" (click)="openEdit(scheduleModal, schedule)"><fa-icon [icon]="faPenToSquare"></fa-icon></button>
+              </td>
+              <td>
                 <button class="btn-styling-none" (click)="deleteSchedule(schedule)"><fa-icon [icon]="faTrashCan"></fa-icon></button>
               </td>
             </tr>
             <tr *ngIf="schedules.length === 0">
-              <td colspan="6" class="text-center dashboard-empty">No scheduled reminders yet</td>
+              <td colspan="7" class="text-center dashboard-empty">No scheduled reminders yet</td>
             </tr>
           </tbody>
         </table>
@@ -60,18 +62,39 @@
 <ng-template #scheduleModal let-modal>
   <form [formGroup]="scheduleForm" class="themed-modal-form">
     <div class="modal-header themed-modal-header">
-      <h4 class="modal-title">New Scheduled Reminder</h4>
+      <h4 class="modal-title">{{ editingScheduleId ? 'Edit Scheduled Reminder' : 'New Scheduled Reminder' }}</h4>
       <button type="button" class="modal-cross-btn" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <div class="mb-3">
+      <div class="mb-3" *ngIf="!editingScheduleId">
+        <div class="scheduled-reminders-customer-header">
+          <label class="form-label auth-label mb-0">Customers</label>
+          <button type="button" class="scheduled-reminders-select-all-btn" (click)="toggleSelectAll()" *ngIf="availableCustomers.length > 0">
+            {{ allAvailableSelected ? 'Clear all' : 'Select all' }}
+          </button>
+        </div>
+        <div class="scheduled-reminders-customer-list">
+          <div class="form-check" *ngFor="let c of availableCustomers">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              [id]="'cust-' + c.id"
+              [checked]="selectedCustomerIds.has(c.id)"
+              (change)="toggleCustomerSelection(c.id)"
+            />
+            <label class="form-check-label" [for]="'cust-' + c.id">{{ c.name }}</label>
+          </div>
+          <p class="scheduled-reminders-empty-note" *ngIf="availableCustomers.length === 0">
+            All customers already have a scheduled reminder.
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-3" *ngIf="editingScheduleId">
         <label class="form-label auth-label">Customer</label>
-        <select formControlName="customerId" class="form-select form-select-lg input-field">
-          <option value="">Choose customer</option>
-          <option *ngFor="let c of customers" [ngValue]="c.id">{{ c.name }}</option>
-        </select>
+        <p class="scheduled-reminders-locked-customer">{{ editingCustomerName }}</p>
       </div>
 
       <div class="mb-3">
@@ -106,10 +129,10 @@
         type="submit"
         class="green-button"
         style="padding-left: 2.5rem; padding-right: 2.5rem"
-        (click)="createSchedule()"
+        (click)="saveSchedule()"
         [disabled]="scheduleForm.invalid"
       >
-        Create Schedule
+        {{ editingScheduleId ? 'Save Changes' : 'Create Schedule' }}
       </button>
     </div>
   </form>

@@ -30,6 +30,12 @@
     flex-wrap: wrap;
 }
 
+.dashboard-header-actions app-add-customer,
+.dashboard-header-actions app-add-transaction {
+    display: flex;
+    align-items: center;
+}
+
 .dashboard-header-actions .purple-button,
 .dashboard-header-actions .green-button {
     width: auto;
@@ -37,6 +43,31 @@
     margin: 0;
     display: inline-flex;
     align-items: center;
+    line-height: 1;
+}
+
+.dashboard-reminders-btn {
+    position: relative;
+    top: 6px;
+    overflow: visible !important;
+    height: 44px !important;
+    align-self: center !important;
+}
+
+.dashboard-new-badge {
+    position: absolute;
+    top: -9px;
+    right: -8px;
+    background-color: #f2994a;
+    color: #ffffff;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    line-height: normal;
 }
 
 .dashboard-sidebar {

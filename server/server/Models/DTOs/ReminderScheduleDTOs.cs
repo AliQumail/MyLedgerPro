@@ -3,7 +3,7 @@ namespace server.Models.DTOs
     public class CreateReminderScheduleDTO
     {
         public Guid UserId { get; set; }
-        public Guid CustomerId { get; set; }
+        public List<Guid> CustomerIds { get; set; } = new List<Guid>();
         public string Frequency { get; set; } = string.Empty;
         public string TimeOfDay { get; set; } = string.Empty; // "HH:mm"
         public int? DayOfWeek { get; set; }

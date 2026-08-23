@@ -77,16 +77,18 @@
       </div>
 
       <div class="mb-2">
-        <label class="form-label auth-label">Amount</label>
-        <div class="input-with-icon">
-          <fa-icon [icon]="coinsIcon" class="field-icon"></fa-icon>
-          <input
-            type="number"
-            id="form3Example3"
-            class="form-control form-control-lg input-field"
-            formControlName="amount"
-            placeholder="Enter amount"
-          />
+        <div class="floating-outline-field">
+          <span class="floating-outline-label">Amount</span>
+          <div class="floating-outline-row">
+            <fa-icon [icon]="coinsIcon" class="floating-outline-prefix"></fa-icon>
+            <input
+              type="number"
+              id="form3Example3"
+              class="floating-outline-input"
+              formControlName="amount"
+              placeholder="0.00"
+            />
+          </div>
         </div>
         <div
           *ngIf="addTransactionForm.controls['amount'].invalid &&

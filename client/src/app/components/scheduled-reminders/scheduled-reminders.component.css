@@ -82,3 +82,57 @@
     background-color: #1d8a5e;
     border-color: #1d8a5e;
 }
+
+.scheduled-reminders-customer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.scheduled-reminders-select-all-btn {
+    border: none;
+    background: none;
+    color: #1d8a5e;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+}
+
+.scheduled-reminders-select-all-btn:hover {
+    text-decoration: underline;
+}
+
+.scheduled-reminders-customer-list {
+    max-height: 180px;
+    overflow-y: auto;
+    border: 1px solid #dfe9e4;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    background-color: #f5f9f7;
+}
+
+.scheduled-reminders-customer-list .form-check {
+    margin-bottom: 0.4rem;
+}
+
+.scheduled-reminders-customer-list .form-check:last-child {
+    margin-bottom: 0;
+}
+
+.scheduled-reminders-empty-note {
+    color: #5a6b64;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.scheduled-reminders-locked-customer {
+    background-color: #f5f9f7;
+    border: 1px solid #dfe9e4;
+    border-radius: 6px;
+    padding: 0.65rem 1rem;
+    color: #0b3d2e;
+    font-weight: 600;
+    margin: 0;
+}

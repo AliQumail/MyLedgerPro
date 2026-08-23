@@ -11,7 +11,7 @@ namespace server.Controllers
     public class ReminderScheduleController : ControllerBase
     {
         private readonly CashBookDbContext DbContext;
-        private const int MaxSchedulesPerUser = 20;
+        private const int MaxSchedulesPerUser = 10;
 
         public ReminderScheduleController(CashBookDbContext dbContext)
         {
@@ -51,10 +51,10 @@ namespace server.Controllers
         [Route("create")]
         public async Task<IActionResult> Create([FromBody] CreateReminderScheduleDTO request)
         {
-            var existingCount = await DbContext.ReminderSchedule.CountAsync(s => s.UserId == request.UserId);
-            if (existingCount >= MaxSchedulesPerUser)
+            var customerIds = request.CustomerIds.Distinct().ToList();
+            if (customerIds.Count == 0)
             {
-                return BadRequest($"This demo is limited to {MaxSchedulesPerUser} scheduled reminders per account");
+                return BadRequest("Select at least one customer");
             }
 
             if (!TimeSpan.TryParse(request.TimeOfDay, out var timeOfDay))
@@ -62,14 +62,34 @@ namespace server.Controllers
                 return BadRequest("Invalid time of day");
             }
 
+            var existingCount = await DbContext.ReminderSchedule.CountAsync(s => s.UserId == request.UserId);
+            if (existingCount + customerIds.Count > MaxSchedulesPerUser)
+            {
+                return BadRequest($"This demo is limited to {MaxSchedulesPerUser} scheduled reminders per account");
+            }
+
+            var alreadyScheduled = await DbContext.ReminderSchedule
+                .Where(s => s.UserId == request.UserId && customerIds.Contains(s.CustomerId))
+                .Select(s => s.CustomerId)
+                .ToListAsync();
+
+            if (alreadyScheduled.Count > 0)
+            {
+                var names = await DbContext.Customer
+                    .Where(c => alreadyScheduled.Contains(c.Id))
+                    .Select(c => c.Name)
+                    .ToListAsync();
+                return BadRequest($"Already scheduled for: {string.Join(", ", names)}");
+            }
+
             var nextRunAt = ReminderScheduleCalculator.ComputeNextRunAt(
                 request.Frequency, timeOfDay, request.DayOfWeek, request.DayOfMonth, DateTime.UtcNow);
 
-            var schedule = new ReminderSchedule
+            var schedules = customerIds.Select(customerId => new ReminderSchedule
             {
                 Id = Guid.NewGuid(),
                 UserId = request.UserId,
-                CustomerId = request.CustomerId,
+                CustomerId = customerId,
                 Frequency = request.Frequency,
                 TimeOfDay = timeOfDay,
                 DayOfWeek = request.DayOfWeek,
@@ -77,12 +97,12 @@ namespace server.Controllers
                 IsActive = true,
                 NextRunAt = nextRunAt,
                 CreatedAt = DateTime.UtcNow,
-            };
+            }).ToList();
 
-            DbContext.ReminderSchedule.Add(schedule);
+            DbContext.ReminderSchedule.AddRange(schedules);
             await DbContext.SaveChangesAsync();
 
-            return Ok("Reminder schedule created");
+            return Ok($"{schedules.Count} reminder schedule(s) created");
         }
 
         [HttpPut]

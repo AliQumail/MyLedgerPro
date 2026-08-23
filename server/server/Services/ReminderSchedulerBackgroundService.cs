@@ -52,58 +52,59 @@ namespace server.Services
 
             if (dueSchedules.Count == 0) return;
 
+            var schedulesToRemove = new List<ReminderSchedule>();
+
             foreach (var schedule in dueSchedules)
             {
                 var customer = await dbContext.Customer.FindAsync(new object[] { schedule.CustomerId }, stoppingToken);
-                if (customer == null || string.IsNullOrWhiteSpace(customer.Email))
+                if (customer != null && !string.IsNullOrWhiteSpace(customer.Email))
                 {
-                    AdvanceOrDeactivate(schedule, now);
-                    continue;
+                    try
+                    {
+                        var totalGive = await dbContext.Transaction
+                            .Where(t => t.CustomerId == customer.Id && t.UserId == schedule.UserId && t.Status == "Give")
+                            .SumAsync(t => t.Amount, stoppingToken);
+                        var totalTake = await dbContext.Transaction
+                            .Where(t => t.CustomerId == customer.Id && t.UserId == schedule.UserId && t.Status == "Take")
+                            .SumAsync(t => t.Amount, stoppingToken);
+
+                        var toTake = totalGive > totalTake ? totalGive - totalTake : 0;
+                        var toGive = totalTake > totalGive ? totalTake - totalGive : 0;
+
+                        var message = toTake > 0
+                            ? $"Hi {customer.Name}, this is a friendly reminder that you have an outstanding balance of {toTake:N0} with us. Please arrange payment at your earliest convenience. Thank you! - MyLedgerPro"
+                            : toGive > 0
+                                ? $"Hi {customer.Name}, just a note that we owe you {toGive:N0}. We'll settle this soon. Thank you! - MyLedgerPro"
+                                : $"Hi {customer.Name}, your account is fully settled. Thank you for being a valued customer! - MyLedgerPro";
+
+                        await emailService.SendReminderEmailAsync(customer.Email, customer.Name, "Payment Reminder - MyLedgerPro", message);
+                        logger.LogInformation("Sent scheduled reminder email to {Email} for customer {CustomerId}", customer.Email, customer.Id);
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.LogWarning(ex, "Failed to send scheduled reminder for schedule {ScheduleId}", schedule.Id);
+                    }
+
+                    schedule.LastRunAt = now;
                 }
 
-                try
+                if (schedule.Frequency == "Once")
                 {
-                    var totalGive = await dbContext.Transaction
-                        .Where(t => t.CustomerId == customer.Id && t.UserId == schedule.UserId && t.Status == "Give")
-                        .SumAsync(t => t.Amount, stoppingToken);
-                    var totalTake = await dbContext.Transaction
-                        .Where(t => t.CustomerId == customer.Id && t.UserId == schedule.UserId && t.Status == "Take")
-                        .SumAsync(t => t.Amount, stoppingToken);
-
-                    var toTake = totalGive > totalTake ? totalGive - totalTake : 0;
-                    var toGive = totalTake > totalGive ? totalTake - totalGive : 0;
-
-                    var message = toTake > 0
-                        ? $"Hi {customer.Name}, this is a friendly reminder that you have an outstanding balance of {toTake:N0} with us. Please arrange payment at your earliest convenience. Thank you! - MyLedgerPro"
-                        : toGive > 0
-                            ? $"Hi {customer.Name}, just a note that we owe you {toGive:N0}. We'll settle this soon. Thank you! - MyLedgerPro"
-                            : $"Hi {customer.Name}, your account is fully settled. Thank you for being a valued customer! - MyLedgerPro";
-
-                    await emailService.SendReminderEmailAsync(customer.Email, customer.Name, "Payment Reminder - MyLedgerPro", message);
-                    logger.LogInformation("Sent scheduled reminder email to {Email} for customer {CustomerId}", customer.Email, customer.Id);
+                    schedulesToRemove.Add(schedule);
                 }
-                catch (Exception ex)
+                else
                 {
-                    logger.LogWarning(ex, "Failed to send scheduled reminder for schedule {ScheduleId}", schedule.Id);
+                    schedule.NextRunAt = ReminderScheduleCalculator.ComputeNextRunAt(
+                        schedule.Frequency, schedule.TimeOfDay, schedule.DayOfWeek, schedule.DayOfMonth, now);
                 }
+            }
 
-                schedule.LastRunAt = now;
-                AdvanceOrDeactivate(schedule, now);
+            if (schedulesToRemove.Count > 0)
+            {
+                dbContext.ReminderSchedule.RemoveRange(schedulesToRemove);
             }
 
             await dbContext.SaveChangesAsync(stoppingToken);
-        }
-
-        private void AdvanceOrDeactivate(ReminderSchedule schedule, DateTime now)
-        {
-            if (schedule.Frequency == "Once")
-            {
-                schedule.IsActive = false;
-                return;
-            }
-
-            schedule.NextRunAt = ReminderScheduleCalculator.ComputeNextRunAt(
-                schedule.Frequency, schedule.TimeOfDay, schedule.DayOfWeek, schedule.DayOfMonth, now);
         }
     }
 }

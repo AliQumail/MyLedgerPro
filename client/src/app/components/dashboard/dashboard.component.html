@@ -16,8 +16,9 @@
           [customers]="customers"
           (refreshList)="handleRefreshList()"
         ></app-add-transaction>
-        <button class="purple-button" routerLink="/reminders">
-          <fa-icon [icon]="faClock" class="me-2"></fa-icon>Schedule Reminders
+        <button class="purple-button dashboard-reminders-btn" routerLink="/reminders">
+          Schedule Reminders
+          <span class="dashboard-new-badge">New</span>
         </button>
       </div>
     </div>
