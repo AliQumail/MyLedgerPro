@@ -39,6 +39,8 @@ export class NavbarComponent implements OnInit {
 
   currencyOptions = ['PKR', 'USD', 'EUR', 'GBP', 'INR', 'AED', 'SAR'];
 
+  private readonly demoUserId = '82419b4f-64d9-4b73-9900-576014a85e37';
+
   profileForm: FormGroup = new FormGroup({
     username: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -50,13 +52,33 @@ export class NavbarComponent implements OnInit {
   }
 
   handleLogout(){
-    localStorage.removeItem('userId');
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    localStorage.removeItem('email');
-    localStorage.removeItem('currency');
-    localStorage.removeItem('isLoggedIn');
-    this.router.navigate(['/login']);
+    const userId = localStorage.getItem('userId');
+
+    const finishLogout = () => {
+      localStorage.removeItem('userId');
+      localStorage.removeItem('token');
+      localStorage.removeItem('username');
+      localStorage.removeItem('email');
+      localStorage.removeItem('currency');
+      localStorage.removeItem('isLoggedIn');
+      this.router.navigate(['/login']);
+    };
+
+    if (userId === this.demoUserId) {
+      this.spinner.show();
+      this.authService.resetDemo().subscribe(
+        () => {
+          this.spinner.hide();
+          finishLogout();
+        },
+        () => {
+          this.spinner.hide();
+          finishLogout();
+        }
+      );
+    } else {
+      finishLogout();
+    }
   }
 
   openProfile(content: any) {

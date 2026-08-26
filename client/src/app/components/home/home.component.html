@@ -1,3 +1,5 @@
+<ngx-spinner bdColor="rgba(255, 255, 255, 0.6)" size="medium" color="#1d8a5e" type="ball-spin-clockwise" [fullScreen]="true"></ngx-spinner>
+
 <div class="login-outer-most-div">
 
 
@@ -21,6 +23,9 @@
 
           <div class="hero-cta-row">
             <button class="green-cta-button" routerLink="/login">Get Started</button>
+            <button class="try-test-user-button" (click)="tryTestUser()">
+              <fa-icon [icon]="faFlask" class="me-2"></fa-icon>Try it now, no signup needed
+            </button>
           </div>
         </div>
 

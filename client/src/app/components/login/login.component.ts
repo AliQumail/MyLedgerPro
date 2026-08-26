@@ -7,7 +7,7 @@ import {
   faTwitter,
   faLinkedin,
 } from '@fortawesome/free-brands-svg-icons';
-import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -26,11 +26,19 @@ export class LoginComponent {
   twitterIcon = faTwitter;
   userIcon = faUser;
   lockIcon = faLock;
+  eyeIcon = faEye;
+  eyeSlashIcon = faEyeSlash;
+
+  showPassword = false;
 
   loginForm: FormGroup = new FormGroup({
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
   });
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 
   // Login
   login(user: any) {

@@ -128,7 +128,7 @@
     box-sizing: border-box;
     color: #fff;
     cursor: pointer;
-    font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
+    font-family: inherit;
     font-size: 100%;
     font-weight: 600;
     height: 44px;

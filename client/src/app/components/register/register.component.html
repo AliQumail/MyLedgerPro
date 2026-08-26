@@ -2,7 +2,7 @@
   bdColor="rgba(255, 255, 255, 0.6)"
   size="medium"
   color="#1d8a5e"
-  type="la-ball-scale-multiple"
+  type="ball-spin-clockwise"
   [fullScreen]="true"
 ></ngx-spinner>
 
@@ -96,12 +96,15 @@
                       <div class="input-with-icon">
                         <fa-icon [icon]="lockIcon" class="field-icon"></fa-icon>
                         <input
-                          type="password"
+                          [type]="showPassword ? 'text' : 'password'"
                           id="typePasswordX"
                           formControlName="password"
                           placeholder="At least 8 characters"
-                          class="form-control form-control-lg input-field"
+                          class="form-control form-control-lg input-field password-field-input"
                         />
+                        <button type="button" class="password-toggle-btn" (click)="togglePasswordVisibility()" tabindex="-1">
+                          <fa-icon [icon]="showPassword ? eyeSlashIcon : eyeIcon"></fa-icon>
+                        </button>
                       </div>
                       <div
                         *ngIf="

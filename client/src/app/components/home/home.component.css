@@ -31,30 +31,52 @@
     flex-wrap: wrap;
 }
 
+.try-test-user-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    height: 48px;
+    padding: 0 28px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #0f5132, #1d8a5e);
+    box-shadow: rgba(15, 81, 50, .25) 0 4px 10px 0;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.15;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.try-test-user-button:hover {
+    transform: translateY(-1px);
+    box-shadow: rgba(15, 81, 50, .35) 0 6px 14px 0;
+}
+
 .green-cta-button {
     appearance: button;
-    background: linear-gradient(135deg, #0f5132, #1d8a5e);
+    background-color: #ffffff;
     border-radius: 8px;
-    border-width: 0;
-    box-shadow: rgba(15, 81, 50, .25) 0 4px 10px 0;
+    border: 1.5px solid #1d8a5e;
     box-sizing: border-box;
-    color: #fff;
+    color: #0f5132;
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
     height: 48px;
     line-height: 1.15;
-    margin: 12px 0 0;
     outline: none;
     overflow: hidden;
     padding: 0 28px;
     text-align: center;
-    transition: transform .2s, box-shadow .2s;
+    transition: background-color .2s, transform .2s;
 }
 
 .green-cta-button:hover {
+    background-color: #eaf6f0;
     transform: translateY(-1px);
-    box-shadow: rgba(15, 81, 50, .35) 0 6px 14px 0;
 }
 
 .hero-image-frame {

@@ -21,6 +21,16 @@ export class AuthService {
     });
   }
 
+  public demoLogin(): Observable<any> {
+    return this.http.post('https://localhost:7277/api/Auth/demo-login', {});
+  }
+
+  public resetDemo(): Observable<any> {
+    return this.http.post('https://localhost:7277/api/Auth/reset-demo', {}, {
+      responseType: 'text',
+    });
+  }
+
   public isAuthenticated(){
     if (localStorage.getItem('token') == null) this.router.navigate(['/login']);
   }

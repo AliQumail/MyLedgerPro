@@ -1,4 +1,4 @@
-<ngx-spinner bdColor="rgba(255, 255, 255, 0.6)" size="medium" color="#1d8a5e" type="la-ball-scale-multiple" [fullScreen]="true"></ngx-spinner>
+<ngx-spinner bdColor="rgba(255, 255, 255, 0.6)" size="medium" color="#1d8a5e" type="ball-spin-clockwise" [fullScreen]="true"></ngx-spinner>
 
 
 <div class="login-outer-most-div">
@@ -53,7 +53,10 @@
                     <label class="form-label auth-label" for="typePasswordX">Password</label>
                     <div class="input-with-icon">
                       <fa-icon [icon]="lockIcon" class="field-icon"></fa-icon>
-                      <input type="password" id="typePasswordX" placeholder="Enter your password" formControlName="password" class="form-control form-control-lg input-field" />
+                      <input [type]="showPassword ? 'text' : 'password'" id="typePasswordX" placeholder="Enter your password" formControlName="password" class="form-control form-control-lg input-field password-field-input" />
+                      <button type="button" class="password-toggle-btn" (click)="togglePasswordVisibility()" tabindex="-1">
+                        <fa-icon [icon]="showPassword ? eyeSlashIcon : eyeIcon"></fa-icon>
+                      </button>
                     </div>
                     <div
                         *ngIf="

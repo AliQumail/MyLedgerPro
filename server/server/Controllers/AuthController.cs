@@ -5,6 +5,7 @@ using server.Models;
 using server.Models.DTOs;
 using server.Models.DTOs.AuthDTOs;
 using server.Repositories.AuthRepository;
+using server.Services;
 
 namespace server.Controllers
 {
@@ -15,10 +16,12 @@ namespace server.Controllers
 
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IAuthRepository authRepository;
-        public AuthController(UserManager<ApplicationUser> _userManager, IAuthRepository _authRepository)
+        private readonly IDemoResetService demoResetService;
+        public AuthController(UserManager<ApplicationUser> _userManager, IAuthRepository _authRepository, IDemoResetService _demoResetService)
         {
             this.userManager = _userManager;
             this.authRepository = _authRepository;
+            this.demoResetService = _demoResetService;
         }
 
         private const int MaxAccounts = 20;
@@ -89,6 +92,52 @@ namespace server.Controllers
                 throw new Exception("User not found");
             }
 
+        }
+
+        private const string DemoUsername = "test_user";
+
+        [HttpPost]
+        [Route("demo-login")]
+        public async Task<IActionResult> DemoLogin()
+        {
+            var user = await userManager.FindByNameAsync(DemoUsername);
+            if (user == null)
+            {
+                return BadRequest("Demo account is not available right now");
+            }
+
+            var token = authRepository.CreateJwtToken(user);
+            if (token == null)
+            {
+                return BadRequest("Something went wrong while logging in");
+            }
+
+            var loginResponse = new LoginResponseDTO()
+            {
+                Id = user.Id,
+                Username = user.UserName,
+                Email = user.Email,
+                Token = token,
+                Currency = string.IsNullOrEmpty(user.Currency) ? "PKR" : user.Currency,
+            };
+
+            return Ok(loginResponse);
+        }
+
+        [HttpPost]
+        [Route("reset-demo")]
+        public async Task<IActionResult> ResetDemo()
+        {
+            var user = await userManager.FindByNameAsync(DemoUsername);
+            if (user == null)
+            {
+                return BadRequest("Demo account is not available right now");
+            }
+
+            var demoUserId = Guid.Parse(user.Id);
+            await demoResetService.ResetDemoUserAsync(demoUserId);
+
+            return Ok("Demo data reset");
         }
 
         [HttpGet]

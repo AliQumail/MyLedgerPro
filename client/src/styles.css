@@ -1,7 +1,7 @@
 /* global font */
 
 body {
-    font-family: 'Inter', -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif;
+    font-family: 'Abel', -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif;
 }
 
 /* buttons */
@@ -89,6 +89,31 @@ body {
 .input-with-icon .input-field,
 .input-with-icon .form-select {
     padding-left: 2.6rem !important;
+}
+
+.password-field-input {
+    padding-right: 2.6rem !important;
+}
+
+.password-toggle-btn {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    color: #5a6b64;
+    opacity: 0.85;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.password-toggle-btn:hover {
+    color: #1d8a5e;
+    opacity: 1;
 }
 
 /* themed modal chrome (Add Customer / Add Transaction / Update Customer) */

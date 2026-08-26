@@ -5,7 +5,7 @@ import {
   faTwitter,
   faLinkedin,
 } from '@fortawesome/free-brands-svg-icons';
-import { faUser, faLock, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock, faEnvelope, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -30,6 +30,10 @@ export class RegisterComponent {
   userIcon = faUser;
   lockIcon = faLock;
   emailIcon = faEnvelope;
+  eyeIcon = faEye;
+  eyeSlashIcon = faEyeSlash;
+
+  showPassword = false;
 
   registerForm: FormGroup = new FormGroup({
     username: new FormControl('', [
@@ -45,6 +49,10 @@ export class RegisterComponent {
       Validators.minLength(8)
     ])
   });
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 
   register(user: any) {
     this.spinner.show();
