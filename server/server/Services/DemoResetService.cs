@@ -72,13 +72,16 @@ namespace server.Services
             {
                 for (int i = 1; i <= TransactionsPerCustomer; i++)
                 {
+                    // Give amounts are kept larger than Take amounts so every seeded
+                    // customer ends up owing money (ToTake > 0) and stays schedulable.
+                    bool isTake = i % 2 == 0;
                     newTransactions.Add(new Transaction
                     {
                         Id = Guid.NewGuid(),
                         UserId = userId,
                         CustomerId = customer.Id,
-                        Status = i % 2 == 0 ? "Take" : "Give",
-                        Amount = 500 + random.Next(0, 49500),
+                        Status = isTake ? "Take" : "Give",
+                        Amount = isTake ? 500 + random.Next(0, 4500) : 5000 + random.Next(0, 45000),
                         Date = DateTime.Now.AddDays(-random.Next(0, 90)),
                     });
                 }

@@ -19,7 +19,7 @@
     </div>
 
     <div class="dashboard-panel">
-      <p class="scheduled-reminders-subtext">Only for Emails</p>
+      <span class="scheduled-reminders-email-badge">Only for Emails</span>
       <div class="table-responsive mt-2">
         <table class="table align-middle mb-0 dashboard-table">
           <thead>
@@ -35,8 +35,8 @@
           </thead>
           <tbody>
             <tr *ngFor="let schedule of schedules">
-              <td>
-                <p class="fw-bold mb-0">{{ customerNames(schedule) }}</p>
+              <td class="scheduled-reminders-customer-cell">
+                <p class="fw-bold mb-0 scheduled-reminders-customer-names" [title]="customerNames(schedule)">{{ customerNames(schedule) }}</p>
                 <p class="text-muted mb-0" *ngIf="schedule.customers.length > 1">{{ schedule.customers.length }} customers</p>
               </td>
               <td>{{ frequencyLabel(schedule) }}</td>

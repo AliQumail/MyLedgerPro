@@ -97,6 +97,11 @@ export class DashboardComponent {
   sortColumn: 'toTake' | 'toGive' | null = null;
   sortDirection: 'asc' | 'desc' = 'asc';
 
+  pagedSummary: any = [];
+  page: number = 1;
+  pageSize: number = 5;
+  pageSizeOptions: number[] = [5, 10, 20, 50];
+
   title : any;
   dataset = [
    
@@ -245,6 +250,24 @@ export class DashboardComponent {
     }
 
     this.filteredSummary = result;
+    this.page = 1;
+    this.updatePagedSummary();
+  }
+
+  updatePagedSummary() {
+    const start = (this.page - 1) * this.pageSize;
+    this.pagedSummary = this.filteredSummary.slice(start, start + this.pageSize);
+  }
+
+  onPageChange(page: number) {
+    this.page = page;
+    this.updatePagedSummary();
+  }
+
+  onPageSizeChange(size: number) {
+    this.pageSize = Number(size);
+    this.page = 1;
+    this.updatePagedSummary();
   }
 
   onSearchChange(term: string) {
@@ -289,7 +312,7 @@ export class DashboardComponent {
   downloadPdf() {
     const doc = new jsPDF();
     doc.setFontSize(14);
-    doc.text('MyLedgerPro - Customer Summary', 14, 15);
+    doc.text('LedgerFlow - Customer Summary', 14, 15);
 
     autoTable(doc, {
       startY: 22,

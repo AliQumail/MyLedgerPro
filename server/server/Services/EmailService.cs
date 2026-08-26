@@ -24,7 +24,7 @@ namespace server.Services
             var port = int.Parse(configuration["Smtp:Port"] ?? "587");
             var username = configuration["Smtp:Username"];
             var appPassword = configuration["Smtp:AppPassword"];
-            var fromName = configuration["Smtp:FromName"] ?? "MyLedgerPro";
+            var fromName = configuration["Smtp:FromName"] ?? "LedgerFlow";
 
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(appPassword))
             {

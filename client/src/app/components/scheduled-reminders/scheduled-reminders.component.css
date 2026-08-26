@@ -69,6 +69,30 @@
     margin-bottom: 0;
 }
 
+.scheduled-reminders-email-badge {
+    display: inline-block;
+    background-color: #eaf7f1;
+    color: #0f5132;
+    border: 1px solid #b7e4cd;
+    border-radius: 999px;
+    padding: 0.25rem 0.85rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.scheduled-reminders-customer-cell {
+    max-width: 260px;
+}
+
+.scheduled-reminders-customer-names {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 260px;
+    cursor: default;
+}
+
 .dashboard-table thead th {
     color: #5a6b64;
     font-size: 0.75rem;

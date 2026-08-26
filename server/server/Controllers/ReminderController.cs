@@ -29,7 +29,7 @@ namespace server.Controllers
                 await emailService.SendReminderEmailAsync(
                     request.CustomerEmail,
                     request.CustomerName,
-                    "Payment Reminder - MyLedgerPro",
+                    "Payment Reminder - LedgerFlow",
                     request.Message
                 );
                 return Ok("Reminder email sent successfully");

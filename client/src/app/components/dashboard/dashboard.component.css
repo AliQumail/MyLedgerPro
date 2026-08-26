@@ -289,3 +289,24 @@
     color: #5a6b64;
     padding: 2rem 0;
 }
+
+.dashboard-pagination-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 1rem;
+}
+
+.dashboard-page-size {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dashboard-page-size-select {
+    width: auto;
+    padding: 0.35rem 2rem 0.35rem 0.75rem !important;
+    font-size: 0.85rem !important;
+}

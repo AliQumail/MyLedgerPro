@@ -84,12 +84,12 @@ namespace server.Services
                         var toGive = totalTake > totalGive ? totalTake - totalGive : 0;
 
                         var message = toTake > 0
-                            ? $"Hi {customer.Name}, this is a friendly reminder that you have an outstanding balance of {toTake:N0} with us. Please arrange payment at your earliest convenience. Thank you! - MyLedgerPro"
+                            ? $"Hi {customer.Name}, this is a friendly reminder that you have an outstanding balance of {toTake:N0} with us. Please arrange payment at your earliest convenience. Thank you! - LedgerFlow"
                             : toGive > 0
-                                ? $"Hi {customer.Name}, just a note that we owe you {toGive:N0}. We'll settle this soon. Thank you! - MyLedgerPro"
-                                : $"Hi {customer.Name}, your account is fully settled. Thank you for being a valued customer! - MyLedgerPro";
+                                ? $"Hi {customer.Name}, just a note that we owe you {toGive:N0}. We'll settle this soon. Thank you! - LedgerFlow"
+                                : $"Hi {customer.Name}, your account is fully settled. Thank you for being a valued customer! - LedgerFlow";
 
-                        await emailService.SendReminderEmailAsync(customer.Email, customer.Name, "Payment Reminder - MyLedgerPro", message);
+                        await emailService.SendReminderEmailAsync(customer.Email, customer.Name, "Payment Reminder - LedgerFlow", message);
                         logger.LogInformation("Sent scheduled reminder email to {Email} for customer {CustomerId}", customer.Email, customer.Id);
                         anySent = true;
                     }

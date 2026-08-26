@@ -55,6 +55,11 @@ export class CustomerDetailsComponent {
   startDate: string = '';
   endDate: string = '';
 
+  pagedTransactions: any = [];
+  page: number = 1;
+  pageSize: number = 5;
+  pageSizeOptions: number[] = [5, 10, 20, 50];
+
   ngOnInit() {
     this.authService.isAuthenticated();
     this.currency = localStorage.getItem('currency') || 'PKR';
@@ -145,6 +150,24 @@ export class CustomerDetailsComponent {
     }
 
     this.filteredTransactions = result;
+    this.page = 1;
+    this.updatePagedTransactions();
+  }
+
+  updatePagedTransactions() {
+    const start = (this.page - 1) * this.pageSize;
+    this.pagedTransactions = this.filteredTransactions.slice(start, start + this.pageSize);
+  }
+
+  onPageChange(page: number) {
+    this.page = page;
+    this.updatePagedTransactions();
+  }
+
+  onPageSizeChange(size: number) {
+    this.pageSize = Number(size);
+    this.page = 1;
+    this.updatePagedTransactions();
   }
 
   onDateFilterChange() {
@@ -196,7 +219,7 @@ export class CustomerDetailsComponent {
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
-    doc.text('MyLedgerPro', margin, 13);
+    doc.text('LedgerFlow', margin, 13);
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
     doc.text(`Transaction History  •  ${this.customer.name}`, margin, 21);

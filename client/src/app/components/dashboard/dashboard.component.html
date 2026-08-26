@@ -94,7 +94,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of filteredSummary">
+                <tr *ngFor="let item of pagedSummary">
                   <td>
                     <div class="d-flex align-items-center">
                       <div class="">
@@ -157,6 +157,24 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div class="dashboard-pagination-row" *ngIf="showGraphicalView == 0 && filteredSummary.length > 0">
+            <div class="dashboard-page-size">
+              <label class="auth-label mb-0">Rows per page</label>
+              <select class="form-select input-field dashboard-page-size-select" [ngModel]="pageSize" (ngModelChange)="onPageSizeChange($event)">
+                <option *ngFor="let size of pageSizeOptions" [ngValue]="size">{{ size }}</option>
+              </select>
+            </div>
+            <ngb-pagination
+              *ngIf="filteredSummary.length > pageSize"
+              [collectionSize]="filteredSummary.length"
+              [(page)]="page"
+              [pageSize]="pageSize"
+              [maxSize]="5"
+              [rotate]="true"
+              [boundaryLinks]="true"
+              (pageChange)="onPageChange($event)"
+            ></ngb-pagination>
           </div>
         </div>
       </div>

@@ -1,7 +1,30 @@
 /* global font */
 
 body {
-    font-family: 'Abel', -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif;
+    font-family: 'Abel', -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif !important;
+}
+
+/* pagination */
+
+.pagination .page-link {
+    color: #0f5132;
+    border-color: #dfe9e4;
+}
+
+.pagination .page-link:hover {
+    color: #0f5132;
+    background-color: #eaf7f1;
+    border-color: #b7e4cd;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #1d8a5e;
+    border-color: #1d8a5e;
+    color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #b3c0ba;
 }
 
 /* buttons */

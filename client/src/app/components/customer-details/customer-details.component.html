@@ -67,7 +67,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let tran of filteredTransactions">
+                    <tr *ngFor="let tran of pagedTransactions">
                       <td>
                         <span class="status-badge" [ngClass]="tran.status === 'Take' ? 'status-badge-take' : 'status-badge-give'">{{tran.status}}</span>
                       </td>
@@ -87,6 +87,24 @@
                     </tr>
                   </tbody>
                 </table>
+              </div>
+              <div class="dashboard-pagination-row" *ngIf="filteredTransactions.length > 0">
+                <div class="dashboard-page-size">
+                  <label class="auth-label mb-0">Rows per page</label>
+                  <select class="form-select input-field dashboard-page-size-select" [ngModel]="pageSize" (ngModelChange)="onPageSizeChange($event)">
+                    <option *ngFor="let size of pageSizeOptions" [ngValue]="size">{{ size }}</option>
+                  </select>
+                </div>
+                <ngb-pagination
+                  *ngIf="filteredTransactions.length > pageSize"
+                  [collectionSize]="filteredTransactions.length"
+                  [(page)]="page"
+                  [pageSize]="pageSize"
+                  [maxSize]="5"
+                  [rotate]="true"
+                  [boundaryLinks]="true"
+                  (pageChange)="onPageChange($event)"
+                ></ngb-pagination>
               </div>
             </div>
           </div>
